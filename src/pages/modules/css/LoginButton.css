@@ -1,0 +1,24 @@
+#login-button input {
+    width: 100%;
+    height: 100%;
+    
+    background-color: #eee;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 15px;
+
+    /* font-weight: bold; */
+    font-size: 18px;
+    color: #222;
+    transition: all 0.25s;
+}
+
+#login-button input:hover {
+    background: #ddd;
+    transition: all 0.25s;
+    cursor: pointer;
+}
+
+#login-button {
+    
+}

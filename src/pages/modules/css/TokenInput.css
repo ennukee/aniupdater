@@ -1,0 +1,48 @@
+/* 50B376 */
+/* A6FFC8 */
+
+#input-container {
+    padding: 20px;
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: 85% 15%;
+    grid-template-rows: 50px;
+}
+
+#token-input {
+    border-top: 1px solid #24663D;
+    border-left: 1px solid #24663D;
+    border-bottom: 1px solid #24663D;
+    border-right: 1px solid #eee;
+    
+    border-radius: 10px 0 0 10px;
+    padding-left: 15px;
+    font-size: 18px;
+    color: #24663D;
+}
+
+#token-submit {
+    font-size: 24px;
+    font-weight: bold;
+
+    background-color: #A6FFC8;
+    border: 1px solid #24663D;
+    transition: all 0.25s;
+    border-width: 1px 1px 1px 0;
+    border-radius: 0 10px 10px 0;
+}
+
+#token-submit:hover {
+    background-color: #86FFC8;
+    transition: all 0.25s;
+    animation: font-pulse 1s ease-in-out infinite;
+    cursor: pointer;
+}
+
+@keyframes font-pulse {
+    0% { font-size: 24px; }
+    50% { font-size: 28px; }
+    100% { font-size: 24px; }
+}
+
