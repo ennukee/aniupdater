@@ -12,8 +12,14 @@ export default class TokenInput extends Component {
     render() {
         return (
             <div id='input-container'>
-                <input id='token-input' type='text' value={this.inputVal} onChange={e => this.setState({inputVal: e.target.value})}/>
-                <input id='token-submit' type='button' value='✓'/>
+                <input id='token-input' type='text' value={this.state.inputVal} onChange={e => this.setState({inputVal: e.target.value})}/>
+                <input 
+                    id='token-submit' 
+                    type='button' 
+                    value='✓' 
+                    onClick={() => this.props.callback(this.state.inputVal)}
+                    disabled={this.props.disabled}
+                />
             </div>
         )
     }
