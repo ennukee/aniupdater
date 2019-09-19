@@ -6,7 +6,7 @@
     width: 100%;
 
     display: grid;
-    grid-template-columns: 85% 15%;
+    grid-template-columns: 89% 11%;
     grid-template-rows: 50px;
 }
 
@@ -16,8 +16,8 @@
     border-bottom: 1px solid #24663D;
     border-right: 1px solid #eee;
     
-    border-radius: 10px 0 0 10px;
-    padding-left: 15px;
+    border-radius: 50px 0 0 50px;
+    padding-left: 25px;
     font-size: 18px;
     color: #24663D;
 }
@@ -30,7 +30,7 @@
     border: 1px solid #24663D;
     transition: all 0.25s;
     border-width: 1px 1px 1px 0;
-    border-radius: 0 10px 10px 0;
+    border-radius: 0 50px 50px 0;
 }
 
 #token-submit:hover {

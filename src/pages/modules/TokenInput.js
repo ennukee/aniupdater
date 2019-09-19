@@ -12,7 +12,11 @@ export default class TokenInput extends Component {
     render() {
         return (
             <div id='input-container'>
-                <input id='token-input' type='text' value={this.state.inputVal} onChange={e => this.setState({inputVal: e.target.value})}/>
+                <input id='token-input' 
+                    type='text' 
+                    placeholder='AniList Token'
+                    value={this.state.inputVal} 
+                    onChange={e => this.setState({inputVal: e.target.value})}/>
                 <input 
                     id='token-submit' 
                     type='button' 
