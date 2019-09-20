@@ -1,14 +1,23 @@
 import React from 'react';
-import './css/LoginButton.css'
+import './css/LoginButton.css';
+import PropTypes from 'prop-types';
 
-const LoginButton = props => {
-    return (
-        <div id='login-button' style={props.style}>
-            <a href={props.redirect}>
-                {props.content}
-            </a>
-        </div>
-    )
-}
+const LoginButton = ({ style, redirect, content }) => (
+  <div id="login-button" style={style}>
+    <a href={redirect}>
+      {content}
+    </a>
+  </div>
+);
 
-export default LoginButton
+LoginButton.propTypes = {
+  style: PropTypes.object,
+  redirect: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+};
+
+LoginButton.defaultProps = {
+  style: {},
+};
+
+export default LoginButton;
