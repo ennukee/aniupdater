@@ -133,19 +133,86 @@
   -o-transition: all 0.25s;
 }
 
+#results-view.inactive {
+  max-height: 0px;
+}
+
 #results-view {
+  max-height: 1080px;
+  transition: max-height 1s ease-out;
   display: grid;
   grid-template-columns: 50% 50%;
   grid-template-rows: 0.33fr 0.33fr 0.34fr;
+  animation: resultItemEntry 1s;
+  -webkit-animation: resultItemEntry 1s;
+  -webkit-transition: max-height 1s ease-out;
+  -moz-transition: max-height 1s ease-out;
+  -ms-transition: max-height 1s ease-out;
+  -o-transition: max-height 1s ease-out;
 }
 
 #results-item {
   display: grid;
-  grid-template-columns: 30% 70%;
+  grid-template-rows: auto auto;
   margin: 10px;
+  animation: resultItemEntry 1s;
+  animation-fill-mode: forwards;
+  /* animation-delay: 1s; */
+  -webkit-animation: resultItemEntry 1s;
+  -webkit-animation-fill-mode: forwards;
+  /* -webkit-animation-delay: 1s; */
 }
 
-#results-item img {
+#result-item-title {
+  width: 230px;
+  font-size: 20px;
+  /* height: 26px; */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: Patua One;
+
+  opacity: 0;
+  animation: resultItemTitleEntry 0.75s;
+  -webkit-animation: resultItemTitleEntry 0.75s;
+  animation-delay: 0.25s;
+  -webkit-animation-delay: 0.25s;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+}
+
+@keyframes resultItemTitleEntry {
+  0% {
+    opacity: 0;
+    width: 230px;
+    transform: translateY(-20px);
+    -webkit-transform: translateY(-20px);
+    -moz-transform: translateY(-20px);
+    -ms-transform: translateY(-20px);
+    -o-transform: translateY(-20px);
+}
+  100% {
+    opacity: 1;
+    width: 460px;
+    transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+}
+}
+
+#results-item #result-item-title ~ .img {
+  width: 460px;
+  height: 99px;
+  transition: all 0.75s;
+  -webkit-transition: all 0.75s;
+  -moz-transition: all 0.75s;
+  -ms-transition: all 0.75s;
+  -o-transition: all 0.75s;
+}
+
+#results-item .img {
   object-fit: cover;
   width: 230px;
   height: 330px;
@@ -154,6 +221,11 @@
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
+  transition: all 0.75s;
+  -webkit-transition: all 0.75s;
+  -moz-transition: all 0.75s;
+  -ms-transition: all 0.75s;
+  -o-transition: all 0.75s;
 }
 
 /* Main phase item states (active, preenter, leaving, inactive) */

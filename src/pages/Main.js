@@ -85,12 +85,12 @@ export default class Main extends Component {
     setTimeout(() => {
       newPhaseElement.classList.replace('preenter', 'active')
     }, 752)
-    setTimeout(() => { // After the animations, autofocus any element we specify (if applicable)
+    setTimeout(() => { // Focus the element after we're sure it's on page
       const nextStartingElement = this.startingElementIdByPhase[nextState]
       if (nextStartingElement) {
         document.getElementById(nextStartingElement).focus()
       }
-    }, 1500)
+    }, 1000)
 
     // Return the state back to normal once we finish transitioning
     this.setState({substate: nextState}) 
@@ -110,6 +110,9 @@ export default class Main extends Component {
         break;
       case 'search-phase':
         // console.log(e.key)
+        if (e.key === 't') {
+          this.setState({titleShowState: !this.state.titleShowState})
+        }
         if (e.key === 'Enter') {
           // console.log(this.state.search, this.state.type)
           const query = `query {
@@ -180,10 +183,20 @@ export default class Main extends Component {
                 autoFocus=''
                 value={this.state.search}
                 onChange={e => this.setState({search: e.target.value})}/>
-              <div id='results-view'>
+              <div id='results-view' className={`${this.state.searchResults.length === 0 ? 'inactive' : 'active'}`}>
                 {this.state.searchResults.map((work, index) => (
                   <div id='results-item'>
-                    <img src={work.coverImage.large} alt='Cover'></img>
+                    {this.state.titleShowState ? (
+                      <div id='result-item-title' 
+                        style={{
+                          color: work.coverImage.color
+                        }}>{work.title.userPreferred}</div>
+                    ) : (<div></div>)}
+                    <div className='img' style={{
+                      // backgroundImage: `url('${work.coverImage.large}')`
+                      border: `1px solid ${work.coverImage.color}`,
+                      backgroundColor: `#${(''+Math.floor(Math.random()*9)).repeat(6)}`
+                    }}></div>
                     {/* <div key={index}>{work.title.userPreferred}</div> */}
                   </div>
                 ))}
