@@ -24,6 +24,30 @@ export default class Main extends Component {
     this.startingElementIdByPhase = {
       'search-phase': 'search-input',
     };
+    this.helpByPhase = {
+      'a-or-m-phase': (
+        <span>
+          Click&nbsp;
+          <span className="aom-a bold">A</span>
+          &nbsp;or&nbsp;
+          <span className="aom-m bold">M</span>
+          &nbsp;to select the media type
+        </span>
+      ),
+      'search-phase': (
+        <span>
+          <span>Press </span>
+          <span className="aom-a bold">Enter</span>
+          <span> to submit your search, </span>
+          <span className="green bold">T</span>
+          <span> to toggle titles, </span>
+          <span className="cyan bold">← →</span>
+          <span> to change pages or </span>
+          <span className="aom-m bold">1 through 4</span>
+          <span> to select the media</span>
+        </span>
+      ),
+    };
   }
 
   componentDidMount() {
@@ -43,7 +67,6 @@ export default class Main extends Component {
 
   handleVerifyError = (e) => {
     console.log(e);
-    // this.setState({ submitActive: true });
   }
 
   authorizeToken = (token) => {
@@ -76,26 +99,24 @@ export default class Main extends Component {
     }
 
     // Don't let any keypresses affect us during our transition state
-    this.setState({ substate: 'TRANSITION' });
+    this.setState({ substate: 'TRANSITION', lastSubstate: this.state.substate, });
 
     // Begin the manual transition animations (where's GSAP at tho)
     oldPhaseElement.classList.replace('active', 'leaving');
     setTimeout(() => {
       oldPhaseElement.classList.replace('leaving', 'inactive');
       newPhaseElement.classList.replace('inactive', 'preenter');
+      setTimeout(() => {
+        newPhaseElement.classList.replace('preenter', 'active');
+        setTimeout(() => { // Focus the element after we're sure it's on page
+          const nextStartingElement = this.startingElementIdByPhase[nextState];
+          if (nextStartingElement) {
+            document.getElementById(nextStartingElement).focus();
+          }
+          this.setState({ substate: nextState });
+        }, 250);
+      }, 10);
     }, 740);
-    setTimeout(() => {
-      newPhaseElement.classList.replace('preenter', 'active');
-    }, 752);
-    setTimeout(() => { // Focus the element after we're sure it's on page
-      const nextStartingElement = this.startingElementIdByPhase[nextState];
-      if (nextStartingElement) {
-        document.getElementById(nextStartingElement).focus();
-      }
-    }, 1000);
-
-    // Return the state back to normal once we finish transitioning
-    this.setState({ substate: nextState });
   }
 
   handleKeyPress = (e) => {
@@ -163,7 +184,7 @@ export default class Main extends Component {
 
   render() {
     const {
-      loginState, submitDisabled, mainState, search, searchResults, titleShowState,
+      loginState, submitDisabled, mainState, substate, search, searchResults, titleShowState, lastSubstate,
     } = this.state;
     return (
       <div id="app">
@@ -186,14 +207,16 @@ export default class Main extends Component {
             }}
           />
         </div>
+
+        <div id="help-message" className={substate}>{ this.helpByPhase[substate] || this.helpByPhase[lastSubstate] }</div>
         <div id="main-phase" className={mainState}>
           <div id="a-or-m-phase" className="main-phase-item active">
-            <span id="aom-a">
+            <span className="aom-a">
               <span className="bold dark">A</span>
               nq
             </span>
             &nbsp;or&nbsp;
-            <span id="aom-m">
+            <span className="aom-m">
               <span className="bold dark">M</span>
               ar
             </span>
