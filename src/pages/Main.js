@@ -3,6 +3,11 @@ import LoginButton from './modules/LoginButton';
 import TokenInput from './modules/TokenInput';
 import './css/Main.css';
 
+/*
+    TODO LIST
+  ! Handler for empty returns on search
+*/
+
 const width = 500;
 const ANILIST_BASE_URL = 'https://graphql.anilist.co';
 
@@ -21,6 +26,48 @@ export default class Main extends Component {
       search: '',
       searchResults: [],
     };
+    this.noResultsFoundResponse = [
+      {
+        id: 3,
+        title: {
+          userPreferred: 'S-senpai!',
+        },
+        coverImage: {
+          large: '',
+          color: '#e44',
+        },
+      },
+      {
+        id: 0,
+        title: {
+          userPreferred: "I'm sorry!",
+        },
+        coverImage: {
+          large: '',
+          color: '#e44',
+        },
+      },
+      {
+        id: 1,
+        title: {
+          userPreferred: 'No results were found!',
+        },
+        coverImage: {
+          large: '',
+          color: '#e44',
+        },
+      },
+      {
+        id: 2,
+        title: {
+          userPreferred: 'Please try another one!',
+        },
+        coverImage: {
+          large: '',
+          color: '#e44',
+        },
+      },
+    ];
     this.startingElementIdByPhase = {
       'search-phase': 'search-input',
     };
@@ -99,7 +146,7 @@ export default class Main extends Component {
     }
 
     // Don't let any keypresses affect us during our transition state
-    this.setState({ substate: 'TRANSITION', lastSubstate: this.state.substate, });
+    this.setState({ substate: 'TRANSITION', lastSubstate: substate });
 
     // Begin the manual transition animations (where's GSAP at tho)
     oldPhaseElement.classList.replace('active', 'leaving');
@@ -159,7 +206,13 @@ export default class Main extends Component {
           const options = this.generateQueryJson(query);
           fetch(ANILIST_BASE_URL, options)
             .then((resp) => resp.json())
-            .then((resp) => this.setState({ searchResults: resp.data.Page.media }));
+            .then((resp) => {
+              if (resp.data.Page.media.length === 0) {
+                this.setState({ searchResults: this.noResultsFoundResponse });
+              } else {
+                this.setState({ searchResults: resp.data.Page.media || this.noResultsFoundResponse });
+              }
+            });
         }
         break;
       default:
@@ -208,7 +261,9 @@ export default class Main extends Component {
           />
         </div>
 
-        <div id="help-message" className={substate}>{ this.helpByPhase[substate] || this.helpByPhase[lastSubstate] }</div>
+        <div id="help-message" className={substate}>
+          { this.helpByPhase[substate] || this.helpByPhase[lastSubstate] }
+        </div>
         <div id="main-phase" className={mainState}>
           <div id="a-or-m-phase" className="main-phase-item active">
             <span className="aom-a">
@@ -250,7 +305,6 @@ export default class Main extends Component {
                       backgroundColor: `#${(`${Math.floor(Math.random() * 9)}`).repeat(6)}`,
                     }}
                   />
-                  {/* <div key={index}>{work.title.userPreferred}</div> */}
                 </div>
               ))}
             </div>
