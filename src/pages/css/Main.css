@@ -314,3 +314,10 @@
   display: none !important;
   opacity: 0;
 }
+
+#page-slider {
+  position: absolute;
+  left: 0;
+  width: 50px;
+  height: 100%;
+}

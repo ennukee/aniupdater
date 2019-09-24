@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import LoginButton from './modules/LoginButton';
 import TokenInput from './modules/TokenInput';
+import PageProgression from './modules/PageProgression';
 import './css/Main.css';
 // Remind me to never try to write an entire single-page in a literal (mostly) single page again
-//                                                                                                        im sorry for your eyes
+//                                                                                             im sorry for your eyes
 
 /*
     TODO LIST
@@ -345,6 +346,8 @@ export default class Main extends Component {
       titleShowState,
       lastSubstate,
       selectedMedia,
+      searchPages,
+      page,
     } = this.state;
     return (
       <div id="app">
@@ -384,6 +387,9 @@ export default class Main extends Component {
             </span>
           </div>
           <div id="search-phase" className="main-phase-item inactive">
+            <div id="page-slider">
+              <PageProgression maxPages={searchPages} page={page} />
+            </div>
             <input
               type="text"
               id="search-input"
