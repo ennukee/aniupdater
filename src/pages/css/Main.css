@@ -311,6 +311,6 @@
 }
 
 .main-phase-item.inactive {
-  display: none;
+  display: none !important;
   opacity: 0;
 }

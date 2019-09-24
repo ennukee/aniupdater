@@ -1,20 +1,21 @@
 {
-    "extends": "airbnb",
-    "parser": "babel-eslint",
-    "rules": {
-        "linebreak-style": ["error", "windows"],
-        "max-len": [
-            "error",
-            {"code": 120}
-        ],
-        "no-console": "off",
-        "react/jsx-filename-extension": [0],
-        "react/forbid-prop-types": ["error", {
-            "forbid": ["any"]
-        }]
-    },
-    "env": {
-        "browser": true,
-        "node": true
-    }
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "rules": {
+    "linebreak-style": ["error", "windows"],
+    "max-len": ["error", { "code": 120 }],
+    "no-console": "off",
+    "no-case-declarations": "off",
+    "react/jsx-filename-extension": [0],
+    "react/forbid-prop-types": [
+      "error",
+      {
+        "forbid": ["any"]
+      }
+    ]
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  }
 }
