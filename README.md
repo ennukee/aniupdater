@@ -1,68 +1,14 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# AniUpdater
+### A quick and simplistic approach to updating many titles at once
 
-## Available Scripts
+AniUpdater is built upon the wonderful API provided by AniList to provide users with the fastest way of updating many titles in one sitting. All done without a mouse -- every step of the way is controlled via keyboard. Save your wrists the unnecessary work.
 
-In the project directory, you can run:
+## Why?
 
-### `npm start`
+To be upfront, it's because I was taking *way* too long whenever I logged onto AniList to update my manga every 1-2 months. I had anywhere between 50-150 manga titles to update and it was a nasty process. Thus, a thought flashed through my mind: "wait, I have the skillset to make this simpler". And so, I did. What you see here is the fruits of many hours of slamming my face against a keyboard until CSS decided to wor-- I mean many hours of troubleshooting. Yes, that.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**This project is still under active development as of 9/25/2019 and is not released to the public yet.** I estimate that this will be finished sometime around mid to late October, but it all depends on how much of my luxuries I want to implement before I consider the website ready for launch.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+Here's a sneak peak of some of the very early design of the website 
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+![](https://i.gyazo.com/5bfa6f4ee6607571e19375ea92f89dc5.gif)
