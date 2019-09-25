@@ -1,8 +1,21 @@
+/* Libraries */
 import React, { Component } from 'react';
+
+/* Modules */
 import LoginButton from './modules/LoginButton';
 import TokenInput from './modules/TokenInput';
 import PageProgression from './modules/PageProgression';
+import MediaTypeSelectionPhase from './modules/MediaTypeSelectionPhase';
+import SearchItem from './modules/SearchItem';
+import DataForm from './modules/DataForm';
+
+/* Utils */
+import generateQueryJson from './modules/util/generateQueryJson';
+import * as consts from './modules/util/const';
+
+/* Styles */
 import './css/Main.css';
+import fadePhases from './modules/util/fadePhases';
 // Remind me to never try to write an entire single-page in a literal (mostly) single page again
 //                                                                                             im sorry for your eyes
 
@@ -12,7 +25,6 @@ import './css/Main.css';
 */
 
 const width = 500;
-const ANILIST_BASE_URL = 'https://graphql.anilist.co';
 
 export default class Main extends Component {
   constructor(props) {
@@ -29,51 +41,11 @@ export default class Main extends Component {
       search: '',
       searchResults: [],
       cachedSearchResults: {},
-      page: 1,
+      page: 0,
       selectedMedia: {},
+      dataStep: 0,
     };
-    this.noResultsFoundResponse = [
-      {
-        id: 3,
-        title: {
-          userPreferred: 'S-senpai!',
-        },
-        coverImage: {
-          large: '',
-          color: '#e44',
-        },
-      },
-      {
-        id: 0,
-        title: {
-          userPreferred: "I'm sorry!",
-        },
-        coverImage: {
-          large: '',
-          color: '#e44',
-        },
-      },
-      {
-        id: 1,
-        title: {
-          userPreferred: 'No results were found!',
-        },
-        coverImage: {
-          large: '',
-          color: '#e44',
-        },
-      },
-      {
-        id: 2,
-        title: {
-          userPreferred: 'Please try another one!',
-        },
-        coverImage: {
-          large: '',
-          color: '#e44',
-        },
-      },
-    ];
+    this.noResultsFoundResponse = consts.NO_RESULTS_FOUND_RESPONSE;
     this.startingElementIdByPhase = {
       'search-phase': 'search-input',
     };
@@ -107,9 +79,9 @@ export default class Main extends Component {
     document.addEventListener('keydown', this.handleKeyPress);
   }
 
-  handleVerifyResponse = async (resp) => {
+  tokenSuccess = (resp) => {
     if (!resp.ok) {
-      this.handleVerifyError(resp);
+      this.tokenFailure(resp);
       return;
     }
     // Response was successful, we now know the token is legitimate. Time to begin the real heavy-lifting.
@@ -124,28 +96,18 @@ export default class Main extends Component {
     );
   };
 
-  handleVerifyError = (e) => {
+  tokenFailure = (e) => {
     console.log(e);
   };
 
   authorizeToken = (token) => {
     this.setState({ submitDisabled: true });
-    console.log(token);
-    // Construct the simplest query possible for token verification
-    const query = `query {
-      Media(id: 1) {
-        title {
-          english
-        }
-      }
-    }`;
-    const options = this.generateQueryJson(query, token);
-    // console.log(options);
+    const options = generateQueryJson(consts.VERIFICATION_QUERY, token);
 
     this.setState({ token });
-    fetch(ANILIST_BASE_URL, options).then(
-      this.handleVerifyResponse,
-      this.handleVerifyError,
+    fetch(consts.ANILIST_BASE_URL, options).then(
+      this.tokenSuccess,
+      this.tokenFailure,
     );
   };
 
@@ -167,38 +129,29 @@ export default class Main extends Component {
     // Don't let any keypresses affect us during our transition state
     this.setState({ substate: 'TRANSITION', lastSubstate: substate });
 
-    // Begin the manual transition animations (where's GSAP at tho)
-    oldPhaseElement.classList.replace('active', 'leaving');
-    setTimeout(() => {
-      oldPhaseElement.classList.replace('leaving', 'inactive');
-      newPhaseElement.classList.replace('inactive', 'preenter');
-      setTimeout(() => {
-        newPhaseElement.classList.replace('preenter', 'active');
-        setTimeout(() => {
-          // Focus the element after we're sure it's on page
-          const nextStartingElement = this.startingElementIdByPhase[nextState];
-          if (nextStartingElement) {
-            document.getElementById(nextStartingElement).focus();
-          }
-          this.setState({ substate: nextState });
-        }, 250);
-      }, 10);
-    }, 740);
+    // Transition states
+    await fadePhases(oldPhaseElement, newPhaseElement, 750);
+
+    // Search for a focus target of the next phase if it exists
+    const nextStartingElement = this.startingElementIdByPhase[nextState];
+    if (nextStartingElement) {
+      document.getElementById(nextStartingElement).focus(); // and focus it if it does
+    }
+
+    // Lastly, return us to a proper state to receive key commands
+    this.setState({ substate: nextState });
   };
 
   handleKeyPress = (e) => {
     const {
-      substate, titleShowState, search, type,
+      substate, titleShowState, search, type, token,
     } = this.state;
     console.log(e.key);
     switch (substate) {
       case 'a-or-m-phase':
-        if (e.key === 'a') {
-          this.setState({ type: 'ANIME' });
-          this.transitionMainState('search-phase');
-        }
-        if (e.key === 'm') {
-          this.setState({ type: 'MANGA' });
+        const { [e.key]: mediaType } = { a: 'ANIME', m: 'MANGA' };
+        if (mediaType) {
+          this.setState({ type: mediaType });
           this.transitionMainState('search-phase');
         }
         break;
@@ -222,19 +175,11 @@ export default class Main extends Component {
         }`;
         switch (e.key) {
           case 'F1':
-            this.selectMediaIndex(0);
-            e.preventDefault();
-            break;
           case 'F2':
-            this.selectMediaIndex(1);
-            e.preventDefault();
-            break;
           case 'F3':
-            this.selectMediaIndex(2);
-            e.preventDefault();
-            break;
           case 'F4':
-            this.selectMediaIndex(3);
+            const { 1: mediaIndex } = /F([1-4])/.exec(e.key); // Find and dynamically grab our F key press number
+            this.selectMediaIndex(mediaIndex - 1);
             e.preventDefault();
             break;
           case 'ArrowUp':
@@ -251,20 +196,13 @@ export default class Main extends Component {
           case 'Enter':
             // Reset our search values back to nothing when performing a fresh search
             this.setState({ page: 1, cachedSearchResults: {} });
-            const options = this.generateQueryJson(searchBaseQuery(1));
-            fetch(ANILIST_BASE_URL, options)
-              .then((resp) => resp.json())
-              .then((resp) => {
-                console.log(resp);
-                if (resp.data.Page.media.length === 0) {
-                  this.setState({ searchResults: this.noResultsFoundResponse });
-                } else {
-                  this.setState({
-                    searchResults: resp.data.Page.media || this.noResultsFoundResponse,
-                    searchPages: Math.ceil(resp.data.Page.pageInfo.total / 4),
-                  });
-                }
-              });
+
+            const options = generateQueryJson(searchBaseQuery(1), token);
+            this.initiateSearch(options, {
+              extraState: {
+                searchPages: (resp) => Math.min(10, Math.ceil(resp.data.Page.pageInfo.total / 4)),
+              },
+            });
             break;
           default:
             document.getElementById('search-input').focus();
@@ -285,9 +223,45 @@ export default class Main extends Component {
     this.transitionMainState('data-phase');
   };
 
+  searchResultParse = (resp, stateOptions) => {
+    const {
+      page = 1,
+      direction = 0,
+      cachedSearchResults = {},
+      extraState = {},
+    } = stateOptions;
+
+    if (resp.data.Page.media.length === 0) {
+      // If no results, default to your "no results" set
+      this.setState({ searchResults: this.noResultsFoundResponse });
+    } else {
+      this.setState({
+        searchResults:
+              resp.data.Page.media || this.noResultsFoundResponse,
+        cachedSearchResults: {
+          ...cachedSearchResults,
+          [page + direction]: resp.data.Page.media,
+        },
+        // me: how do I go about accessing the response data in a call to this function before we have it
+        // the world: callbacks!
+        // me:
+        ...Object.fromEntries(Object.entries(extraState).map(([key, cb]) => [key, cb(resp)])),
+      });
+    }
+  }
+
+  initiateSearch = (queryOptions, stateOptions) => {
+    fetch(consts.ANILIST_BASE_URL, queryOptions)
+      .then((resp) => resp.json())
+      .then((resp) => {
+        this.searchResultParse(resp, stateOptions);
+      });
+  }
 
   changeSearchPage = (direction, baseQueryCallback) => {
-    const { cachedSearchResults, page, searchPages } = this.state;
+    const {
+      cachedSearchResults, page, searchPages, token,
+    } = this.state;
     if (page + direction < 1 || page + direction > searchPages) return; // No page 0s or extra queries :)
 
     this.setState({ page: page + direction });
@@ -299,41 +273,14 @@ export default class Main extends Component {
         searchResults: cachedSearchResults[page + direction],
       });
     } else {
-      const options = this.generateQueryJson(query);
-      fetch(ANILIST_BASE_URL, options)
-        .then((resp) => resp.json())
-        .then((resp) => {
-          if (resp.data.Page.media.length === 0) {
-            // If no results, default to your "no results" set
-            this.setState({ searchResults: this.noResultsFoundResponse });
-          } else {
-            this.setState({
-              searchResults:
-                  resp.data.Page.media || this.noResultsFoundResponse,
-              cachedSearchResults: {
-                ...cachedSearchResults,
-                [page + direction]: resp.data.Page.media,
-              },
-            });
-          }
-        });
+      const options = generateQueryJson(query, token);
+      this.initiateSearch(options, {
+        page,
+        direction,
+        cachedSearchResults,
+      });
     }
   }
-
-  generateQueryJson = (query, providedToken) => {
-    const { token = providedToken } = this.state;
-    return {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        query,
-      }),
-    };
-  };
 
   render() {
     const {
@@ -346,6 +293,7 @@ export default class Main extends Component {
       titleShowState,
       lastSubstate,
       selectedMedia,
+      dataStep,
       searchPages,
       page,
     } = this.state;
@@ -376,19 +324,11 @@ export default class Main extends Component {
         </div>
         <div id="main-phase" className={mainState}>
           <div id="a-or-m-phase" className="main-phase-item active">
-            <span className="aom-a">
-              <span className="bold dark">A</span>
-              nq
-            </span>
-            &nbsp;or&nbsp;
-            <span className="aom-m">
-              <span className="bold dark">M</span>
-              ar
-            </span>
+            <MediaTypeSelectionPhase />
           </div>
           <div id="search-phase" className="main-phase-item inactive">
             <div id="page-slider">
-              <PageProgression maxPages={searchPages} page={page} />
+              {page && searchPages ? <PageProgression maxPages={searchPages} page={page} /> : null}
             </div>
             <input
               type="text"
@@ -404,39 +344,21 @@ export default class Main extends Component {
               }`}
             >
               {searchResults.map((work) => (
-                <div id="results-item" key={work.id}>
-                  {titleShowState ? (
-                    <div
-                      id="result-item-title"
-                      style={{
-                        color: work.coverImage.color,
-                      }}
-                    >
-                      {work.title.userPreferred}
-                    </div>
-                  ) : (
-                    <div />
-                  )}
-                  <div
-                    className="img"
-                    style={{
-                      // backgroundImage: `url('${work.coverImage.large}')`
-                      border: `1px solid ${work.coverImage.color}`,
-                      backgroundColor: `#${`${Math.floor(
-                        Math.random() * 9,
-                      )}`.repeat(6)}`,
-                    }}
-                  />
-                </div>
+                <SearchItem
+                  key={work.id}
+                  color={work.coverImage.color}
+                  coverImage={work.coverImage.large}
+                  title={work.title.userPreferred}
+                  showTitle={titleShowState}
+                />
               ))}
             </div>
           </div>
           <div id="data-phase" className="main-phase-item inactive">
             {substate === 'data-phase' ? (
-              <div>
-                aa
-                {selectedMedia.id}
-              </div>
+              <DataForm
+                phase={dataStep}
+              />
             ) : <div />}
           </div>
         </div>

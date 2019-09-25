@@ -2,14 +2,35 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './css/PageProgression.css';
 
-function PageProgression(props) {
-  const { maxPages } = props;
+const PageProgression = (props) => {
+  const { maxPages, page } = props;
   return (
-    <div id="container">
-      {[...Array(maxPages)].map((i) => <div>{i}</div>)}
+    <div id="page-prog-container">
+      <div id="line-container">
+        <div id="line">
+          <div
+            id="line-fill"
+            style={{
+              width: `${Math.floor(((page - 1) / (Math.max(maxPages - 1, 1))) * 100)}%`,
+            }}
+          />
+        </div>
+      </div>
+      <div id="circles">
+        {[...Array(maxPages)].map((v, i) => (
+          <div
+            key={v}
+            className={`
+              page-prog-circle 
+              ${i + 1 < page ? 'pastPage' : ''}
+              ${i + 1 == page ? 'activePage' : ''}
+            `}
+          />
+        ))}
+      </div>
     </div>
   );
-}
+};
 
 PageProgression.propTypes = {
   maxPages: PropTypes.number.isRequired,

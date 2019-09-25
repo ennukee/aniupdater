@@ -6,6 +6,7 @@
     "max-len": ["error", { "code": 120 }],
     "no-console": "off",
     "no-case-declarations": "off",
+    "no-cond-assign": ["error", "except-parens"],
     "react/jsx-filename-extension": [0],
     "react/forbid-prop-types": [
       "error",
