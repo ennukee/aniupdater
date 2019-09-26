@@ -39,11 +39,11 @@ export default class Main extends Component {
       substate: 'TRANSITION',
       type: '',
       search: '',
-      searchResults: [],
+      searchResults: consts.NO_RESULTS_FOUND_RESPONSE,
+      titleShowState: true,
       cachedSearchResults: {},
       page: 0,
       selectedMedia: {},
-      dataStep: 0,
     };
     this.noResultsFoundResponse = consts.NO_RESULTS_FOUND_RESPONSE;
     this.startingElementIdByPhase = {
@@ -70,6 +70,21 @@ export default class Main extends Component {
           <span> to change pages or </span>
           <span className="aom-m bold">F1 through F4</span>
           <span> to select the media</span>
+        </span>
+      ),
+      'data-phase': (
+        <span>
+          <span>Status keybinds: </span>
+          <span className="green bold">N</span>
+          <span> for new, </span>
+          <span className="yellow bold">U</span>
+          <span> for updating existing, </span>
+          <span className="aom-m bold">C</span>
+          <span> for completed, </span>
+          <span className="aom-a bold">D</span>
+          <span> for dropped, and </span>
+          <span className="orange bold">H</span>
+          <span> for something put on hold, </span>
         </span>
       ),
     };
@@ -149,7 +164,9 @@ export default class Main extends Component {
     console.log(e.key);
     switch (substate) {
       case 'a-or-m-phase':
-        const { [e.key]: mediaType } = { a: 'ANIME', m: 'MANGA' };
+        const { [e.key]: mediaType } = {
+          a: 'ANIME', A: 'ANIME', m: 'MANGA', M: 'MANGA',
+        };
         if (mediaType) {
           this.setState({ type: mediaType });
           this.transitionMainState('search-phase');
@@ -209,6 +226,16 @@ export default class Main extends Component {
             break;
         }
         break;
+      case 'data-phase':
+        const { [e.key.toLowerCase()]: mediaStatus } = {
+          n: 'NEW', u: 'UPDATE', c: 'COMPLETED', d: 'DROPPED', h: 'HOLD',
+        };
+        if (mediaStatus) {
+          this.setState({ mediaStatus });
+        } else if (e.key === 'Enter') {
+          // TODO: Submit the information to some POST request handler here
+        }
+        break;
       default:
         break;
     }
@@ -233,7 +260,7 @@ export default class Main extends Component {
 
     if (resp.data.Page.media.length === 0) {
       // If no results, default to your "no results" set
-      this.setState({ searchResults: this.noResultsFoundResponse });
+      this.setState({ searchResults: this.noResultsFoundResponse, searchPages: 0 });
     } else {
       this.setState({
         searchResults:
@@ -293,9 +320,10 @@ export default class Main extends Component {
       titleShowState,
       lastSubstate,
       selectedMedia,
-      dataStep,
       searchPages,
       page,
+      mediaStatus,
+      type,
     } = this.state;
     return (
       <div id="app">
@@ -357,7 +385,11 @@ export default class Main extends Component {
           <div id="data-phase" className="main-phase-item inactive">
             {substate === 'data-phase' ? (
               <DataForm
-                phase={dataStep}
+                title={selectedMedia.title.userPreferred}
+                image={selectedMedia.coverImage.large}
+                color={selectedMedia.coverImage.color}
+                mediaStatus={mediaStatus}
+                type={type}
               />
             ) : <div />}
           </div>

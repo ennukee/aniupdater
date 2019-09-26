@@ -1,4 +1,23 @@
 /* GENERIC STYLES */
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none !important;
+}
+
+.yellow {
+  color: #ee2;
+}
+
+.orange {
+  color: #ea6;
+}
+
+.purple {
+  color: #a2a;
+}
+
 .green {
   color: #2c2;
 }
@@ -153,7 +172,7 @@
 }
 
 #search-input {
-  width: 100%;
+  width: 80%;
   margin-bottom: 20px;
   padding: 15px 20px 15px 25px;
   font-size: 18px;
