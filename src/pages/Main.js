@@ -227,15 +227,6 @@ export default class Main extends Component {
         }
         break;
       case 'data-phase':
-        const { [e.key.toLowerCase()]: mediaStatus } = {
-          n: 'NEW', u: 'UPDATE', c: 'COMPLETED', d: 'DROPPED', h: 'HOLD',
-        };
-        if (mediaStatus) {
-          this.setState({ mediaStatus });
-        } else if (e.key === 'Enter') {
-          // TODO: Submit the information to some POST request handler here
-        }
-        break;
       default:
         break;
     }
@@ -322,8 +313,8 @@ export default class Main extends Component {
       selectedMedia,
       searchPages,
       page,
-      mediaStatus,
       type,
+      token,
     } = this.state;
     return (
       <div id="app">
@@ -335,7 +326,7 @@ export default class Main extends Component {
           }}
         >
           <TokenInput
-            callback={(token) => this.authorizeToken(token)}
+            callback={(tkn) => this.authorizeToken(tkn)}
             disabled={submitDisabled}
           />
           <LoginButton
@@ -385,11 +376,12 @@ export default class Main extends Component {
           <div id="data-phase" className="main-phase-item inactive">
             {substate === 'data-phase' ? (
               <DataForm
+                mediaId={selectedMedia.id}
                 title={selectedMedia.title.userPreferred}
                 image={selectedMedia.coverImage.large}
                 color={selectedMedia.coverImage.color}
-                mediaStatus={mediaStatus}
                 type={type}
+                token={token}
               />
             ) : <div />}
           </div>

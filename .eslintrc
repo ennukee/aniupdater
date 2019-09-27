@@ -1,5 +1,8 @@
 {
   "extends": "airbnb",
+  "plugins": [
+    "react-hooks"
+  ],
   "parser": "babel-eslint",
   "rules": {
     "linebreak-style": ["error", "windows"],
@@ -13,7 +16,9 @@
       {
         "forbid": ["any"]
       }
-    ]
+    ],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   },
   "env": {
     "browser": true,

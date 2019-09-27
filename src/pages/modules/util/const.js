@@ -48,3 +48,26 @@ export const NO_RESULTS_FOUND_RESPONSE = [
     },
   },
 ];
+export const POST_MEDIA_CHANGE_QUERY_GEN = (params) => `mutation {
+  SaveMediaListEntry(${Object.entries(params).filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`).join(', ')}) {
+    id
+    status
+    score,
+    progress
+  }
+}`;
+export const MEDIA_STATUS_COLORS = {
+  CURRENT: '#cc6',
+  COMPLETED: '#66c',
+  DROPPED: '#c66',
+  PAUSED: '#fb6',
+};
+export const MEDIA_TYPE_SINGLETON_TERM = {
+  ANIME: 'Episode',
+  MANGA: 'Chapter',
+};
+export const SHOULD_SCORE_MEDIA_STATUS = {
+  COMPLETED: true,
+  DROPPED: true,
+  HOLD: true,
+};
