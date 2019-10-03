@@ -48,6 +48,9 @@ export const NO_RESULTS_FOUND_RESPONSE = [
     },
   },
 ];
+export const FOCUS_ELEMENT_BY_PHASE = {
+  'search-phase': 'search-input',
+};
 export const POST_MEDIA_CHANGE_QUERY_GEN = (params) => `mutation {
   SaveMediaListEntry(${Object.entries(params).filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`).join(', ')}) {
     id

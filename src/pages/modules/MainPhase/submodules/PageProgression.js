@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './css/PageProgression.css';
+import './PageProgression.css';
 
 const PageProgression = (props) => {
   const { maxPages, page } = props;

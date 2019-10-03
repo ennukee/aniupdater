@@ -6,10 +6,10 @@ import {
   SHOULD_SCORE_MEDIA_STATUS,
   POST_MEDIA_CHANGE_QUERY_GEN,
   ANILIST_BASE_URL,
-} from './util/const';
-import generateQueryJson from './util/generateQueryJson';
+} from '../../util/const';
+import generateQueryJson from '../../util/generateQueryJson';
 
-import './css/DataForm.css';
+import './DataForm.css';
 
 const DataForm = ({
   title, image, color, type, token, mediaId,

@@ -2,12 +2,10 @@
 import React, { Component } from 'react';
 
 /* Modules */
-import LoginButton from './modules/LoginButton';
-import TokenInput from './modules/TokenInput';
-import PageProgression from './modules/PageProgression';
+import LoginPhase from './modules/LoginPhase/LoginPhase';
+import HelpMessage from './modules/HelpMessage';
 import MediaTypeSelectionPhase from './modules/MediaTypeSelectionPhase';
 import SearchItem from './modules/SearchItem';
-import DataForm from './modules/DataForm';
 
 /* Utils */
 import generateQueryJson from './modules/util/generateQueryJson';
@@ -16,12 +14,12 @@ import * as consts from './modules/util/const';
 /* Styles */
 import './css/Main.css';
 import fadePhases from './modules/util/fadePhases';
-// Remind me to never try to write an entire single-page in a literal (mostly) single page again
-//                                                                                             im sorry for your eyes
+import MainPhase from './modules/MainPhase/MainPhase';
 
 /*
     TODO LIST
-  ! none
+  ! R E F A C T O R
+  ! H O O K S
 */
 
 const width = 500;
@@ -91,7 +89,7 @@ export default class Main extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener('keydown', this.handleKeyPress);
+    // document.addEventListener('keydown', this.handleKeyPress);
   }
 
   tokenSuccess = (resp) => {
@@ -318,30 +316,22 @@ export default class Main extends Component {
     } = this.state;
     return (
       <div id="app">
-        <div
-          id="login-phase"
-          className={loginState}
-          style={{
-            width,
-          }}
-        >
-          <TokenInput
-            callback={(tkn) => this.authorizeToken(tkn)}
-            disabled={submitDisabled}
-          />
-          <LoginButton
-            content="No token? Click here to sign in."
-            redirect="https://anilist.co/api/v2/oauth/authorize?client_id=2599&response_type=token"
-            style={{
-              width,
-            }}
-          />
-        </div>
-
-        <div id="help-message" className={substate}>
-          {this.helpByPhase[substate] || this.helpByPhase[lastSubstate]}
-        </div>
-        <div id="main-phase" className={mainState}>
+        <LoginPhase
+          loginState={loginState}
+          width={width}
+          submitCallback={(tkn) => this.authorizeToken(tkn)}
+          submitDisabled={submitDisabled}
+        />
+        <HelpMessage
+          substate={substate}
+          prevSubstate={lastSubstate}
+          helpMap={this.helpByPhase}
+        />
+        <MainPhase
+          token={token}
+          mainState={mainState}
+        />
+        {/* <div id="main-phase" className={mainState}>
           <div id="a-or-m-phase" className="main-phase-item active">
             <MediaTypeSelectionPhase />
           </div>
@@ -385,7 +375,8 @@ export default class Main extends Component {
               />
             ) : <div />}
           </div>
-        </div>
+        </div> */}
+
       </div>
     );
   }
