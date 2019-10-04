@@ -1,11 +1,78 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
+import UseAnimations from 'react-useanimations';
+
 import './TokenInput.css';
 import PropTypes from 'prop-types';
 
-const TokenInput = ({ callback, disabled }) => {
+import generateQueryJson from '../../util/generateQueryJson';
+import * as consts from '../../util/const';
+
+const TokenInput = ({ callback }) => {
   const [inputVal, setInputVal] = useState('');
+  const [disabled, setDisabled] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertColor, setAlertColor] = useReducer((oldV, newV) => ({
+    ...oldV, ...newV,
+  }), {});
+
+  const tokenFailure = (e) => {
+    console.log(e);
+    setAlertMessage('This token is either invalid or has expired. '
+      + 'Please use the link below to get a new token and try again.');
+    setAlertColor({ bg: '#eee', border: '#222' });
+    setDisabled(false);
+  };
+
+  const tokenSuccess = (resp, tkn) => {
+    if (!resp.ok) {
+      tokenFailure(resp);
+      return;
+    }
+    window.localStorage.setItem('token', tkn);
+    callback(tkn);
+  };
+
+  const authorizeToken = (tkn) => {
+    setDisabled(true);
+    const options = generateQueryJson(consts.VERIFICATION_QUERY, tkn);
+
+    fetch(consts.ANILIST_BASE_URL, options).then(
+      (resp) => tokenSuccess(resp, tkn),
+      tokenFailure,
+    );
+  };
+
+  useEffect(() => {
+    const preloadedToken = window.localStorage.getItem('token');
+    if (preloadedToken) {
+      setInputVal(preloadedToken);
+      authorizeToken(preloadedToken);
+    }
+  // Intentionally disabled because I truly only wish for this to run a single time on mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div id="input-container">
+      {alertMessage && (
+      <div
+        id="alert-box"
+        style={{
+          border: `1px solid ${alertColor.border}`,
+          backgroundColor: alertColor.bg,
+          color: alertColor.border,
+          boxShadow: `0 1px 4px ${alertColor.border}`,
+        }}
+      >
+        <UseAnimations
+          id="alert-icon"
+          animationKey="alertCircle"
+          size={40}
+          style={{ float: 'left' }}
+        />
+        {alertMessage}
+      </div>
+      )}
       <input
         id="token-input"
         type="text"
@@ -17,7 +84,7 @@ const TokenInput = ({ callback, disabled }) => {
         id="token-submit"
         type="button"
         value="✓"
-        onClick={() => callback(inputVal)}
+        onClick={() => authorizeToken(inputVal)}
         disabled={disabled}
       />
     </div>
@@ -28,5 +95,4 @@ export default TokenInput;
 
 TokenInput.propTypes = {
   callback: PropTypes.func.isRequired,
-  disabled: PropTypes.bool.isRequired,
 };

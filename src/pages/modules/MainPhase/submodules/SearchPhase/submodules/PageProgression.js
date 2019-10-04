@@ -33,8 +33,13 @@ const PageProgression = (props) => {
 };
 
 PageProgression.propTypes = {
-  maxPages: PropTypes.number.isRequired,
-  page: PropTypes.number.isRequired,
+  maxPages: PropTypes.number,
+  page: PropTypes.number,
+};
+
+PageProgression.defaultProps = {
+  maxPages: 10,
+  page: 1,
 };
 
 export default PageProgression;

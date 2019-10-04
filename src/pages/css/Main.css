@@ -66,40 +66,6 @@ button:focus {
 /* MAIN PHASE CSS */
 /* -------------- */
 
-#help-message.TRANSITION {
-  opacity: 0;
-  transform: translateX(-20px);
-  -webkit-transform: translateX(-20px);
-  -moz-transform: translateX(-20px);
-  -ms-transform: translateX(-20px);
-  -o-transform: translateX(-20px);
-}
-
-#help-message {
-  opacity: 1;
-  transform: translateX(0);
-  position: fixed;
-  bottom: 30px;
-  color: #eee;
-  background-color: #eee3;
-  border: 1px solid #eee;
-  padding: 15px 30px;
-  border-radius: 50px;
-  -webkit-border-radius: 50px;
-  -moz-border-radius: 50px;
-  -ms-border-radius: 50px;
-  -o-border-radius: 50px;
-  transition: all 0.25s;
-  -webkit-transition: all 0.25s;
-  -moz-transition: all 0.25s;
-  -ms-transition: all 0.25s;
-  -o-transition: all 0.25s;
-  -webkit-transform: translateX(0);
-  -moz-transform: translateX(0);
-  -ms-transform: translateX(0);
-  -o-transform: translateX(0);
-}
-
 #main-phase {
   transform: translateY(50px);
   -webkit-transform: translateY(50px);

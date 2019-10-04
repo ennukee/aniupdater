@@ -1,5 +1,5 @@
 /* Libraries */
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 /* Modules */
@@ -10,6 +10,7 @@ import HelpMessage from './submodules/HelpMessage';
 
 /* Custom Hooks */
 import useHelpMap from './util/useHelpMap';
+import useShiftModifier from './util/useShiftModifier';
 
 /* Utils */
 import fadePhases from '../util/fadePhases';
@@ -55,6 +56,21 @@ const MainPhase = ({ token, mainState }) => {
     setSelectedMedia(newSelectedMedia);
     transitionMainState('data-phase');
   };
+
+  const { isShifting } = useShiftModifier();
+  const handleKeyPress = useCallback((e) => {
+    console.log(e.key, isShifting);
+    if (e.key === 'CapsLock' && isShifting) {
+      transitionMainState('a-or-m-phase');
+    }
+  }, [isShifting, transitionMainState]);
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyPress);
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [handleKeyPress]);
 
   return (
     <>
