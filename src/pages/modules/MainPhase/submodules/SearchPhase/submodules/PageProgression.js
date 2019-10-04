@@ -23,7 +23,7 @@ const PageProgression = (props) => {
             className={`
               page-prog-circle 
               ${i + 1 < page ? 'pastPage' : ''}
-              ${i + 1 == page ? 'activePage' : ''}
+              ${i + 1 === page ? 'activePage' : ''}
             `}
           />
         ))}
