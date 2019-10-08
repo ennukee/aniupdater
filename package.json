@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "http://ennukee.github.io/aniupdater",
   "dependencies": {
+    "d3-ease": "^1.0.5",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-react-hooks": "^2.0.1",
     "gh-pages": "^2.1.1",
@@ -11,6 +12,7 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-scripts": "3.1.1",
+    "react-spring": "^8.0.27",
     "react-useanimations": "^1.2.10"
   },
   "scripts": {

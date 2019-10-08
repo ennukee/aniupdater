@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import UseAnimations from 'react-useanimations';
+import { useSpring, animated } from 'react-spring';
 
 import './TokenInput.css';
 import PropTypes from 'prop-types';
@@ -52,27 +53,39 @@ const TokenInput = ({ callback }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // const alertMessageProps = useSpring({
+  //   to: async (next, cancel) => {
+  //     await next({ opacity: 1 });
+  //   },
+  //   from: { opacity: 0 },
+  // });
+
+  const alertMessageProps = useSpring({
+    opacity: alertMessage ? 1 : 0,
+    transform: `translateY(${alertMessage ? 0 : -20}px)`,
+  });
+
   return (
     <div id="input-container">
-      {alertMessage && (
-      <div
-        id="alert-box"
-        style={{
-          border: `1px solid ${alertColor.border}`,
-          backgroundColor: alertColor.bg,
-          color: alertColor.border,
-          boxShadow: `0 1px 4px ${alertColor.border}`,
-        }}
-      >
-        <UseAnimations
-          id="alert-icon"
-          animationKey="alertCircle"
-          size={40}
-          style={{ float: 'left' }}
-        />
-        {alertMessage}
-      </div>
-      )}
+      <animated.div style={{ gridArea: '1 / 1 / 2 / 3', ...alertMessageProps }}>
+        <div
+          id="alert-box"
+          style={{
+            border: `1px solid ${alertColor.border}`,
+            backgroundColor: alertColor.bg,
+            color: alertColor.border,
+            boxShadow: `0 1px 4px ${alertColor.border}`,
+          }}
+        >
+          <UseAnimations
+            id="alert-icon"
+            animationKey="alertCircle"
+            size={40}
+            style={{ float: 'left' }}
+          />
+          {alertMessage}
+        </div>
+      </animated.div>
       <input
         id="token-input"
         type="text"

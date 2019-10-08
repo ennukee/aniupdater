@@ -2,6 +2,7 @@ import React, {
   useState, useEffect, useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
+import { useSpring, animated } from 'react-spring';
 
 import SearchItem from './submodules/SearchItem';
 import PageProgression from './submodules/PageProgression';
@@ -125,6 +126,10 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
     document.getElementById('search-phase').focus();
   }, []);
 
+  const gridProps = useSpring({
+    gridTemplateColumns: `${showTitles ? 0.50 : 0.25}fr ${showTitles ? 0.50 : 0.25}fr ${showTitles ? 0 : 0.25}fr ${showTitles ? 0 : 0.25}fr`,
+  });
+
   return (
     <>
       <div id="page-slider">
@@ -137,7 +142,8 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      <div
+      <animated.div
+        style={gridProps}
         id="results-view"
         className={`${
           searchResults.length === 0 ? 'inactive' : 'active'
@@ -152,7 +158,7 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
             showTitle={showTitles}
           />
         ))}
-      </div>
+      </animated.div>
     </>
   );
 };

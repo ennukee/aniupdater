@@ -1,15 +1,5 @@
-#help-message.TRANSITION {
-    opacity: 0;
-    transform: translateX(-20px);
-    -webkit-transform: translateX(-20px);
-    -moz-transform: translateX(-20px);
-    -ms-transform: translateX(-20px);
-    -o-transform: translateX(-20px);
-  }
-  
-  #help-message {
-    opacity: 1;
-    transform: translateX(0);
+
+#help-message {
     position: fixed;
     bottom: 30px;
     color: #222;
@@ -22,13 +12,4 @@
     -moz-border-radius: 50px;
     -ms-border-radius: 50px;
     -o-border-radius: 50px;
-    transition: all 0.25s;
-    -webkit-transition: all 0.25s;
-    -moz-transition: all 0.25s;
-    -ms-transition: all 0.25s;
-    -o-transition: all 0.25s;
-    -webkit-transform: translateX(0);
-    -moz-transform: translateX(0);
-    -ms-transform: translateX(0);
-    -o-transform: translateX(0);
-  }
+}
