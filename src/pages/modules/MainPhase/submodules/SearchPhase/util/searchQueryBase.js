@@ -12,6 +12,10 @@ export default (newPage, search, type) => `query {
           large
           color
         }
+        mediaListEntry {
+          progress
+          score
+        }
       }
     }
   }`;

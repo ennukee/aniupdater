@@ -1,8 +1,7 @@
 export const VERIFICATION_QUERY = `query {
-  Media(id: 1) {
-    title {
-    english
-    }
+  Viewer {
+    id
+    name
   }
 }`;
 export const ANILIST_BASE_URL = 'https://graphql.anilist.co';
@@ -10,7 +9,7 @@ export const NO_RESULTS_FOUND_RESPONSE = [
   {
     id: 3,
     title: {
-      userPreferred: 'S-senpai!',
+      userPreferred: '---',
     },
     coverImage: {
       large: '',
@@ -59,12 +58,28 @@ export const POST_MEDIA_CHANGE_QUERY_GEN = (params) => `mutation {
     progress
   }
 }`;
+export const VIEWER_RELEVANT_MEDIA_QUERY_GEN = (userId, type) => `query {
+  MediaListCollection(userId: ${userId}, type: ${type}) {
+   lists {
+     name
+     entries {
+       mediaId
+     }
+   }
+ }
+}`;
 export const MEDIA_STATUS_COLORS = {
-  CURRENT: '#cc6',
+  CURRENT: '#6c6',
   COMPLETED: '#66c',
   DROPPED: '#c66',
   PAUSED: '#fb6',
 };
+export const MEDIA_STATUS_ALERT_MESSAGES = {
+  CURRENT: 'Now updating existing...',
+  COMPLETED: 'Now completing...',
+  DROPPED: 'Now dropping...',
+  PAUSED: 'Now pausing...',
+}
 export const MEDIA_TYPE_SINGLETON_TERM = {
   ANIME: 'Episode',
   MANGA: 'Chapter',

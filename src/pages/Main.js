@@ -12,11 +12,15 @@ const width = 500;
 
 const Main = () => {
   const [token, setToken] = useState('');
+  const [userId, setUserId] = useState(0);
+  const [username, setUsername] = useState('');
   const [loginState, setLoginState] = useState('');
   const [mainState, setMainState] = useState('not-entered');
 
-  const enterMainPhase = (tkn) => {
+  const enterMainPhase = (tkn, uid, user) => {
     setToken(tkn);
+    setUserId(uid);
+    setUsername(user);
     setLoginState('leaving');
     setTimeout(
       () => {
@@ -36,10 +40,12 @@ const Main = () => {
       <LoginPhase
         loginState={loginState}
         width={width}
-        submitCallback={(tkn) => enterMainPhase(tkn)}
+        submitCallback={(tkn, uid, user) => enterMainPhase(tkn, uid, user)}
       />
       <MainPhase
         token={token}
+        userId={userId}
+        username={username}
         mainState={mainState}
       />
     </div>

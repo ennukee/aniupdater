@@ -18,6 +18,7 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
   const [page, setPage] = useState(1);
   const [searchPages, setSearchPages] = useState(0);
   const [cachedSearchResults, setCachedSearchResults] = useState({});
+  const [isFlatView, setIsFlatView] = useState(() => window.innerWidth / window.innerHeight < 1.65);
 
   const selectMediaIndex = useCallback((index) => {
     if (Object.keys(searchResults[index]).length === 0) {
@@ -117,6 +118,15 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
     }
   }, [changeSearchPage, initiateSearch, search, selectMediaIndex, showTitles, token, type]);
 
+  const updateWindowSize = () => {
+    console.log(window.innerWidth / window.innerHeight);
+    if (window.innerWidth / window.innerHeight < 1.65) {
+      setIsFlatView(true);
+    } else {
+      setIsFlatView(false);
+    }
+  };
+
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress);
     return () => document.removeEventListener('keydown', handleKeyPress);
@@ -124,17 +134,19 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
 
   useEffect(() => {
     document.getElementById('search-phase').focus();
+    window.addEventListener('resize', updateWindowSize);
+    return () => window.removeEventListener('resize', updateWindowSize);
   }, []);
 
-  const gridProps = useSpring({
-    gridTemplateColumns: `${showTitles ? 0.50 : 0.25}fr ${showTitles ? 0.50 : 0.25}fr ${showTitles ? 0 : 0.25}fr ${showTitles ? 0 : 0.25}fr`,
-  });
+  // const gridProps = useSpring({
+  //   gridTemplateColumns: `${showTitles ? 0.50 : 0.25}fr ${showTitles ? 0.50 : 0.25}fr ${showTitles ? 0 : 0.25}fr ${showTitles ? 0 : 0.25}fr`,
+  // });
 
   return (
     <>
-      <div id="page-slider">
+      {/* <div id="page-slider">
         {page && searchPages && searchPages > 1 && <PageProgression maxPages={searchPages} page={page} />}
-      </div>
+      </div> */}
       <input
         type="text"
         id="search-input"
@@ -143,19 +155,21 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
         onChange={(e) => setSearch(e.target.value)}
       />
       <animated.div
-        style={gridProps}
+        // style={gridProps}
         id="results-view"
         className={`${
           searchResults.length === 0 ? 'inactive' : 'active'
         }`}
       >
-        {searchResults.map((work) => (
+        {searchResults.map((work, index) => (
           <SearchItem
             key={work.id}
+            index={index}
             color={work.coverImage.color}
             coverImage={work.coverImage.large}
             title={work.title.userPreferred}
             showTitle={showTitles}
+            isFlatView={isFlatView}
           />
         ))}
       </animated.div>

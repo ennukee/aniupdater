@@ -27,9 +27,7 @@ const useHelpMap = () => {
     'data-phase': (
       <span>
         <span>Status keybinds: </span>
-        <span className="green bold">N</span>
-        <span> for new, </span>
-        <span className="yellow bold">U</span>
+        <span className="green bold">U</span>
         <span> for updating existing, </span>
         <span className="aom-m bold">C</span>
         <span> for completed, </span>

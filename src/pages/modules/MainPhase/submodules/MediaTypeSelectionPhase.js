@@ -1,7 +1,10 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 
-const MediaTypeSelectionPhase = ({ transitionCallback }) => {
+import Alert from '../util/Alert';
+
+const MediaTypeSelectionPhase = ({ transitionCallback, username }) => {
+  const [alertActive, setAlertActive] = useState(false);
   const handleKeyPress = useCallback((e) => {
     const { [e.key.toLowerCase()]: mediaType } = {
       a: 'ANIME', m: 'MANGA',
@@ -16,8 +19,26 @@ const MediaTypeSelectionPhase = ({ transitionCallback }) => {
     return () => document.removeEventListener('keydown', handleKeyPress);
   }, [handleKeyPress]);
 
+  useEffect(() => {
+    setTimeout(() => setAlertActive(true), 750);
+    setTimeout(() => setAlertActive(false), 2250);
+  }, []);
+
   return (
     <div>
+      <Alert
+        active={alertActive}
+        content={`Welcome ${username}`}
+        containerStyle={{
+          top: '200px',
+        }}
+        style={{
+          fontSize: '16px',
+          backgroundColor: '#eee3',
+          border: '1px solid #eee',
+          color: '#eee',
+        }}
+      />
       <span className="aom-a">
         <span className="bold dark">A</span>
         nq
@@ -33,6 +54,7 @@ const MediaTypeSelectionPhase = ({ transitionCallback }) => {
 
 MediaTypeSelectionPhase.propTypes = {
   transitionCallback: PropTypes.func.isRequired,
+  username: PropTypes.string.isRequired,
 };
 
 export default MediaTypeSelectionPhase;

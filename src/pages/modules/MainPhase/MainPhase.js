@@ -13,9 +13,13 @@ import useHelpMap from './util/useHelpMap';
 import useShiftModifier from './util/useShiftModifier';
 
 /* Utils */
+import { ANILIST_BASE_URL, VIEWER_RELEVANT_MEDIA_QUERY_GEN } from '../util/const';
 import fadePhases from '../util/fadePhases';
+import generateQueryJson from '../util/generateQueryJson';
 
-const MainPhase = ({ token, mainState }) => {
+const MainPhase = ({
+  token, mainState, userId, username,
+}) => {
   const [substate, setSubstate] = useState('a-or-m-phase');
   const [prevSubstate, setPrevSubstate] = useState('');
   const [type, setType] = useState('');
@@ -65,6 +69,31 @@ const MainPhase = ({ token, mainState }) => {
     }
   }, [isShifting, transitionMainState]);
 
+  // Commented until I find a way to query a user's lists like you can query anime
+  // useEffect(() => {
+  //   if (!userId || !type) {
+  //     return;
+  //   }
+  //   const queryBody = VIEWER_RELEVANT_MEDIA_QUERY_GEN(userId, type);
+  //   const options = generateQueryJson(queryBody, token);
+  //   fetch(ANILIST_BASE_URL, options)
+  //     .then((resp) => resp.json())
+  //     .then((resp) => {
+  //       // Take the response from our query and transform it into a desirable form
+  //       console.log(resp, queryBody);
+  //       const watchingOrCompleted = resp.data.MediaListCollection.lists
+  //         // First, filter out the Dropped / On-hold / Planning lists as we probably don't care
+  //         .filter((list) => ['Reading', 'Completed', 'Watching'].includes(list.name))
+  //         // Next, we reduce the two remaining arrays (either Reading / Completed or Watching / Completed) into one
+  //         .reduce((acc, cur) => [...acc, ...cur.entries
+  //           // And we make sure to map the objects (e.g. { mediaId: 125 }) down to just their value (e.g. 125)
+  //           .map((obj) => obj.mediaId),
+  //         ], []);
+
+  //       console.log(watchingOrCompleted);
+  //     });
+  // }, [token, type, userId]);
+
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress);
     return () => {
@@ -87,6 +116,7 @@ const MainPhase = ({ token, mainState }) => {
           {substate === 'a-or-m-phase' && (
             <MediaTypeSelectionPhase
               transitionCallback={mediaTypeSelectionHandler}
+              username={username}
             />
           )}
         </div>
@@ -108,8 +138,11 @@ const MainPhase = ({ token, mainState }) => {
               title={selectedMedia.title.userPreferred}
               image={selectedMedia.coverImage.large}
               color={selectedMedia.coverImage.color}
+              presetProgress={selectedMedia.mediaListEntry ? selectedMedia.mediaListEntry.progress : undefined}
+              presetScore={selectedMedia.mediaListEntry ? selectedMedia.mediaListEntry.score : undefined}
               type={type}
               token={token}
+              transitionCallback={() => transitionMainState('search-phase')}
             />
           ) : <div />}
         </div>
@@ -121,6 +154,8 @@ const MainPhase = ({ token, mainState }) => {
 MainPhase.propTypes = {
   token: PropTypes.string.isRequired,
   mainState: PropTypes.string.isRequired,
+  userId: PropTypes.number.isRequired,
+  username: PropTypes.string.isRequired,
 };
 
 export default MainPhase;

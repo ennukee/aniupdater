@@ -25,22 +25,23 @@ const TokenInput = ({ callback }) => {
   };
 
   const tokenSuccess = (resp, tkn) => {
-    if (!resp.ok) {
+    if (!resp || !resp.data || !resp.data.Viewer.id || !resp.data.Viewer.name) {
       tokenFailure(resp);
       return;
     }
+
     window.localStorage.setItem('token', tkn);
-    callback(tkn);
+    console.log(resp.data.Viewer);
+    callback(tkn, resp.data.Viewer.id, resp.data.Viewer.name);
   };
 
   const authorizeToken = (tkn) => {
     setDisabled(true);
     const options = generateQueryJson(consts.VERIFICATION_QUERY, tkn);
 
-    fetch(consts.ANILIST_BASE_URL, options).then(
-      (resp) => tokenSuccess(resp, tkn),
-      tokenFailure,
-    );
+    fetch(consts.ANILIST_BASE_URL, options)
+      .then((resp) => resp.json())
+      .then((resp) => tokenSuccess(resp, tkn));
   };
 
   useEffect(() => {
@@ -52,13 +53,6 @@ const TokenInput = ({ callback }) => {
   // Intentionally disabled because I truly only wish for this to run a single time on mount
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // const alertMessageProps = useSpring({
-  //   to: async (next, cancel) => {
-  //     await next({ opacity: 1 });
-  //   },
-  //   from: { opacity: 0 },
-  // });
 
   const alertMessageProps = useSpring({
     opacity: alertMessage ? 1 : 0,
