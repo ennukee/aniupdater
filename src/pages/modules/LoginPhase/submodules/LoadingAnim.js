@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
+import './LoadingAnim.css';
 
 const LoadingAnim = () => {
   const [loaderStatus, setLoaderStatus] = useState(0);
@@ -20,6 +21,7 @@ const LoadingAnim = () => {
   }, []);
   return (
     <animated.div
+      id="loading-anim-div"
       style={{
         position: 'fixed',
         width: '300px',
@@ -34,9 +36,7 @@ const LoadingAnim = () => {
         left: 'calc(50% - 150px)',
         ...loaderProps,
       }}
-    >
-      AYAYA
-    </animated.div>
+    />
   );
 };
 

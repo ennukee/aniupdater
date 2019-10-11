@@ -37,6 +37,11 @@ const Main = () => {
 
   return (
     <div id="app">
+      <div id="bg-video-anim-container">
+        <video id="bg-video-anim" autoPlay="true" loop="loop" muted="muted">
+          <source src="http://anilist.co/video/hero.webm" type="video/mp4" />
+        </video>
+      </div>
       <LoginPhase
         loginState={loginState}
         width={width}

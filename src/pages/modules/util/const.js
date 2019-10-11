@@ -5,7 +5,8 @@ export const VERIFICATION_QUERY = `query {
   }
 }`;
 export const ANILIST_BASE_URL = 'https://graphql.anilist.co';
-export const NO_RESULTS_FOUND_RESPONSE = [
+export const NO_RESULTS_FOUND_RESPONSE = [];
+export const NO_RESULTS_FOUND_RESPONSE__NO_USE = [
   {
     id: 3,
     title: {

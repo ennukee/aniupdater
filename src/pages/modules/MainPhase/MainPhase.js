@@ -1,6 +1,7 @@
 /* Libraries */
 import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useSpring, animated } from 'react-spring';
 
 /* Modules */
 import SearchPhase from './submodules/SearchPhase/SearchPhase';
@@ -13,9 +14,9 @@ import useHelpMap from './util/useHelpMap';
 import useShiftModifier from './util/useShiftModifier';
 
 /* Utils */
-import { ANILIST_BASE_URL, VIEWER_RELEVANT_MEDIA_QUERY_GEN } from '../util/const';
+// import { ANILIST_BASE_URL, VIEWER_RELEVANT_MEDIA_QUERY_GEN } from '../util/const';
 import fadePhases from '../util/fadePhases';
-import generateQueryJson from '../util/generateQueryJson';
+// import generateQueryJson from '../util/generateQueryJson';
 
 const MainPhase = ({
   token, mainState, userId, username,
@@ -69,37 +70,22 @@ const MainPhase = ({
     }
   }, [isShifting, transitionMainState]);
 
-  // Commented until I find a way to query a user's lists like you can query anime
-  // useEffect(() => {
-  //   if (!userId || !type) {
-  //     return;
-  //   }
-  //   const queryBody = VIEWER_RELEVANT_MEDIA_QUERY_GEN(userId, type);
-  //   const options = generateQueryJson(queryBody, token);
-  //   fetch(ANILIST_BASE_URL, options)
-  //     .then((resp) => resp.json())
-  //     .then((resp) => {
-  //       // Take the response from our query and transform it into a desirable form
-  //       console.log(resp, queryBody);
-  //       const watchingOrCompleted = resp.data.MediaListCollection.lists
-  //         // First, filter out the Dropped / On-hold / Planning lists as we probably don't care
-  //         .filter((list) => ['Reading', 'Completed', 'Watching'].includes(list.name))
-  //         // Next, we reduce the two remaining arrays (either Reading / Completed or Watching / Completed) into one
-  //         .reduce((acc, cur) => [...acc, ...cur.entries
-  //           // And we make sure to map the objects (e.g. { mediaId: 125 }) down to just their value (e.g. 125)
-  //           .map((obj) => obj.mediaId),
-  //         ], []);
-
-  //       console.log(watchingOrCompleted);
-  //     });
-  // }, [token, type, userId]);
-
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress);
     return () => {
       document.removeEventListener('keydown', handleKeyPress);
     };
   }, [handleKeyPress]);
+
+  const AOMProps = useSpring({
+    opacity: substate === 'a-or-m-phase' ? 1 : 0,
+  });
+  const SearchProps = useSpring({
+    opacity: substate === 'search-phase' ? 1 : 0,
+  });
+  const DataProps = useSpring({
+    opacity: substate === 'data-phase' ? 1 : 0,
+  });
 
   return (
     <>
@@ -112,16 +98,16 @@ const MainPhase = ({
       )}
       <div id="main-phase" className={mainState}>
 
-        <div id="a-or-m-phase" className="main-phase-item active">
+        <animated.div id="a-or-m-phase" style={AOMProps} className="main-phase-item active">
           {substate === 'a-or-m-phase' && (
             <MediaTypeSelectionPhase
               transitionCallback={mediaTypeSelectionHandler}
               username={username}
             />
           )}
-        </div>
+        </animated.div>
 
-        <div id="search-phase" className="main-phase-item inactive">
+        <animated.div id="search-phase" style={SearchProps} className="main-phase-item inactive">
           {substate === 'search-phase' && (
             <SearchPhase
               token={token}
@@ -129,9 +115,9 @@ const MainPhase = ({
               transitionCallback={searchSelectionHandler}
             />
           )}
-        </div>
+        </animated.div>
 
-        <div id="data-phase" className="main-phase-item inactive">
+        <animated.div id="data-phase" style={DataProps} className="main-phase-item inactive">
           {substate === 'data-phase' ? (
             <DataForm
               mediaId={selectedMedia.id}
@@ -145,7 +131,7 @@ const MainPhase = ({
               transitionCallback={() => transitionMainState('search-phase')}
             />
           ) : <div />}
-        </div>
+        </animated.div>
       </div>
     </>
   );
@@ -159,3 +145,28 @@ MainPhase.propTypes = {
 };
 
 export default MainPhase;
+
+// Commented until I find a way to query a user's lists like you can query anime
+// useEffect(() => {
+//   if (!userId || !type) {
+//     return;
+//   }
+//   const queryBody = VIEWER_RELEVANT_MEDIA_QUERY_GEN(userId, type);
+//   const options = generateQueryJson(queryBody, token);
+//   fetch(ANILIST_BASE_URL, options)
+//     .then((resp) => resp.json())
+//     .then((resp) => {
+//       // Take the response from our query and transform it into a desirable form
+//       console.log(resp, queryBody);
+//       const watchingOrCompleted = resp.data.MediaListCollection.lists
+//         // First, filter out the Dropped / On-hold / Planning lists as we probably don't care
+//         .filter((list) => ['Reading', 'Completed', 'Watching'].includes(list.name))
+//         // Next, we reduce the two remaining arrays (either Reading / Completed or Watching / Completed) into one
+//         .reduce((acc, cur) => [...acc, ...cur.entries
+//           // And we make sure to map the objects (e.g. { mediaId: 125 }) down to just their value (e.g. 125)
+//           .map((obj) => obj.mediaId),
+//         ], []);
+
+//       console.log(watchingOrCompleted);
+//     });
+// }, [token, type, userId]);

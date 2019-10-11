@@ -6,6 +6,7 @@
   "parser": "babel-eslint",
   "rules": {
     "linebreak-style": ["error", "windows"],
+    "jsx-a11y/media-has-caption": "off",
     "max-len": ["error", { "code": 120 }],
     "no-console": "off",
     "no-case-declarations": "off",

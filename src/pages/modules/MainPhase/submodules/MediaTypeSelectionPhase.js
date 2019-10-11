@@ -34,7 +34,7 @@ const MediaTypeSelectionPhase = ({ transitionCallback, username }) => {
         }}
         style={{
           fontSize: '16px',
-          backgroundColor: '#eee3',
+          backgroundColor: '#2229',
           border: '1px solid #eee',
           color: '#eee',
         }}
