@@ -1,0 +1,47 @@
+#footer-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding-left: 10px;
+    display: flex;
+    flex-direction: row;
+
+    font-family: Khula;
+    font-weight: 200;
+}
+
+#footer-container a {
+    text-decoration: none;
+    color: #f99;
+}
+
+#footer-container a:hover {
+    text-decoration: none;
+    filter: brightness(150%);
+    -webkit-filter: brightness(150%);
+}
+
+#discord-logo {
+    width: 1.4em;
+    height: 1.4em;
+    fill: blue;    
+}
+
+.discord {
+    filter: invert(45%) sepia(20%) saturate(2924%) hue-rotate(201deg) brightness(99%) contrast(106%);
+    -webkit-filter: invert(45%) sepia(20%) saturate(2924%) hue-rotate(201deg) brightness(99%) contrast(106%);
+}
+
+#locale-selector-container {
+    display: flex;
+    flex-direction: row;
+
+    position: fixed;
+    padding: 10px;
+    bottom: 0;
+    right: 0;
+}
+
+.locale-selector:hover {
+    cursor: pointer;
+}

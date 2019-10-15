@@ -1,49 +1,60 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { animated } from 'react-spring';
+import { useSpring, animated } from 'react-spring';
 
 const SearchItem = ({
   color, coverImage, title, showTitle, index, isFlatView,
-}) => (
-  <div
-    id="results-item"
-    style={{
-      top: `${!isFlatView ? 0 : Math.floor(index / 2) * 50}%`,
-      left: `${!isFlatView ? index * 25 : (index % 2) * 50}%`,
-      width: `${!isFlatView ? 25 : 50}%`,
-      height: `${!isFlatView ? 100 : 50}%`,
-    }}
-  >
+}) => {
+  const [loaded, setLoaded] = useState(false);
+  const itemProps = useSpring({
+    transform: `translateY(${loaded ? 0 : -20}px)`,
+    opacity: loaded ? 1 : 0,
+  });
+  useEffect(() => {
+    setTimeout(() => setLoaded(true), index * 25);
+  }, [index]);
+  return (
     <animated.div
-      className="img"
+      id="results-item"
       style={{
-        // backgroundImage: `url('${coverImage}')`,
-        border: '1px solid #222',
-        height: '100%',
-        backgroundColor: `#${`${Math.floor(
-          Math.random() * 9,
-        )}`.repeat(6)}`,
-        // ...imageProps,
+        ...itemProps,
+        top: `${!isFlatView ? 0 : Math.floor(index / 2) * 50}%`,
+        left: `${!isFlatView ? index * 25 : (index % 2) * 50}%`,
+        width: `${!isFlatView ? 25 : 50}%`,
+        height: `${!isFlatView ? 100 : 50}%`,
       }}
     >
-      {isFlatView ? (
-        <animated.div
-          id="result-item-title-grid-view"
-          className="result-item-title"
-        >
-          {title}
-        </animated.div>
-      ) : (
-        <animated.div
-          id="result-item-title-flat-view"
-          className={`result-item-title ${index > 1 ? 'grid-right-side' : 'grid-left-side'}`}
-        >
-          {title}
-        </animated.div>
-      )}
+      <animated.div
+        className="img"
+        style={{
+          // backgroundImage: `url('${coverImage}')`,
+          border: '1px solid #222',
+          height: '100%',
+          backgroundColor: `#${`${Math.floor(
+            Math.random() * 9,
+          )}`.repeat(6)}`,
+          // ...imageProps,
+        }}
+      >
+        {isFlatView ? (
+          <animated.div
+            id="result-item-title-grid-view"
+            className="result-item-title"
+          >
+            {title}
+          </animated.div>
+        ) : (
+          <animated.div
+        id="result-item-title-flat-view"
+        className={`result-item-title ${index > 1 ? 'grid-right-side' : 'grid-left-side'}`}
+      >
+        {title}
+      </animated.div>
+        )}
+      </animated.div>
     </animated.div>
-  </div>
-);
+  );
+};
 
 export default SearchItem;
 

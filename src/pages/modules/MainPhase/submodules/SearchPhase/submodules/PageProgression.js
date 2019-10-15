@@ -4,7 +4,7 @@ import './PageProgression.css';
 
 const PageProgression = (props) => {
   const { maxPages, page } = props;
-  return (
+  return maxPages > 1 && (
     <div id="page-prog-container">
       <div id="line-container">
         <div id="line">
@@ -38,8 +38,8 @@ PageProgression.propTypes = {
 };
 
 PageProgression.defaultProps = {
-  maxPages: 10,
-  page: 1,
+  maxPages: 0,
+  page: 0,
 };
 
 export default PageProgression;

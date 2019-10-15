@@ -2,7 +2,6 @@ import React, {
   useState, useEffect, useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
-import { useSpring, animated } from 'react-spring';
 
 import SearchItem from './submodules/SearchItem';
 import PageProgression from './submodules/PageProgression';
@@ -144,9 +143,9 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
 
   return (
     <>
-      {/* <div id="page-slider">
-        {page && searchPages && searchPages > 1 && <PageProgression maxPages={searchPages} page={page} />}
-      </div> */}
+      <div id="page-slider">
+        <PageProgression maxPages={searchPages} page={page} />
+      </div>
       <input
         type="text"
         id="search-input"
@@ -154,7 +153,7 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      <animated.div
+      <div
         // style={gridProps}
         id="results-view"
         className={`${
@@ -163,7 +162,7 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
       >
         {searchResults.map((work, index) => (
           <SearchItem
-            key={work.id}
+            key={`work${work.id}`}
             index={index}
             color={work.coverImage.color}
             coverImage={work.coverImage.large}
@@ -172,7 +171,7 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
             isFlatView={isFlatView}
           />
         ))}
-      </animated.div>
+      </div>
     </>
   );
 };
