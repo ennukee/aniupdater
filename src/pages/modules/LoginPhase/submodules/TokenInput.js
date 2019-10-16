@@ -25,13 +25,13 @@ const TokenInput = ({ callback }) => {
   };
 
   const tokenSuccess = (resp, tkn) => {
-    if (!resp || !resp.data || !resp.data.Viewer.id || !resp.data.Viewer.name) {
+    if (!resp || !resp.data || !resp.data.Viewer || !resp.data.Viewer.id || !resp.data.Viewer.name) {
       tokenFailure(resp);
       return;
     }
 
     window.localStorage.setItem('token', tkn);
-    console.log(resp.data.Viewer);
+    // console.log(resp.data.Viewer);
     callback(tkn, resp.data.Viewer.id, resp.data.Viewer.name);
   };
 

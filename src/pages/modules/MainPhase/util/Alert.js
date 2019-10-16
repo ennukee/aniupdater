@@ -38,7 +38,13 @@ const Alert = ({ active, content, style, containerStyle }) => {
 Alert.propTypes = {
   active: PropTypes.bool.isRequired,
   content: PropTypes.string.isRequired,
-  style: PropTypes.object.isRequired,
+  style: PropTypes.object,
+  containerStyle: PropTypes.object,
+};
+
+Alert.defaultProps = {
+  style: {},
+  containerStyle: {},
 };
 
 export default Alert;

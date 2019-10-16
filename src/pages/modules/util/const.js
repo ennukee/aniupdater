@@ -55,19 +55,19 @@ export const POST_MEDIA_CHANGE_QUERY_GEN = (params) => `mutation {
   SaveMediaListEntry(${Object.entries(params).filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`).join(', ')}) {
     id
     status
-    score,
+    score
     progress
   }
 }`;
 export const VIEWER_RELEVANT_MEDIA_QUERY_GEN = (userId, type) => `query {
   MediaListCollection(userId: ${userId}, type: ${type}) {
-   lists {
-     name
-     entries {
-       mediaId
-     }
-   }
- }
+    lists {
+      name
+      entries {
+        mediaId
+      }
+    }
+  }
 }`;
 export const MEDIA_STATUS_COLORS = {
   CURRENT: '#6c6',
@@ -80,7 +80,7 @@ export const MEDIA_STATUS_ALERT_MESSAGES = {
   COMPLETED: 'Now completing...',
   DROPPED: 'Now dropping...',
   PAUSED: 'Now pausing...',
-}
+};
 export const MEDIA_TYPE_SINGLETON_TERM = {
   ANIME: 'Episode',
   MANGA: 'Chapter',
