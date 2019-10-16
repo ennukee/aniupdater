@@ -11,4 +11,6 @@ To be upfront, it's because I was taking *way* too long whenever I logged onto A
 
 *10/15/2019 Update*: The project is very close to completion and is on track for completion by the end of October if all goes well. I plan to try and get the whole app tested as well, which may be the only issue with getting it out by then (I'm quite new to React testing). In the meanwhile, have the new preview gif below.
 
+https://i.gyazo.com/11afdf5e112815530aabb6ca3b7c150a.gif
+
 ![](https://i.gyazo.com/11afdf5e112815530aabb6ca3b7c150a.gif)
