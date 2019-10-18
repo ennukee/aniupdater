@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useSpring, animated } from 'react-spring';
 
 const SearchItem = ({
+  // eslint-disable-next-line no-unused-vars
   color, coverImage, title, showTitle, index, isFlatView,
 }) => {
   const [loaded, setLoaded] = useState(false);
@@ -11,7 +12,8 @@ const SearchItem = ({
     opacity: loaded ? 1 : 0,
   });
   useEffect(() => {
-    setTimeout(() => setLoaded(true), index * 25);
+    const load = setTimeout(() => setLoaded(true), index * 25);
+    return clearTimeout(load);
   }, [index]);
   return (
     <animated.div
@@ -38,18 +40,18 @@ const SearchItem = ({
       >
         {isFlatView ? (
           <animated.div
-            id="result-item-title-grid-view"
+            id="result-item-title-flat-view"
             className="result-item-title"
           >
             {title}
           </animated.div>
         ) : (
           <animated.div
-        id="result-item-title-flat-view"
-        className={`result-item-title ${index > 1 ? 'grid-right-side' : 'grid-left-side'}`}
-      >
-        {title}
-      </animated.div>
+            id="result-item-title-grid-view"
+            className="result-item-title"
+          >
+            {title}
+          </animated.div>
         )}
       </animated.div>
     </animated.div>

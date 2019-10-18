@@ -17,9 +17,9 @@ const PageProgression = (props) => {
         </div>
       </div>
       <div id="circles">
-        {[...Array(maxPages)].map((v, i) => (
+        {Object.keys([...Array(maxPages)]).map((v, i) => (
           <div
-            key={v}
+            key={`circle${v}`}
             className={`
               page-prog-circle 
               ${i + 1 < page ? 'pastPage' : ''}

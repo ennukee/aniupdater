@@ -20,7 +20,7 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
   const [isFlatView, setIsFlatView] = useState(() => window.innerWidth / window.innerHeight < 1.65);
 
   const selectMediaIndex = useCallback((index) => {
-    if (Object.keys(searchResults[index]).length === 0) {
+    if (!searchResults[index] || Object.keys(searchResults[index]).length === 0) {
       return; // Likely we tried to select something that isnt present on the last page of the search
     }
     // setSelectedMedia(searchResults[index]);
@@ -60,8 +60,8 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
     if (page + direction < 1 || page + direction > searchPages) return; // No page 0s or extra queries :)
 
     const query = baseQueryCallback(page + direction, search, type);
-    console.table(cachedSearchResults);
-    console.log(page, direction, page + direction);
+    // console.table(cachedSearchResults);
+    // console.log(page, direction, page + direction);
     if (cachedSearchResults[page + direction]) {
       console.log('Cached search results found, using those instead');
       setSearchResults(cachedSearchResults[page + direction]);
@@ -132,14 +132,9 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
   }, [handleKeyPress]);
 
   useEffect(() => {
-    document.getElementById('search-phase').focus();
     window.addEventListener('resize', updateWindowSize);
     return () => window.removeEventListener('resize', updateWindowSize);
   }, []);
-
-  // const gridProps = useSpring({
-  //   gridTemplateColumns: `${showTitles ? 0.50 : 0.25}fr ${showTitles ? 0.50 : 0.25}fr ${showTitles ? 0 : 0.25}fr ${showTitles ? 0 : 0.25}fr`,
-  // });
 
   return (
     <>

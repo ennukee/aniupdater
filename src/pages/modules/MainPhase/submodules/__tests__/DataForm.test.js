@@ -1,0 +1,85 @@
+import React from 'react';
+import {
+  render,
+  fireEvent,
+  act,
+} from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import fetch from 'jest-fetch-mock';
+import DataForm from '../DataForm';
+import { MEDIA_STATUS_COLORS, ANILIST_BASE_URL } from '../../../util/const';
+
+const setup = ({ presetProgress = 0, presetScore = 0 } = {}) => {
+  const callbackFn = jest.fn();
+  const { container } = render(
+    <DataForm
+      title="AX"
+      image="2020"
+      color="#eee"
+      type="ANIME"
+      token="TOKEN"
+      mediaId={123123}
+      transitionCallback={callbackFn}
+      presetProgress={presetProgress}
+      presetScore={presetScore}
+    />,
+  );
+  return { callbackFn, container };
+};
+
+describe('data phase tests', () => {
+  it('focuses the count field on page load', () => {
+    const { container } = setup();
+    expect(container.querySelector('#data-form-media-count-value')).toHaveFocus();
+  });
+  it('stylizes the cover image div correctly', () => {
+    const { container } = setup();
+    const imageDiv = container.querySelector('#data-form-image');
+    // TODO: Uncomment next line when bg image is used
+    // expect(imageDiv).toHaveStyle("background-image: url('2020')");
+    expect(imageDiv).toHaveStyle(`border: 1px solid ${MEDIA_STATUS_COLORS.CURRENT}`); // default border
+  });
+  it('autopopulates media count field', () => {
+    const { container } = setup({ presetProgress: 12 });
+    expect(container.querySelector('#data-form-media-count-value')).toHaveValue(12);
+  });
+  it('changes to completed mode and renders', () => {
+    const { container } = setup({ presetScore: 5 });
+    fireEvent.keyDown(container, { key: 'c', code: 67 });
+
+    const imageDiv = container.querySelector('#data-form-image');
+    const scoreField = container.querySelector('#data-form-score-value');
+    expect(imageDiv).toHaveStyle(`border: 1px solid ${MEDIA_STATUS_COLORS.COMPLETED}`);
+    expect(scoreField).not.toBeNull();
+    expect(scoreField).toHaveValue(5);
+  });
+  it('changes to dropped mode and renders', () => {
+    const { container } = setup();
+    fireEvent.keyDown(container, { key: 'd', code: 68 });
+
+    const imageDiv = container.querySelector('#data-form-image');
+    const scoreField = container.querySelector('#data-form-score-value');
+    expect(imageDiv).toHaveStyle(`border: 1px solid ${MEDIA_STATUS_COLORS.DROPPED}`);
+    expect(scoreField).not.toBeNull();
+  });
+  it('changes to paused/hold mode and renders', () => {
+    const { container } = setup();
+    fireEvent.keyDown(container, { key: 'h', code: 72 });
+
+    const imageDiv = container.querySelector('#data-form-image');
+    const scoreField = container.querySelector('#data-form-score-value');
+    expect(imageDiv).toHaveStyle(`border: 1px solid ${MEDIA_STATUS_COLORS.PAUSED}`);
+    expect(scoreField).not.toBeNull();
+  });
+
+  it('posts data to anilist on Enter', async () => {
+    fetch.mockResponseOnce(JSON.stringify({ ok: true }));
+    const { container, callbackFn } = setup({ presetProgress: 12 });
+    await act(async () => {
+      fireEvent.keyDown(container, { key: 'Enter', code: 13 });
+    });
+    expect(fetch.mock.calls.length).toBe(1);
+    expect(fetch.mock.calls[0][0]).toBe(ANILIST_BASE_URL);
+    expect(callbackFn).toHaveBeenCalledTimes(1);
+  });
+});

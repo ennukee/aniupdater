@@ -4,7 +4,6 @@ import { useSpring, animated } from 'react-spring';
 
 import './HelpMessage.css';
 
-
 const HelpMessage = ({ substate, prevSubstate, helpMap }) => {
   const helpMessageProps = useSpring({
     opacity: substate === 'TRANSITION' ? 0 : 1,

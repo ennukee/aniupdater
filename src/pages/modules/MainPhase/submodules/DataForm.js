@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
-
 import Alert from '../util/Alert';
-
 import {
   MEDIA_STATUS_COLORS,
   MEDIA_TYPE_SINGLETON_TERM,
@@ -25,7 +23,6 @@ const DataForm = ({
 
   /* Key Press Event Handler */
   const handleKeyPress = useCallback((e) => {
-    console.log(e);
     const { [e.key.toLowerCase()]: newStatus } = {
       u: 'CURRENT', c: 'COMPLETED', d: 'DROPPED', h: 'PAUSED',
     };
@@ -36,16 +33,13 @@ const DataForm = ({
       }, 1000);
       setStatus(newStatus);
     } else if (e.key === 'Enter') {
-      // TODO: send the user back to whatever prev page
       const options = generateQueryJson(POST_MEDIA_CHANGE_QUERY_GEN({
         mediaId, status, score, progress,
       }), token);
-      console.log(options);
       fetch(ANILIST_BASE_URL, options)
         .then((resp) => resp.json())
-        .then((resp) => {
-          console.log(resp);
-          transitionCallback();
+        .then(() => {
+          transitionCallback(); // return to search phase
         });
     }
   }, [mediaId, progress, score, status, token, transitionCallback]);
@@ -64,7 +58,6 @@ const DataForm = ({
   /* Rendering */
   return (
     <>
-      
       <div id="data-form-container">
         <Alert
           active={alertActive}
@@ -77,6 +70,7 @@ const DataForm = ({
         <div
           id="data-form-image"
           style={{
+            // backgroundImage: `url('${image}')`,
             backgroundColor: `#${`${Math.floor(
               Math.random() * 9,
             )}`.repeat(6)}`,
@@ -138,6 +132,6 @@ DataForm.propTypes = {
 DataForm.defaultProps = {
   presetProgress: undefined,
   presetScore: undefined,
-}
+};
 
 export default DataForm;

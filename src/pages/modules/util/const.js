@@ -88,5 +88,92 @@ export const MEDIA_TYPE_SINGLETON_TERM = {
 export const SHOULD_SCORE_MEDIA_STATUS = {
   COMPLETED: true,
   DROPPED: true,
-  HOLD: true,
+  PAUSED: true,
+};
+export const SEARCH_PHASE_MOCK_RESPONSE = {
+  data: {
+    Page: {
+      pageInfo: {
+        total: 5,
+      },
+      media: [
+        {
+          id: 123,
+          title: {
+            userPreferred: 'AYAYA',
+          },
+          coverImage: {
+            large: '', color: '#111',
+          },
+          mediaListEntry: {
+            progress: 1,
+            score: 1,
+          },
+        },
+        {
+          id: 124,
+          title: {
+            userPreferred: 'DansGame',
+          },
+          coverImage: {
+            large: '', color: '#222',
+          },
+          mediaListEntry: {
+            progress: 2,
+            score: 2,
+          },
+        },
+        {
+          id: 125,
+          title: {
+            userPreferred: 'Kappa',
+          },
+          coverImage: {
+            large: '', color: '#333',
+          },
+          mediaListEntry: {
+            progress: 3,
+            score: 3,
+          },
+        },
+        {
+          id: 126,
+          title: {
+            userPreferred: 'PogU',
+          },
+          coverImage: {
+            large: '', color: '#444',
+          },
+          mediaListEntry: {
+            progress: 4,
+            score: 4,
+          },
+        },
+      ],
+    },
+  },
+};
+export const SEARCH_PHASE_MOCK_RESPONSE_PARTIAL = {
+  data: {
+    Page: {
+      pageInfo: {
+        total: 5,
+      },
+      media: [
+        {
+          id: 123,
+          title: {
+            userPreferred: 'AYAYA',
+          },
+          coverImage: {
+            large: '', color: '#111',
+          },
+          mediaListEntry: {
+            progress: 1,
+            score: 1,
+          },
+        },
+      ],
+    },
+  },
 };
