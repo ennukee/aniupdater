@@ -52,7 +52,7 @@ const Main = () => {
     <div id="app">
       <div id="bg-video-anim-container">
         <video id="bg-video-anim" autoPlay loop="loop" muted="muted">
-          {/* <source src="http://anilist.co/video/hero.webm" type="video/mp4" /> */}
+          <source src="http://anilist.co/video/hero.webm" type="video/webm" />
         </video>
       </div>
       <LoginPhase

@@ -12,8 +12,9 @@ const SearchItem = ({
     opacity: loaded ? 1 : 0,
   });
   useEffect(() => {
+    // setLoaded(true);
     const load = setTimeout(() => setLoaded(true), index * 25);
-    return clearTimeout(load);
+    return () => clearTimeout(load);
   }, [index]);
   return (
     <animated.div

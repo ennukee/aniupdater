@@ -49,8 +49,8 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  filter: hue-rotate(45deg);
-  -webkit-filter: hue-rotate(45deg);
+  filter: hue-rotate(45deg) brightness(0.25);
+  -webkit-filter: hue-rotate(45deg) brightness(0.25);
   z-index: -1;
 }
 
@@ -218,7 +218,7 @@ body {
 
 #results-item {
   position: fixed;
-  z-index: -1;
+  /* z-index: -1; */
 }
 
 #result-item-title-grid-view {
