@@ -162,6 +162,8 @@ describe('search phase tests', () => {
     await act(async () => {
       fetch.mockResponse(JSON.stringify(SEARCH_PHASE_MOCK_RESPONSE));
       fireEvent.change(input, { target: { value: 'TEST' } });
+    });
+    await act(async () => {
       fireEvent.keyDown(input, { key: 'Enter', code: 13 });
     });
     expect(fetch.mock.calls.length).toBe(1);
@@ -172,7 +174,6 @@ describe('search phase tests', () => {
     await act(async () => {
       fireEvent.keyDown(input, { key: 'ArrowLeft', code: 37 });
     });
-    expect(fetch.mock.calls.length).not.toBe(3);
     expect(fetch.mock.calls.length).toBe(2);
   });
 });
