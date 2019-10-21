@@ -25,6 +25,7 @@ const setup = () => {
 describe('search phase tests', () => {
   beforeEach(() => {
     fetch.resetMocks();
+    localStorage.clear();
   });
   it('updates the input field on typing', () => {
     const { input } = setup();

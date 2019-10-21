@@ -1,5 +1,5 @@
 import React, {
-  useState, useEffect, useCallback,
+  useState, useEffect, useCallback, useReducer,
 } from 'react';
 import PropTypes from 'prop-types';
 
@@ -10,29 +10,52 @@ import searchQueryBase from './util/searchQueryBase';
 import generateQueryJson from '../../../util/generateQueryJson';
 import * as consts from '../../../util/const';
 
+/*
+  TODO
+  ! Add keybind to purge individual search caches or entire cache
+*/
+
 const SearchPhase = ({ transitionCallback, token, type }) => {
   const [search, setSearch] = useState('');
   const [showTitles, setShowTitles] = useState(true);
   const [searchResults, setSearchResults] = useState(consts.NO_RESULTS_FOUND_RESPONSE);
   const [page, setPage] = useState(1);
   const [searchPages, setSearchPages] = useState(0);
-  const [cachedSearchResults, setCachedSearchResults] = useState({});
+
+  const [cachedSearchResults, addToCachedSearchResults] = useReducer((state, action) => {
+    // action param => { query: "ABCDEF", page: 0, searchPages: 99, result: [...] }
+    if (action.WIPE_CACHE) { return {}; }
+    console.log(state, action);
+    const newState = {
+      // Persist existing cached state
+      ...state,
+      [action.query]: {
+        searchPages: action.searchPages,
+        // As well as persist existing page data about this query, defaulting in case
+        // of us not knowing what this query is yet
+        ...state[action.query] || [],
+        [action.page]: action.results,
+      },
+    };
+    console.log(newState);
+
+    // Store this in localStorage so we can use it at a future point
+    localStorage.setItem('cachedResults', JSON.stringify(newState));
+    return newState;
+  }, JSON.parse(localStorage.getItem('cachedResults')) || {});
+
   const [isFlatView, setIsFlatView] = useState(() => window.innerWidth / window.innerHeight < 1.65);
 
   const selectMediaIndex = useCallback((index) => {
     if (!searchResults[index] || Object.keys(searchResults[index]).length === 0) {
       return; // Likely we tried to select something that isnt present on the last page of the search
     }
-    // setSelectedMedia(searchResults[index]);
     transitionCallback(searchResults[index]);
   }, [searchResults, transitionCallback]);
 
   const searchResultParse = useCallback((resp, stateOptions) => {
     const {
-      // page = 1,
       direction = 0,
-      // cachedSearchResults = {},
-      extraState = {},
     } = stateOptions;
 
     if (resp.data.Page.media.length === 0) {
@@ -41,41 +64,46 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
       setSearchPages(0);
     } else {
       setSearchResults(resp.data.Page.media || consts.NO_RESULTS_FOUND_RESPONSE);
-      setCachedSearchResults({ ...cachedSearchResults, [page + direction]: resp.data.Page.media });
-      if (extraState.searchPages) {
-        setSearchPages(Math.min(10, Math.ceil(resp.data.Page.pageInfo.total / 4)));
-      }
+      addToCachedSearchResults({
+        query: search,
+        page: page + direction,
+        results: resp.data.Page.media,
+        searchPages: Math.min(10, Math.ceil(resp.data.Page.pageInfo.total / 4)),
+      });
+      setSearchPages(Math.min(10, Math.ceil(resp.data.Page.pageInfo.total / 4)));
     }
-  }, [cachedSearchResults, page]);
+  }, [page, search]);
 
-  const initiateSearch = useCallback((queryOptions, stateOptions) => {
+  const initiateSearch = useCallback((queryOptions, { direction = 0 }) => {
+    console.info(`Currently checking local cache for query = '${search}' on page index ${page + direction}...`);
+    if (cachedSearchResults[search] && cachedSearchResults[search][page + direction]) {
+      console.info('Found cached query, restoring it now');
+      setSearchResults(cachedSearchResults[search][page + direction]);
+      setSearchPages(cachedSearchResults[search].searchPages);
+      return;
+    }
+
+    console.error('Unable to find a cached query, sending new query out...');
     fetch(consts.ANILIST_BASE_URL, queryOptions)
       .then((resp) => resp.json())
       .then((resp) => {
-        searchResultParse(resp, stateOptions);
+        searchResultParse(resp, {
+          page, direction, cachedSearchResults,
+        });
       });
-  }, [searchResultParse]);
+  }, [searchResultParse, cachedSearchResults, search, page]);
 
   const changeSearchPage = useCallback((direction, baseQueryCallback) => {
     if (page + direction < 1 || page + direction > searchPages) return; // No page 0s or extra queries :)
 
     const query = baseQueryCallback(page + direction, search, type);
-    // console.table(cachedSearchResults);
-    // console.log(page, direction, page + direction);
-    if (cachedSearchResults[page + direction]) {
-      console.log('Cached search results found, using those instead');
-      setSearchResults(cachedSearchResults[page + direction]);
-    } else {
-      console.log('No cached search result, querying...');
-      const options = generateQueryJson(query, token);
-      initiateSearch(options, {
-        page,
-        direction,
-        cachedSearchResults,
-      });
-    }
+    const options = generateQueryJson(query, token);
+    initiateSearch(options, {
+      page,
+      direction,
+    });
     setPage(page + direction);
-  }, [cachedSearchResults, initiateSearch, page, search, searchPages, token, type]);
+  }, [initiateSearch, page, search, searchPages, token, type]);
 
   const handleKeyPress = useCallback((e) => {
     switch (e.key) {
@@ -100,16 +128,10 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
         e.preventDefault();
         break;
       case 'Enter':
-        // Reset our search values back to nothing when performing a fresh search
         setPage(1);
-        setCachedSearchResults({});
 
         const options = generateQueryJson(searchQueryBase(1, search, type), token);
-        initiateSearch(options, {
-          extraState: {
-            searchPages: true,
-          },
-        });
+        initiateSearch(options, {});
         break;
       default:
         document.getElementById('search-input').focus();
