@@ -23,9 +23,8 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
   const [searchPages, setSearchPages] = useState(0);
 
   const [cachedSearchResults, addToCachedSearchResults] = useReducer((state, action) => {
-    // action param => { query: "ABCDEF", page: 0, searchPages: 99, result: [...] }
+    // ? -> action = { query: "ABCDEF", page: 0, searchPages: 99, result: [...] }
     if (action.WIPE_CACHE) { return {}; }
-    // console.log(state, action);
     const newState = {
       // Persist existing cached state
       ...state,
@@ -37,7 +36,6 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
         [action.page]: action.results,
       },
     };
-    // console.log(newState);
 
     // Store this in localStorage so we can use it at a future point
     localStorage.setItem('cachedResults', JSON.stringify(newState));

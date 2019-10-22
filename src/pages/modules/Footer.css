@@ -2,9 +2,12 @@
     position: fixed;
     bottom: 0;
     left: 0;
+    height: 3em;
     padding-left: 10px;
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
 
     font-family: Khula;
     font-weight: 200;
@@ -17,31 +20,23 @@
 
 #footer-container a:hover {
     text-decoration: none;
-    filter: brightness(150%);
-    -webkit-filter: brightness(150%);
+    filter: brightness(75%);
+    -webkit-filter: brightness(75%);
 }
 
-#discord-logo {
-    width: 1.4em;
-    height: 1.4em;
-    fill: blue;    
+.footer-logo {
+    width: 3em;
+    height: 3em;
 }
 
-.discord {
-    filter: invert(45%) sepia(20%) saturate(2924%) hue-rotate(201deg) brightness(99%) contrast(106%);
-    -webkit-filter: invert(45%) sepia(20%) saturate(2924%) hue-rotate(201deg) brightness(99%) contrast(106%);
-}
-
-#locale-selector-container {
-    display: flex;
-    flex-direction: row;
-
-    position: fixed;
-    padding: 10px;
-    bottom: 0;
-    right: 0;
-}
-
-.locale-selector:hover {
+.footer-logo:hover {
     cursor: pointer;
+}
+
+.github {
+    filter: brightness(0%) invert(100%);
+    -webkit-filter: brightness(0%) invert(100%);
+    width: 2.25em;
+    height: 2.25em;
+    padding: 0 5px 0 0;
 }
