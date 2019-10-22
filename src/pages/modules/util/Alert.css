@@ -1,6 +1,6 @@
 #alert-container {
     position: absolute;
-    top: 0;
+    top: 150px;
     left: 0;
     transform: translateY(-40px);
     display: flex;

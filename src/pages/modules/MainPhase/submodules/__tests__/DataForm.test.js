@@ -8,23 +8,32 @@ import '@testing-library/jest-dom/extend-expect';
 import fetch from 'jest-fetch-mock';
 import DataForm from '../DataForm';
 import { MEDIA_STATUS_COLORS, ANILIST_BASE_URL } from '../../../util/const';
+import GlobalContext from '../../../util/GlobalContext';
 
 const setup = ({ presetProgress = 0, presetScore = 0 } = {}) => {
   const callbackFn = jest.fn();
+  const setGlobalCallbackFn = jest.fn();
   const { container } = render(
-    <DataForm
-      title="AX"
-      image="2020"
-      color="#eee"
-      type="ANIME"
-      token="TOKEN"
-      mediaId={123123}
-      transitionCallback={callbackFn}
-      presetProgress={presetProgress}
-      presetScore={presetScore}
-    />,
+    <GlobalContext.Provider
+      value={{
+        globalValues: {},
+        setGlobalValues: setGlobalCallbackFn,
+      }}
+    >
+      <DataForm
+        title="AX"
+        image="2020"
+        color="#eee"
+        type="ANIME"
+        token="TOKEN"
+        mediaId={123123}
+        transitionCallback={callbackFn}
+        presetProgress={presetProgress}
+        presetScore={presetScore}
+      />
+    </GlobalContext.Provider>,
   );
-  return { callbackFn, container };
+  return { callbackFn, container, setGlobalCallbackFn };
 };
 
 describe('data phase tests', () => {
@@ -43,12 +52,23 @@ describe('data phase tests', () => {
     const { container } = setup({ presetProgress: 12 });
     expect(container.querySelector('#data-form-media-count-value')).toHaveValue(12);
   });
-  it('changes to completed mode and renders', () => {
-    const { container } = setup({ presetScore: 5 });
+  it('changes to completed mode, calls global context and renders', () => {
+    const { container, setGlobalCallbackFn } = setup({ presetScore: 5 });
     fireEvent.keyDown(container, { key: 'c', code: 67 });
 
     const imageDiv = container.querySelector('#data-form-image');
     const scoreField = container.querySelector('#data-form-score-value');
+    expect(setGlobalCallbackFn).toHaveBeenCalledWith({
+      type: 'ALERT',
+      data: {
+        active: true,
+        content: 'Now completing...',
+        style: {
+          backgroundColor: `${MEDIA_STATUS_COLORS.COMPLETED}3`,
+          border: `1px solid ${MEDIA_STATUS_COLORS.COMPLETED}`,
+        },
+      },
+    });
     expect(imageDiv).toHaveStyle(`border: 1px solid ${MEDIA_STATUS_COLORS.COMPLETED}`);
     expect(scoreField).not.toBeNull();
     expect(scoreField).toHaveValue(5);

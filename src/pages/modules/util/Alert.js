@@ -1,19 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect, useContext } from 'react';
 import { useSpring, animated } from 'react-spring';
 
 import './Alert.css';
+import GlobalContext from './GlobalContext';
 
-const Alert = ({ active, content, style, containerStyle }) => {
+const Alert = () => {
+  const {
+    globalValues: {
+      alertData: {
+        active,
+        content,
+        containerStyle,
+        style,
+      },
+    },
+    setGlobalValues,
+  } = useContext(GlobalContext);
+
   const [cachedAlert, setCachedAlert] = useState(content);
   const alertProps = useSpring({
     transform: `translateY(${active ? -150 : -250}%)`,
-    opacity: active ? 1 : 0,
+    opacity: active && content ? 1 : 0,
   });
+
+  useEffect(() => {
+    if (active && content) {
+      const hide = setTimeout(() => setGlobalValues({
+        type: 'RESET_ALERT',
+      }), 1250);
+      return () => clearTimeout(hide);
+    }
+    return () => {};
+  }, [active, content, setGlobalValues]);
 
   useEffect(() => {
     if (content) setCachedAlert(content);
   }, [content]);
+
   return (
     <animated.div
       id="alert-container"
@@ -33,18 +56,6 @@ const Alert = ({ active, content, style, containerStyle }) => {
       </div>
     </animated.div>
   );
-};
-
-Alert.propTypes = {
-  active: PropTypes.bool.isRequired,
-  content: PropTypes.string.isRequired,
-  style: PropTypes.object,
-  containerStyle: PropTypes.object,
-};
-
-Alert.defaultProps = {
-  style: {},
-  containerStyle: {},
 };
 
 export default Alert;

@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, {
+  useState, useEffect, useCallback, useContext,
+} from 'react';
 import PropTypes from 'prop-types';
-import Alert from '../util/Alert';
 import {
   MEDIA_STATUS_COLORS,
   MEDIA_TYPE_SINGLETON_TERM,
@@ -12,6 +13,7 @@ import {
 import generateQueryJson from '../../util/generateQueryJson';
 
 import './DataForm.css';
+import GlobalContext from '../../util/GlobalContext';
 
 const DataForm = ({
   title, image, color, type, token, mediaId, transitionCallback, presetProgress, presetScore,
@@ -19,7 +21,27 @@ const DataForm = ({
   const [status, setStatus] = useState('CURRENT');
   const [progress, setProgress] = useState(presetProgress);
   const [score, setScore] = useState(presetScore);
-  const [alertActive, setAlertActive] = useState(false);
+
+  const { setGlobalValues } = useContext(GlobalContext);
+
+  /* Get current media status color or default to black */
+  const currentMediaColor = useCallback((override = status) => MEDIA_STATUS_COLORS[override] || '#222', [status]);
+
+
+  const switchMediaMode = useCallback((newStatus) => {
+    setStatus(newStatus);
+    setGlobalValues({
+      type: 'ALERT',
+      data: {
+        active: true,
+        content: MEDIA_STATUS_ALERT_MESSAGES[newStatus],
+        style: {
+          border: `1px solid ${currentMediaColor(newStatus)}`,
+          backgroundColor: `${currentMediaColor(newStatus)}3`,
+        },
+      },
+    });
+  }, [currentMediaColor, setGlobalValues]);
 
   /* Key Press Event Handler */
   const handleKeyPress = useCallback((e) => {
@@ -27,11 +49,11 @@ const DataForm = ({
       u: 'CURRENT', c: 'COMPLETED', d: 'DROPPED', h: 'PAUSED',
     };
     if (newStatus) {
-      setAlertActive(MEDIA_STATUS_ALERT_MESSAGES[newStatus]);
-      setTimeout(() => {
-        setAlertActive(null);
-      }, 1000);
-      setStatus(newStatus);
+      switchMediaMode(newStatus);
+      // setAlertActive(MEDIA_STATUS_ALERT_MESSAGES[newStatus]);
+      // setTimeout(() => {
+      //   setAlertActive(null);
+      // }, 1000);
     } else if (e.key === 'Enter') {
       const options = generateQueryJson(POST_MEDIA_CHANGE_QUERY_GEN({
         mediaId, status, score, progress,
@@ -42,10 +64,7 @@ const DataForm = ({
           transitionCallback(); // return to search phase
         });
     }
-  }, [mediaId, progress, score, status, token, transitionCallback]);
-
-  /* Get current media status color or default to black */
-  const currentMediaColor = () => MEDIA_STATUS_COLORS[status] || '#222';
+  }, [mediaId, progress, score, status, switchMediaMode, token, transitionCallback]);
 
   /* Event handling setup and initial form focus */
   useEffect(() => {
@@ -59,14 +78,14 @@ const DataForm = ({
   return (
     <>
       <div id="data-form-container">
-        <Alert
+        {/* <Alert
           active={alertActive}
           content={alertActive}
           style={{
             border: `1px solid ${currentMediaColor()}`,
             backgroundColor: `${currentMediaColor()}3`,
           }}
-        />
+        /> */}
         <div
           id="data-form-image"
           style={{
