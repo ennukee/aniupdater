@@ -1,10 +1,13 @@
 /* Libraries */
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 
 /* Modules */
 import LoginPhase from './modules/LoginPhase/LoginPhase';
 import MainPhase from './modules/MainPhase/MainPhase';
 import Footer from './modules/Footer';
+import Alert from './modules/util/Alert';
+import GlobalContext from './modules/util/GlobalContext';
+import useGlobalValues from './modules/util/useGlobalValues';
 
 /* Styles */
 import './css/Main.css';
@@ -17,6 +20,9 @@ const Main = () => {
   const [username, setUsername] = useState('');
   const [loginState, setLoginState] = useState('');
   const [mainState, setMainState] = useState('not-entered');
+
+  const { globalValues, setGlobalValues } = useGlobalValues();
+  const providerValue = useMemo(() => ({ globalValues, setGlobalValues }), [globalValues, setGlobalValues]);
 
   const enterMainPhase = (tkn, uid, user) => {
     setToken(tkn);
@@ -43,17 +49,20 @@ const Main = () => {
           <source src="http://anilist.co/video/hero.webm" type="video/webm" />
         </video>
       </div>
-      <LoginPhase
-        loginState={loginState}
-        width={width}
-        submitCallback={(tkn, uid, user) => enterMainPhase(tkn, uid, user)}
-      />
-      <MainPhase
-        token={token}
-        userId={userId}
-        username={username}
-        mainState={mainState}
-      />
+      <GlobalContext.Provider value={providerValue}>
+        <Alert />
+        <LoginPhase
+          loginState={loginState}
+          width={width}
+          submitCallback={(tkn, uid, user) => enterMainPhase(tkn, uid, user)}
+        />
+        <MainPhase
+          token={token}
+          userId={userId}
+          username={username}
+          mainState={mainState}
+        />
+      </GlobalContext.Provider>
       <Footer />
     </div>
   );

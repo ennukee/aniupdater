@@ -101,14 +101,6 @@ body {
 /* MAIN PHASE CSS */
 /* -------------- */
 
-#main-phase {
-  /* transform: translateY(50px);
-  -webkit-transform: translateY(50px);
-  -moz-transform: translateY(50px);
-  -ms-transform: translateY(50px);
-  -o-transform: translateY(50px); */
-}
-
 #main-phase.not-entered {
   display: none;
   opacity: 0;

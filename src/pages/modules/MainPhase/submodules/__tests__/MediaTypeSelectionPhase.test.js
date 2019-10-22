@@ -2,8 +2,6 @@ import React from 'react';
 import {
   render,
   fireEvent,
-  act,
-  wait,
 } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import MediaTypeSelectionPhase from '../MediaTypeSelectionPhase';
@@ -31,10 +29,11 @@ describe('media type selection phase tests', () => {
     expect(callbackFn).toHaveBeenCalledTimes(2);
   });
 
-  it('loads the alert upon initial render of phase', () => {
-    const { container } = setup();
-    const alertContainer = container.querySelector('#alert-container');
-    expect(alertContainer).not.toBeNull();
-    wait(() => expect(alertContainer).toHaveStyle('opacity: 1'));
-  });
+  // TODO: Move this test to a test for the Main part (doesn't currently exist)
+  // it('loads the alert upon initial render of phase', () => {
+  //   const { container } = setup();
+  //   const alertContainer = container.querySelector('#alert-container');
+  //   expect(alertContainer).not.toBeNull();
+  //   wait(() => expect(alertContainer).toHaveStyle('opacity: 1'));
+  // });
 });
