@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSpring, animated } from 'react-spring';
+import { IoIosInformationCircleOutline } from 'react-icons/io';
 
 import './HelpMessage.css';
 
@@ -12,6 +13,12 @@ const HelpMessage = ({ substate, prevSubstate, helpMap }) => {
 
   return (helpMap[substate] || helpMap[prevSubstate]) && (
     <animated.div style={helpMessageProps} id="help-message" className={substate}>
+      <IoIosInformationCircleOutline
+        size="1.75em"
+        style={{
+          paddingRight: '3px',
+        }}
+      />
       {helpMap[substate] || helpMap[prevSubstate]}
     </animated.div>
   );

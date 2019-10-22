@@ -1,16 +1,11 @@
 
 #help-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: 10;
     position: fixed;
     bottom: 50px;
-    color: #222;
-    background-color: #eee;
-    border: 1px solid #222;
-    box-shadow: 0 1px 4px white;
-    padding: 15px 30px;
-    border-radius: 50px;
-    -webkit-border-radius: 50px;
-    -moz-border-radius: 50px;
-    -ms-border-radius: 50px;
-    -o-border-radius: 50px;
+    color: #eee;
+    text-shadow: -1px 0 #222, 1px 0 #222, 0 1px #222, 0 -1px #222;
 }

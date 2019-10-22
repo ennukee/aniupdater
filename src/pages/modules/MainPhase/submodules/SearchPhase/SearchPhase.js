@@ -10,11 +10,6 @@ import searchQueryBase from './util/searchQueryBase';
 import generateQueryJson from '../../../util/generateQueryJson';
 import * as consts from '../../../util/const';
 
-/*
-  TODO
-  ! Add keybind to purge individual search caches or entire cache
-*/
-
 const SearchPhase = ({ transitionCallback, token, type }) => {
   const [search, setSearch] = useState('');
   const [showTitles, setShowTitles] = useState(true);

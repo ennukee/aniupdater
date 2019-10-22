@@ -4,7 +4,7 @@ const useHelpMap = () => {
   const helpByPhase = {
     'a-or-m-phase': (
       <span>
-        Click&nbsp;
+        Press&nbsp;
         <span className="aom-a bold">A</span>
         &nbsp;or&nbsp;
         <span className="aom-m bold">M</span>

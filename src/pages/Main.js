@@ -9,18 +9,6 @@ import Footer from './modules/Footer';
 /* Styles */
 import './css/Main.css';
 
-/*
-  TODO
-
-  ! Handle expired / invalid tokens on search / POST requests
-  ! Cache previous searches in localStorage to prevent requests
-  ! ! Similarly, track which mediaId was chosen per query and use it for future identical queries
-  ? Implement a way to reset localStorage cache for non-technical users
-  ! Implement a Context / Redux(?) to allow for a global error Alert to exist ( don't have a bunch of individual ones )
-  ! test literally everything
-
-*/
-
 const width = 500;
 
 const Main = () => {
