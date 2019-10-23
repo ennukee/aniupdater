@@ -1,14 +1,17 @@
 import React, {
-  useState, useEffect, useCallback, useReducer,
+  useState, useEffect, useCallback, useReducer, useContext,
 } from 'react';
 import PropTypes from 'prop-types';
 
 import SearchItem from './submodules/SearchItem';
 import PageProgression from './submodules/PageProgression';
 
+import GlobalContext from '../../../util/GlobalContext';
 import searchQueryBase from './util/searchQueryBase';
 import generateQueryJson from '../../../util/generateQueryJson';
 import * as consts from '../../../util/const';
+import useKeyModifiers from '../../util/useKeyModifiers';
+import { presets } from '../../../util/Alert';
 
 const SearchPhase = ({ transitionCallback, token, type }) => {
   const [search, setSearch] = useState('');
@@ -16,28 +19,65 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
   const [searchResults, setSearchResults] = useState(consts.NO_RESULTS_FOUND_RESPONSE);
   const [page, setPage] = useState(1);
   const [searchPages, setSearchPages] = useState(0);
+  const [isFlatView, setIsFlatView] = useState(() => window.innerWidth / window.innerHeight < 1.65);
+  const { setGlobalValues } = useContext(GlobalContext);
 
-  const [cachedSearchResults, addToCachedSearchResults] = useReducer((state, action) => {
+  const { isCtrling, isShifting } = useKeyModifiers();
+
+  const [cachedSearchResults, affectCachedSearchResults] = useReducer((state, action) => {
+    // ? -> action = { type: 'WIPE_CACHE' }
+    // ? -> action = { type: 'DELETE_QUERY', query: 'DEFABC' }
     // ? -> action = { query: "ABCDEF", page: 0, searchPages: 99, result: [...] }
-    if (action.WIPE_CACHE) { return {}; }
-    const newState = {
-      // Persist existing cached state
-      ...state,
-      [action.query]: {
-        searchPages: action.searchPages,
-        // As well as persist existing page data about this query, defaulting in case
-        // of us not knowing what this query is yet
-        ...state[action.query] || [],
-        [action.page]: action.results,
-      },
-    };
+
+    let newState;
+    if (action.type === 'WIPE_CACHE') {
+      newState = {};
+      setGlobalValues({
+        type: 'ALERT',
+        data: {
+          active: true,
+          content: 'Successfully erased all saved search results',
+          style: presets.orange,
+          containerStyle: {
+            top: '150px',
+          },
+          duration: 2500,
+        },
+      });
+    } else if (action.type === 'DELETE_QUERY') {
+      newState = {
+        ...Object.fromEntries(Object.entries(state).filter(([k]) => k !== action.query)),
+      };
+      setGlobalValues({
+        type: 'ALERT',
+        data: {
+          active: true,
+          content: `Successfully cleared known results for "${action.query}"`,
+          style: presets.green,
+          containerStyle: {
+            top: '150px',
+          },
+          duration: 2500,
+        },
+      });
+    } else {
+      newState = {
+        // Persist existing cached state
+        ...state,
+        [action.query]: {
+          searchPages: action.searchPages,
+          // As well as persist existing page data about this query, defaulting in case
+          // of us not knowing what this query is yet
+          ...state[action.query] || [],
+          [action.page]: action.results,
+        },
+      };
+    }
 
     // Store this in localStorage so we can use it at a future point
     localStorage.setItem('cachedResults', JSON.stringify(newState));
     return newState;
   }, JSON.parse(localStorage.getItem('cachedResults')) || {});
-
-  const [isFlatView, setIsFlatView] = useState(() => window.innerWidth / window.innerHeight < 1.65);
 
   const selectMediaIndex = useCallback((index) => {
     if (!searchResults[index] || Object.keys(searchResults[index]).length === 0) {
@@ -57,7 +97,7 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
       setSearchPages(0);
     } else {
       setSearchResults(resp.data.Page.media || consts.NO_RESULTS_FOUND_RESPONSE);
-      addToCachedSearchResults({
+      affectCachedSearchResults({
         query: search,
         page: page + direction,
         results: resp.data.Page.media,
@@ -73,6 +113,21 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
       console.info('Found cached query, restoring it now');
       setSearchResults(cachedSearchResults[search][page + direction]);
       setSearchPages(cachedSearchResults[search].searchPages);
+      setGlobalValues({
+        type: 'ALERT',
+        data: {
+          active: true,
+          content: 'You are viewing a cached result. To do a fresh search, do Shift + Delete',
+          style: {
+            ...presets.black,
+            padding: '10px 20px',
+          },
+          containerStyle: {
+            top: '150px',
+          },
+          duration: 1500,
+        },
+      });
       return;
     }
 
@@ -108,9 +163,20 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
         selectMediaIndex(mediaIndex - 1);
         e.preventDefault();
         break;
-      case 'ArrowUp':
-        setShowTitles(!showTitles);
-        e.preventDefault();
+      case 'Delete':
+        console.log(isShifting, isCtrling);
+        if (isShifting) {
+          affectCachedSearchResults({
+            type: 'DELETE_QUERY',
+            query: search,
+          });
+          e.preventDefault();
+        } else if (isCtrling) {
+          affectCachedSearchResults({
+            type: 'WIPE_CACHE',
+          });
+          e.preventDefault();
+        }
         break;
       case 'ArrowLeft':
         changeSearchPage(-1, searchQueryBase);
@@ -130,7 +196,7 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
         document.getElementById('search-input').focus();
         break;
     }
-  }, [changeSearchPage, initiateSearch, search, selectMediaIndex, showTitles, token, type]);
+  }, [changeSearchPage, initiateSearch, isCtrling, isShifting, search, selectMediaIndex, token, type]);
 
   const updateWindowSize = () => {
     console.log(window.innerWidth / window.innerHeight);

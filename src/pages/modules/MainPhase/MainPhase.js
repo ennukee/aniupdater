@@ -11,7 +11,7 @@ import HelpMessage from './submodules/HelpMessage';
 
 /* Custom Hooks */
 import useHelpMap from './util/useHelpMap';
-import useShiftModifier from './util/useShiftModifier';
+import useKeyModifiers from './util/useKeyModifiers';
 
 /* Utils */
 // import { ANILIST_BASE_URL, VIEWER_RELEVANT_MEDIA_QUERY_GEN } from '../util/const';
@@ -62,7 +62,7 @@ const MainPhase = ({
     transitionMainState('data-phase');
   };
 
-  const { isShifting } = useShiftModifier();
+  const { isShifting } = useKeyModifiers();
   const handleKeyPress = useCallback((e) => {
     console.log(e.key, isShifting);
     if (e.key === 'CapsLock' && isShifting) {
