@@ -135,10 +135,10 @@ body {
   font-size: 48px;
 }
 
-.aom-a {
+.aom-a, .red {
   color: #c66;
 }
-.aom-m {
+.aom-m, .blue {
   color: #66c;
 }
 
