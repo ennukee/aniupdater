@@ -67,6 +67,46 @@ describe('search phase tests', () => {
     expect(pageProgCircles[0]).toHaveClass('activePage');
   });
 
+  it('refreshes on failed anilist response', async () => {
+    jest.useFakeTimers();
+
+    const { callbackFn, input } = setup();
+    window.location.reload = jest.fn();
+    await act(async () => {
+      fetch.mockResponseOnce({ ok: false });
+      fireEvent.change(input, { target: { value: 'TEST' } });
+      fireEvent.keyDown(input, { key: 'Enter', code: 13 });
+    });
+    expect(fetch.mock.calls.length).toBe(1);
+    expect(callbackFn).not.toHaveBeenCalled();
+
+    setTimeout(() => {
+      expect(window.location.reload).toHaveBeenCalled();
+    }, 2500);
+
+    jest.runAllTimers();
+  });
+
+  it('refreshes on failed fetch', async () => {
+    jest.useFakeTimers();
+
+    const { callbackFn, input } = setup();
+    window.location.reload = jest.fn();
+    await act(async () => {
+      fetch.mockReject(new Error('fake error'));
+      fireEvent.change(input, { target: { value: 'TEST' } });
+      fireEvent.keyDown(input, { key: 'Enter', code: 13 });
+    });
+    expect(fetch.mock.calls.length).toBe(1);
+    expect(callbackFn).not.toHaveBeenCalled();
+
+    setTimeout(() => {
+      expect(window.location.reload).toHaveBeenCalled();
+    }, 2500);
+
+    jest.runAllTimers();
+  });
+
   it('shifts the page on arrow keypress', async () => {
     const { container, input } = setup();
     await act(async () => {

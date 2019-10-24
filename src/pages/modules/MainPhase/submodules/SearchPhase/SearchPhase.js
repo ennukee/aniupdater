@@ -79,6 +79,21 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
     return newState;
   }, JSON.parse(localStorage.getItem('cachedResults')) || {});
 
+  const handleBadRequest = useCallback(() => {
+    setGlobalValues({
+      type: 'ALERT',
+      data: {
+        active: true,
+        content: 'Something went wrong with the request. The page will automatically refresh in 2 seconds.',
+        duration: 2000,
+        style: presets.red,
+      },
+    });
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+  }, [setGlobalValues]);
+
   const selectMediaIndex = useCallback((index) => {
     if (!searchResults[index] || Object.keys(searchResults[index]).length === 0) {
       return; // Likely we tried to select something that isnt present on the last page of the search
@@ -138,8 +153,9 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
         searchResultParse(resp, {
           page, direction, cachedSearchResults,
         });
-      });
-  }, [searchResultParse, cachedSearchResults, search, page]);
+      })
+      .catch(handleBadRequest);
+  }, [search, page, cachedSearchResults, handleBadRequest, setGlobalValues, searchResultParse]);
 
   const changeSearchPage = useCallback((direction, baseQueryCallback) => {
     if (page + direction < 1 || page + direction > searchPages) return; // No page 0s or extra queries :)

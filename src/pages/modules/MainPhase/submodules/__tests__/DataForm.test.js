@@ -37,6 +37,10 @@ const setup = ({ presetProgress = 0, presetScore = 0 } = {}) => {
 };
 
 describe('data phase tests', () => {
+  beforeEach(() => {
+    fetch.resetMocks();
+  });
+
   it('focuses the count field on page load', () => {
     const { container } = setup();
     expect(container.querySelector('#data-form-media-count-value')).toHaveFocus();
@@ -101,5 +105,45 @@ describe('data phase tests', () => {
     expect(fetch.mock.calls.length).toBe(1);
     expect(fetch.mock.calls[0][0]).toBe(ANILIST_BASE_URL);
     expect(callbackFn).toHaveBeenCalledTimes(1);
+  });
+
+  it('fails and refreshes on invalid token issues', async () => {
+    jest.useFakeTimers();
+
+    fetch.mockResponseOnce(JSON.stringify({ ok: false }));
+    window.location.reload = jest.fn();
+    const { container, callbackFn } = setup({ presetProgress: 12 });
+    await act(async () => {
+      fireEvent.keyDown(container, { key: 'Enter', code: 13 });
+    });
+    expect(fetch.mock.calls.length).toBe(1);
+    expect(fetch.mock.calls[0][0]).toBe(ANILIST_BASE_URL);
+    expect(callbackFn).not.toHaveBeenCalled();
+
+    setTimeout(() => {
+      expect(window.location.reload).toHaveBeenCalled();
+    }, 2500);
+
+    jest.runAllTimers();
+  });
+
+  it('reacts correctly on failed fetch', async () => {
+    jest.useFakeTimers();
+
+    fetch.mockReject(new Error('fake error'));
+    window.location.reload = jest.fn();
+    const { container, callbackFn } = setup({ presetProgress: 12 });
+    await act(async () => {
+      fireEvent.keyDown(container, { key: 'Enter', code: 13 });
+    });
+    expect(fetch.mock.calls.length).toBe(1);
+    expect(fetch.mock.calls[0][0]).toBe(ANILIST_BASE_URL);
+    expect(callbackFn).not.toHaveBeenCalled();
+
+    setTimeout(() => {
+      expect(window.location.reload).toHaveBeenCalled();
+    }, 2500);
+
+    jest.runAllTimers();
   });
 });
