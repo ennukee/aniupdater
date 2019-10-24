@@ -14,6 +14,7 @@ import generateQueryJson from '../../util/generateQueryJson';
 
 import './DataForm.css';
 import GlobalContext from '../../util/GlobalContext';
+import { presets } from '../../util/Alert';
 
 const DataForm = ({
   title, image, color, type, token, mediaId, transitionCallback, presetProgress, presetScore,
@@ -27,6 +28,20 @@ const DataForm = ({
   /* Get current media status color or default to black */
   const currentMediaColor = useCallback((override = status) => MEDIA_STATUS_COLORS[override] || '#222', [status]);
 
+  const handleBadRequest = useCallback(() => {
+    setGlobalValues({
+      type: 'ALERT',
+      data: {
+        active: true,
+        content: 'Something went wrong with the request. The page will automatically refresh in 2 seconds.',
+        duration: 2000,
+        style: presets.red,
+      },
+    });
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+  }, [setGlobalValues]);
 
   const switchMediaMode = useCallback((newStatus) => {
     setStatus(newStatus);
@@ -60,11 +75,12 @@ const DataForm = ({
       }), token);
       fetch(ANILIST_BASE_URL, options)
         .then((resp) => resp.json())
-        .then(() => {
-          transitionCallback(); // return to search phase
-        });
+        .then((resp) => (resp.ok
+          ? transitionCallback() // return to search phase
+          : handleBadRequest()))
+        .catch(handleBadRequest);
     }
-  }, [mediaId, progress, score, status, switchMediaMode, token, transitionCallback]);
+  }, [handleBadRequest, mediaId, progress, score, status, switchMediaMode, token, transitionCallback]);
 
   /* Event handling setup and initial form focus */
   useEffect(() => {
