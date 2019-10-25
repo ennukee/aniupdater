@@ -12,7 +12,6 @@ const SearchItem = ({
     opacity: loaded ? 1 : 0,
   });
   useEffect(() => {
-    // setLoaded(true);
     const load = setTimeout(() => setLoaded(true), index * 25);
     return () => clearTimeout(load);
   }, [index]);
@@ -30,13 +29,13 @@ const SearchItem = ({
       <animated.div
         className="img"
         style={{
+          // TODO
           // backgroundImage: `url('${coverImage}')`,
           border: '1px solid #222',
           height: '100%',
           backgroundColor: `#${`${Math.floor(
             Math.random() * 9,
           )}`.repeat(6)}`,
-          // ...imageProps,
         }}
       >
         {isFlatView ? (

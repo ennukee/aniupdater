@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import GlobalContext from '../../util/GlobalContext';
 
 const MediaTypeSelectionPhase = ({ transitionCallback, username }) => {
-  // const [alertActive, setAlertActive] = useState(false);
   const { setGlobalValues } = useContext(GlobalContext);
 
   const handleKeyPress = useCallback((e) => {

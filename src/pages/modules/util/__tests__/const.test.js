@@ -12,7 +12,6 @@ it('has all values used in production', () => {
     'SHOULD_SCORE_MEDIA_STATUS',
   ];
   VARS_USED.forEach((value) => {
-    // console.log(value);
     expect(c[value]).toBeDefined();
   });
 });

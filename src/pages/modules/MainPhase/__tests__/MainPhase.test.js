@@ -4,6 +4,7 @@ import {
   fireEvent,
   act,
   waitForElement,
+  wait,
 } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import fetch from 'jest-fetch-mock';
@@ -31,6 +32,14 @@ describe('MainPhase.js', () => {
     );
     return { container };
   };
+
+  // TODO: Send to Main.test.js when it is made (currently does not exist)
+  it.skip('loads the alert upon initial render of phase', async () => {
+    const { container } = setup();
+    const alertContainer = await waitForElement(() => container.querySelector('#alert-container'));
+    expect(alertContainer).not.toBeNull();
+    await wait(() => expect(alertContainer).toHaveStyle('opacity: 1'));
+  });
 
   it('differentiates search caching between different media types', async () => {
     const { container } = setup();
