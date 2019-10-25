@@ -85,8 +85,8 @@ SearchItem.propTypes = {
   showTitle: PropTypes.bool,
   index: PropTypes.number.isRequired,
   isFlatView: PropTypes.bool.isRequired,
-  progress: PropTypes.string.isRequired,
-  maxProgress: PropTypes.string.isRequired,
+  progress: PropTypes.number.isRequired,
+  maxProgress: PropTypes.number.isRequired,
 };
 
 SearchItem.defaultProps = {

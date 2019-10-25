@@ -26,8 +26,8 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
 
   const [cachedSearchResults, affectCachedSearchResults] = useReducer((state, action) => {
     // ? -> action = { type: 'WIPE_CACHE' }
-    // ? -> action = { type: 'DELETE_QUERY', query: 'DEFABC' }
-    // ? -> action = { query: "ABCDEF", page: 0, searchPages: 99, result: [...] }
+    // ? -> action = { type: 'DELETE_QUERY', mediaType: 'ANIME', query: 'DEFABC' }
+    // ? -> action = { query: "ABCDEF", mediaType: 'ANIME', page: 0, searchPages: 99, result: [...] }
 
     let newState;
     if (action.type === 'WIPE_CACHE') {
@@ -46,7 +46,12 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
       });
     } else if (action.type === 'DELETE_QUERY') {
       newState = {
-        ...Object.fromEntries(Object.entries(state).filter(([k]) => k !== action.query)),
+        ...state,
+        [action.mediaType]: {
+          ...Object.fromEntries(
+            Object.entries(state[action.mediaType] || {}).filter(([k]) => k !== action.query)
+          ),
+        },
       };
       setGlobalValues({
         type: 'ALERT',
@@ -64,12 +69,15 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
       newState = {
         // Persist existing cached state
         ...state,
-        [action.query]: {
-          searchPages: action.searchPages,
-          // As well as persist existing page data about this query, defaulting in case
-          // of us not knowing what this query is yet
-          ...state[action.query] || [],
-          [action.page]: action.results,
+        [action.mediaType]: {
+          ...state[action.mediaType] || {},
+          [action.query]: {
+            searchPages: action.searchPages,
+            // As well as persist existing page data about this query, defaulting in case
+            // of us not knowing what this query is yet
+            ...(state[action.mediaType] || {})[action.query] || {},
+            [action.page]: action.results,
+          },
         },
       };
     }
@@ -101,11 +109,7 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
     transitionCallback(searchResults[index]);
   }, [searchResults, transitionCallback]);
 
-  const searchResultParse = useCallback((resp, stateOptions) => {
-    const {
-      direction = 0,
-    } = stateOptions;
-
+  const searchResultParse = useCallback((resp, { direction = 0, page: pageParsed }) => {
     if (resp.data.Page.media.length === 0) {
       // If no results, default to your "no results" set
       setSearchResults(consts.NO_RESULTS_FOUND_RESPONSE);
@@ -114,20 +118,21 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
       setSearchResults(resp.data.Page.media || consts.NO_RESULTS_FOUND_RESPONSE);
       affectCachedSearchResults({
         query: search,
-        page: page + direction,
+        mediaType: type,
+        page: pageParsed + direction,
         results: resp.data.Page.media,
         searchPages: Math.min(10, Math.ceil(resp.data.Page.pageInfo.total / 4)),
       });
       setSearchPages(Math.min(10, Math.ceil(resp.data.Page.pageInfo.total / 4)));
     }
-  }, [page, search]);
+  }, [search, type]);
 
-  const initiateSearch = useCallback((queryOptions, { direction = 0 }) => {
-    console.info(`Currently checking local cache for query = '${search}' on page index ${page + direction}...`);
-    if (cachedSearchResults[search] && cachedSearchResults[search][page + direction]) {
+  const initiateSearch = useCallback((queryOptions, { pageOverride = 0, direction = 0 }) => {
+    console.info(`Currently checking local cache for query = '${search}' on page index ${(pageOverride || page) + direction}...`);
+    if (cachedSearchResults[type] && cachedSearchResults[type][search] && cachedSearchResults[type][search][(pageOverride || page) + direction]) {
       console.info('Found cached query, restoring it now');
-      setSearchResults(cachedSearchResults[search][page + direction]);
-      setSearchPages(cachedSearchResults[search].searchPages);
+      setSearchResults(cachedSearchResults[type][search][(pageOverride || page) + direction]);
+      setSearchPages(cachedSearchResults[type][search].searchPages);
       setGlobalValues({
         type: 'ALERT',
         data: {
@@ -151,11 +156,11 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
       .then((resp) => resp.json())
       .then((resp) => {
         searchResultParse(resp, {
-          page, direction, cachedSearchResults,
+          page: (pageOverride || page), direction, cachedSearchResults,
         });
       })
       .catch(handleBadRequest);
-  }, [search, page, cachedSearchResults, handleBadRequest, setGlobalValues, searchResultParse]);
+  }, [search, page, cachedSearchResults, handleBadRequest, setGlobalValues, searchResultParse, type]);
 
   const changeSearchPage = useCallback((direction, baseQueryCallback) => {
     if (page + direction < 1 || page + direction > searchPages) return; // No page 0s or extra queries :)
@@ -184,6 +189,7 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
         if (isShifting) {
           affectCachedSearchResults({
             type: 'DELETE_QUERY',
+            mediaType: type,
             query: search,
           });
           e.preventDefault();
@@ -206,7 +212,7 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
         setPage(1);
 
         const options = generateQueryJson(searchQueryBase(1, search, type), token);
-        initiateSearch(options, {});
+        initiateSearch(options, { pageOverride: 1 });
         break;
       default:
         document.getElementById('search-input').focus();
