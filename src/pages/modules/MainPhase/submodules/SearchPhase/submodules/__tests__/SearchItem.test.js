@@ -7,7 +7,7 @@ import SearchItem from '../SearchItem';
 
 describe('search item DOM tests', () => {
   describe('both views', () => {
-    // When the backgroundImage is uncommented in SearchItem, unskip this
+    // TODO: When the backgroundImage is uncommented in SearchItem, unskip this
     it.skip('loads the coverImage', () => {
       const imgUrl = 'http://a.ya/ya.png';
       const { container } = render(
@@ -32,6 +32,35 @@ describe('search item DOM tests', () => {
         />,
       );
       expect(container.querySelector('.result-item-title')).toHaveTextContent('AYAYA');
+    });
+    it('loads the progress when it exists', () => {
+      const { container } = render(
+        <SearchItem
+          color="#eee"
+          title="AYAYA"
+          index={2}
+          progress={23}
+          maxProgress={24}
+          coverImage=""
+          isFlatView
+        />,
+      );
+      expect(container.querySelector('#result-item-media-progress')).toBeDefined();
+      expect(container.querySelector('#result-item-media-progress')).toHaveTextContent('23 / 24');
+    });
+    it('does not load the progress when it is absent', () => {
+      const { container } = render(
+        <SearchItem
+          color="#eee"
+          title="AYAYA"
+          index={2}
+          progress={null}
+          maxProgress={24}
+          coverImage=""
+          isFlatView
+        />,
+      );
+      expect(container.querySelector('#result-item-media-progress')).toBeNull();
     });
   });
   describe('flat view', () => {

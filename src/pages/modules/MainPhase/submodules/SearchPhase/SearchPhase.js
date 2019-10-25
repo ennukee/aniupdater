@@ -261,6 +261,8 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
             title={work.title.userPreferred}
             showTitle={showTitles}
             isFlatView={isFlatView}
+            progress={work.mediaListEntry ? work.mediaListEntry.progress : null}
+            maxProgress={work.episodes || work.chapters}
           />
         ))}
       </div>
