@@ -11,8 +11,6 @@ import MainPhase from '../MainPhase';
 import { SEARCH_PHASE_MOCK_RESPONSE, SEARCH_PHASE_MOCK_RESPONSE_PARTIAL } from '../../util/const';
 import GlobalContext from '../../util/GlobalContext';
 
-const wait = async (dur) => { await new Promise((r) => setTimeout(r, dur)); };
-
 describe('MainPhase.js', () => {
   const setup = () => {
     const setGlobalCallbackFn = jest.fn();

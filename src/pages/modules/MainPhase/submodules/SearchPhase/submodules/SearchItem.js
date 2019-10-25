@@ -4,7 +4,7 @@ import { useSpring, animated } from 'react-spring';
 
 const SearchItem = ({
   // eslint-disable-next-line no-unused-vars
-  color, coverImage, title, showTitle, index, isFlatView, progress, maxProgress,
+  color, coverImage, title, index, isFlatView, progress, maxProgress,
 }) => {
   const [loaded, setLoaded] = useState(false);
   const itemProps = useSpring({
@@ -70,7 +70,6 @@ const SearchItem = ({
               )}
           </animated.div>
         )}
-        
       </animated.div>
     </animated.div>
   );
@@ -82,13 +81,8 @@ SearchItem.propTypes = {
   color: PropTypes.string.isRequired,
   coverImage: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  showTitle: PropTypes.bool,
   index: PropTypes.number.isRequired,
   isFlatView: PropTypes.bool.isRequired,
   progress: PropTypes.number.isRequired,
   maxProgress: PropTypes.number.isRequired,
-};
-
-SearchItem.defaultProps = {
-  showTitle: false,
 };
