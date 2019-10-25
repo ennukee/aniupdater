@@ -15,7 +15,6 @@ import { presets } from '../../../util/Alert';
 
 const SearchPhase = ({ transitionCallback, token, type }) => {
   const [search, setSearch] = useState('');
-  const [showTitles, setShowTitles] = useState(true);
   const [searchResults, setSearchResults] = useState(consts.NO_RESULTS_FOUND_RESPONSE);
   const [page, setPage] = useState(1);
   const [searchPages, setSearchPages] = useState(0);
@@ -49,7 +48,7 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
         ...state,
         [action.mediaType]: {
           ...Object.fromEntries(
-            Object.entries(state[action.mediaType] || {}).filter(([k]) => k !== action.query)
+            Object.entries(state[action.mediaType] || {}).filter(([k]) => k !== action.query),
           ),
         },
       };
@@ -128,8 +127,12 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
   }, [search, type]);
 
   const initiateSearch = useCallback((queryOptions, { pageOverride = 0, direction = 0 }) => {
-    console.info(`Currently checking local cache for query = '${search}' on page index ${(pageOverride || page) + direction}...`);
-    if (cachedSearchResults[type] && cachedSearchResults[type][search] && cachedSearchResults[type][search][(pageOverride || page) + direction]) {
+    console.info(
+      `Currently checking local cache for query = '${search}' on page index ${(pageOverride || page) + direction}...`,
+    );
+    if (cachedSearchResults[type]
+      && cachedSearchResults[type][search]
+      && cachedSearchResults[type][search][(pageOverride || page) + direction]) {
       console.info('Found cached query, restoring it now');
       setSearchResults(cachedSearchResults[type][search][(pageOverride || page) + direction]);
       setSearchPages(cachedSearchResults[type][search].searchPages);
@@ -265,7 +268,6 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
             color={work.coverImage.color}
             coverImage={work.coverImage.large}
             title={work.title.userPreferred}
-            showTitle={showTitles}
             isFlatView={isFlatView}
             progress={work.mediaListEntry ? work.mediaListEntry.progress : null}
             maxProgress={work.episodes || work.chapters}

@@ -14,7 +14,6 @@ describe('page progression rendering', () => {
       />,
     );
     expect(container.querySelector('#page-prog-container')).toBeNull();
-    // expect(container.querySelector('#alert-content')).toHaveTextContent('Hello world');
   });
 
   it('renders when there are pages', () => {
@@ -25,7 +24,6 @@ describe('page progression rendering', () => {
       />,
     );
     expect(container.querySelector('#page-prog-container')).not.toBeNull();
-    // expect(container.querySelector('#alert-content')).toHaveTextContent('Hello world');
   });
 });
 

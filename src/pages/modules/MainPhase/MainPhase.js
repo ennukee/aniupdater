@@ -146,27 +146,29 @@ MainPhase.propTypes = {
 
 export default MainPhase;
 
+/*
 // Commented until I find a way to query a user's lists like you can query anime
-// useEffect(() => {
-//   if (!userId || !type) {
-//     return;
-//   }
-//   const queryBody = VIEWER_RELEVANT_MEDIA_QUERY_GEN(userId, type);
-//   const options = generateQueryJson(queryBody, token);
-//   fetch(ANILIST_BASE_URL, options)
-//     .then((resp) => resp.json())
-//     .then((resp) => {
-//       // Take the response from our query and transform it into a desirable form
-//       console.log(resp, queryBody);
-//       const watchingOrCompleted = resp.data.MediaListCollection.lists
-//         // First, filter out the Dropped / On-hold / Planning lists as we probably don't care
-//         .filter((list) => ['Reading', 'Completed', 'Watching'].includes(list.name))
-//         // Next, we reduce the two remaining arrays (either Reading / Completed or Watching / Completed) into one
-//         .reduce((acc, cur) => [...acc, ...cur.entries
-//           // And we make sure to map the objects (e.g. { mediaId: 125 }) down to just their value (e.g. 125)
-//           .map((obj) => obj.mediaId),
-//         ], []);
+useEffect(() => {
+  if (!userId || !type) {
+    return;
+  }
+  const queryBody = VIEWER_RELEVANT_MEDIA_QUERY_GEN(userId, type);
+  const options = generateQueryJson(queryBody, token);
+  fetch(ANILIST_BASE_URL, options)
+    .then((resp) => resp.json())
+    .then((resp) => {
+      // Take the response from our query and transform it into a desirable form
+      console.log(resp, queryBody);
+      const watchingOrCompleted = resp.data.MediaListCollection.lists
+        // First, filter out the Dropped / On-hold / Planning lists as we probably don't care
+        .filter((list) => ['Reading', 'Completed', 'Watching'].includes(list.name))
+        // Next, we reduce the two remaining arrays (either Reading / Completed or Watching / Completed) into one
+        .reduce((acc, cur) => [...acc, ...cur.entries
+          // And we make sure to map the objects (e.g. { mediaId: 125 }) down to just their value (e.g. 125)
+          .map((obj) => obj.mediaId),
+        ], []);
 
-//       console.log(watchingOrCompleted);
-//     });
-// }, [token, type, userId]);
+      console.log(watchingOrCompleted);
+    });
+}, [token, type, userId]);
+*/

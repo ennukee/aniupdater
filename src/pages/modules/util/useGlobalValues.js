@@ -17,7 +17,7 @@ const useGlobalValues = () => {
         type: 'RESET_ALERT',
       }
     */
-    // console.info(`Global context reducer: ${action.type}`, action.data);
+    /* console.info(`Global context reducer: ${action.type}`, action.data); */
     if (action.type === 'ALERT') {
       return {
         ...state,

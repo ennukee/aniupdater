@@ -65,10 +65,6 @@ const DataForm = ({
     };
     if (newStatus) {
       switchMediaMode(newStatus);
-      // setAlertActive(MEDIA_STATUS_ALERT_MESSAGES[newStatus]);
-      // setTimeout(() => {
-      //   setAlertActive(null);
-      // }, 1000);
     } else if (e.key === 'Enter') {
       const options = generateQueryJson(POST_MEDIA_CHANGE_QUERY_GEN({
         mediaId, status, score, progress,
@@ -105,6 +101,7 @@ const DataForm = ({
         <div
           id="data-form-image"
           style={{
+            // TODO
             // backgroundImage: `url('${image}')`,
             backgroundColor: `#${`${Math.floor(
               Math.random() * 9,
