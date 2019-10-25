@@ -4,7 +4,7 @@ import { useSpring, animated } from 'react-spring';
 
 const SearchItem = ({
   // eslint-disable-next-line no-unused-vars
-  color, coverImage, title, showTitle, index, isFlatView,
+  color, coverImage, title, showTitle, index, isFlatView, progress, maxProgress,
 }) => {
   const [loaded, setLoaded] = useState(false);
   const itemProps = useSpring({
@@ -45,6 +45,14 @@ const SearchItem = ({
             className="result-item-title"
           >
             {title}
+            {progress
+              && (
+              <animated.div
+                id="result-item-media-progress"
+              >
+                {`${progress} / ${maxProgress}`}
+              </animated.div>
+              )}
           </animated.div>
         ) : (
           <animated.div
@@ -52,8 +60,17 @@ const SearchItem = ({
             className="result-item-title"
           >
             {title}
+            {progress
+              && (
+              <animated.div
+                id="result-item-media-progress"
+              >
+                {`${progress} / ${maxProgress}`}
+              </animated.div>
+              )}
           </animated.div>
         )}
+        
       </animated.div>
     </animated.div>
   );
@@ -68,6 +85,8 @@ SearchItem.propTypes = {
   showTitle: PropTypes.bool,
   index: PropTypes.number.isRequired,
   isFlatView: PropTypes.bool.isRequired,
+  progress: PropTypes.string.isRequired,
+  maxProgress: PropTypes.string.isRequired,
 };
 
 SearchItem.defaultProps = {

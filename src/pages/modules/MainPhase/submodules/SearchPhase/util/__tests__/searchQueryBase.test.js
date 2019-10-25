@@ -9,6 +9,8 @@ it('generates the correct search query', () => {
       }
       media(search: "Kimi", type: ANIME) {
         id
+        episodes
+        chapters
         title {
           userPreferred
         }

@@ -5,6 +5,8 @@ export default (newPage, search, type) => `query {
       }
       media(search: "${search}", type: ${type}) {
         id
+        episodes
+        chapters
         title {
           userPreferred
         }
