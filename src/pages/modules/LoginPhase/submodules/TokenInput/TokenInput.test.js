@@ -6,7 +6,7 @@ import {
 import '@testing-library/jest-dom/extend-expect';
 import 'jest-canvas-mock';
 import fetch from 'jest-fetch-mock';
-import TokenInput from '../TokenInput';
+import TokenInput from './TokenInput';
 
 describe('preloading token in localStorage', () => {
   it('loads token and attempts to verify', () => {

@@ -3,8 +3,8 @@ import {
   render,
 } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import Alert from '../Alert';
-import GlobalContext from '../GlobalContext';
+import Alert from './Alert';
+import GlobalContext from '../util/GlobalContext';
 
 describe('alert dialog tests', () => {
   const setGlobalCallbackFn = jest.fn();

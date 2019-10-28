@@ -3,7 +3,7 @@ import {
   render,
 } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import PageProgression from '../PageProgression';
+import PageProgression from './PageProgression';
 
 describe('page progression rendering', () => {
   it('does not render when there arent pages', () => {

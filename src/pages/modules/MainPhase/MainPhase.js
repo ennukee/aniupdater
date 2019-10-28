@@ -5,9 +5,9 @@ import { useSpring, animated } from 'react-spring';
 
 /* Modules */
 import SearchPhase from './submodules/SearchPhase/SearchPhase';
-import MediaTypeSelectionPhase from './submodules/MediaTypeSelectionPhase';
-import DataForm from './submodules/DataForm';
-import HelpMessage from './submodules/HelpMessage';
+import MediaTypeSelectionPhase from './submodules/MediaTypeSelectionPhase/MediaTypeSelectionPhase';
+import DataForm from './submodules/DataForm/DataForm';
+import HelpMessage from './submodules/HelpMessage/HelpMessage';
 
 /* Custom Hooks */
 import useHelpMap from './util/useHelpMap';

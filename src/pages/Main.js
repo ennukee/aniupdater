@@ -4,13 +4,13 @@ import React, { useState, useMemo } from 'react';
 /* Modules */
 import LoginPhase from './modules/LoginPhase/LoginPhase';
 import MainPhase from './modules/MainPhase/MainPhase';
-import Footer from './modules/Footer';
-import Alert from './modules/util/Alert';
+import Footer from './modules/Footer/Footer';
+import Alert from './modules/Alert/Alert';
 import GlobalContext from './modules/util/GlobalContext';
 import useGlobalValues from './modules/util/useGlobalValues';
 
 /* Styles */
-import './css/Main.css';
+import './Main.css';
 
 const width = 500;
 

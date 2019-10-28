@@ -4,7 +4,7 @@ import {
   render, fireEvent, act,
 } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import LoadingAnim from '../LoadingAnim';
+import LoadingAnim from './LoadingAnim';
 
 describe('loading anim tests', () => {
   it('preloads small image before main image', () => {
