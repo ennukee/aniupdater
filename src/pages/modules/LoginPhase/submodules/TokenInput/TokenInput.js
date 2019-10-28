@@ -5,8 +5,8 @@ import { useSpring, animated } from 'react-spring';
 import './TokenInput.css';
 import PropTypes from 'prop-types';
 
-import generateQueryJson from '../../util/generateQueryJson';
-import * as consts from '../../util/const';
+import generateQueryJson from '../../../util/generateQueryJson';
+import * as consts from '../../../util/const';
 
 const TokenInput = ({ callback }) => {
   const [inputVal, setInputVal] = useState('');

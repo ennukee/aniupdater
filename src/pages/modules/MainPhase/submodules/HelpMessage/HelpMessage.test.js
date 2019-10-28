@@ -3,7 +3,7 @@ import {
   render,
 } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import HelpMessage from '../HelpMessage';
+import HelpMessage from './HelpMessage';
 
 const setup = ({ substate = 'state1', prevSubstate = 'state0' } = {}) => {
   const { container } = render(

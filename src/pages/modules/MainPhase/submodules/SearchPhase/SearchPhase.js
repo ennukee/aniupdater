@@ -2,18 +2,17 @@ import React, {
   useState, useEffect, useCallback, useReducer, useContext,
 } from 'react';
 import PropTypes from 'prop-types';
+import { IoIosSearch } from 'react-icons/io';
 
-import SearchItem from './submodules/SearchItem';
-import PageProgression from './submodules/PageProgression';
+import SearchItem from './submodules/SearchItem/SearchItem';
+import PageProgression from './submodules/PageProgression/PageProgression';
 
 import GlobalContext from '../../../util/GlobalContext';
 import searchQueryBase from './util/searchQueryBase';
 import generateQueryJson from '../../../util/generateQueryJson';
 import * as consts from '../../../util/const';
 import useKeyModifiers from '../../util/useKeyModifiers';
-import { presets } from '../../../util/Alert';
-
-import { IoIosSearch } from 'react-icons/io';
+import { presets } from '../../../Alert/Alert';
 
 const SearchPhase = ({ transitionCallback, token, type }) => {
   const [search, setSearch] = useState('');
@@ -250,7 +249,6 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
         <PageProgression maxPages={searchPages} page={page} />
       </div>
       <div id="search-input-container">
-        
         <input
           type="text"
           id="search-input"

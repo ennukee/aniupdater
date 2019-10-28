@@ -9,12 +9,12 @@ import {
   POST_MEDIA_CHANGE_QUERY_GEN,
   ANILIST_BASE_URL,
   MEDIA_STATUS_ALERT_MESSAGES,
-} from '../../util/const';
-import generateQueryJson from '../../util/generateQueryJson';
+} from '../../../util/const';
+import generateQueryJson from '../../../util/generateQueryJson';
 
 import './DataForm.css';
-import GlobalContext from '../../util/GlobalContext';
-import { presets } from '../../util/Alert';
+import GlobalContext from '../../../util/GlobalContext';
+import { presets } from '../../../Alert/Alert';
 
 const DataForm = ({
   title, image, color, type, token, mediaId, transitionCallback, presetProgress, presetScore,

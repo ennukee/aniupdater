@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useSpring, animated } from 'react-spring';
 
 import './Alert.css';
-import GlobalContext from './GlobalContext';
+import GlobalContext from '../util/GlobalContext';
 
 const Alert = () => {
   const {
@@ -79,6 +79,6 @@ export const presets = {
   black: {
     borderColor: '#242229',
     backgroundColor: '#24222966',
-  }
+  },
 };
 export default Alert;

@@ -9,4 +9,6 @@ To be upfront, it's because I was taking *way* too long whenever I logged onto A
 
 **While still fully uncompleted, you can view an early version of the site here:** http://www.aniupdater.com/
 
+## Contribution Guidelines
 
+Please see CONTRIBUTING.md for information on contributing to this open source project.

@@ -6,7 +6,7 @@ import {
 } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import fetch from 'jest-fetch-mock';
-import DataForm from '../DataForm';
+import DataForm from './DataForm';
 import { MEDIA_STATUS_COLORS, ANILIST_BASE_URL } from '../../../util/const';
 import GlobalContext from '../../../util/GlobalContext';
 

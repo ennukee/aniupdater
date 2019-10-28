@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSpring, animated } from 'react-spring';
-import TokenInput from './submodules/TokenInput';
-import LoginButton from './submodules/LoginButton';
-import LoadingAnim from './submodules/LoadingAnim';
+import TokenInput from './submodules/TokenInput/TokenInput';
+import LoginButton from './submodules/LoginButton/LoginButton';
+import LoadingAnim from './submodules/LoadingAnim/LoadingAnim';
 
 
 const LoginPhase = ({
