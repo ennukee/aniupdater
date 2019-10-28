@@ -13,6 +13,8 @@ import * as consts from '../../../util/const';
 import useKeyModifiers from '../../util/useKeyModifiers';
 import { presets } from '../../../util/Alert';
 
+import { IoIosSearch } from 'react-icons/io';
+
 const SearchPhase = ({ transitionCallback, token, type }) => {
   const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState(consts.NO_RESULTS_FOUND_RESPONSE);
@@ -247,13 +249,27 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
       <div id="page-slider">
         <PageProgression maxPages={searchPages} page={page} />
       </div>
-      <input
-        type="text"
-        id="search-input"
-        placeholder="Title"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
+      <div id="search-input-container">
+        
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Title"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <IoIosSearch
+          size="2em"
+          color="#222"
+          style={{
+            position: 'absolute',
+            left: '0',
+            paddingRight: '3px',
+            marginLeft: '15px',
+            zIndex: '500',
+          }}
+        />
+      </div>
       <div
         // style={gridProps}
         id="results-view"

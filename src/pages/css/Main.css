@@ -162,9 +162,19 @@ body {
   align-items: center;
 }
 
-#search-input {
+#search-input-container {
+  position: relative;
   width: 80%;
-  padding: 15px 20px 15px 25px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+#search-input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 15px 20px 15px 50px;
   font-size: 18px;
   border-radius: 50px;
   border: 2px solid #99e0;
