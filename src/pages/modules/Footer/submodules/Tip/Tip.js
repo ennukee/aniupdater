@@ -42,7 +42,7 @@ const Tip = () => {
   useEffect(() => {
     const intrvl = setInterval(() => {
       setTipCount((tC) => tC + 1);
-    }, 5000); // TODO: Bring up this interval
+    }, 10000);
     return () => clearInterval(intrvl);
   }, []);
   return (
