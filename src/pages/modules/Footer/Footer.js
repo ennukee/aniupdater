@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
+import Tip from './submodules/Tip/Tip';
 import './Footer.css';
 
 const Footer = () => (
@@ -29,6 +30,9 @@ const Footer = () => (
         data-tip="enragednuke#0001"
         src={`${process.env.PUBLIC_URL}/logos/discord.svg`}
       />
+    </div>
+    <div id="tip-container">
+      <Tip />
     </div>
   </>
 );

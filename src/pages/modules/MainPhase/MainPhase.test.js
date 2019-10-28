@@ -61,7 +61,7 @@ describe('MainPhase.js', () => {
 
     // Then we wait for data phase to be loaded and check localStorage
     await waitForElement(() => container.querySelector('#data-phase'));
-    console.log(JSON.parse(window.localStorage.getItem('cachedResults')));
+    // console.log(JSON.parse(window.localStorage.getItem('cachedResults')));
     expect(JSON.parse(window.localStorage.getItem('cachedResults')).ANIME.TEST).toBeDefined();
     expect(fetch.mock.calls.length).toBe(1);
 
@@ -90,7 +90,7 @@ describe('MainPhase.js', () => {
 
     // Then we check for the same query as before but in the manga cache
     await waitForElement(() => container.querySelector('#data-phase'));
-    console.log(window.localStorage);
+    // console.log(window.localStorage);
     expect(JSON.parse(window.localStorage.getItem('cachedResults')).MANGA.TEST).toBeDefined();
     expect(fetch.mock.calls.length).toBe(2);
   });

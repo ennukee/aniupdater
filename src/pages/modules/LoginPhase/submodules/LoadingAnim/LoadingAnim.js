@@ -26,7 +26,6 @@ const LoadingAnim = () => {
       setImageLoaded(true);
       imgRef.current.src = fullImg;
     }
-    console.log(imgRef.current.src);
   };
 
   useEffect(() => {
