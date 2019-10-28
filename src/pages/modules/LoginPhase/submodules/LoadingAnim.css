@@ -1,10 +1,11 @@
 #loading-anim-div {
-    background-image: url(../../../../big.jpg);
+    /*background-image: url(../../../../loading_full.jpg);*/
     background-position-x: 50%;
     background-size: cover;
     border: 2px solid #222 !important;
     animation: shine 1s;
     -webkit-animation: shine 1s;
+
 }
 
 @keyframes shine {

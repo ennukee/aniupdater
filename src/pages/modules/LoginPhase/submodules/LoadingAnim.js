@@ -1,9 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+// import ProgressiveImage from 'react-progressive-image';
 import { useSpring, animated } from 'react-spring';
 import './LoadingAnim.css';
 
+import img from '../../../../loading_verysmall.jpg';
+import fullImg from '../../../../loading_full.jpg';
+
 const LoadingAnim = () => {
   const [loaderStatus, setLoaderStatus] = useState(0);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const imgRef = useRef();
   const scalePerStatus = {
     0: 1,
     1: 1.75,
@@ -15,13 +21,24 @@ const LoadingAnim = () => {
     },
   });
 
+  const handleImageLoad = () => {
+    if (!imageLoaded) {
+      setImageLoaded(true);
+      imgRef.current.src = fullImg;
+    }
+    console.log(imgRef.current.src);
+  };
+
   useEffect(() => {
     setLoaderStatus(1);
     setTimeout(() => setLoaderStatus(2), 750);
   }, []);
   return (
-    <animated.div
+    <animated.img
       id="loading-anim-div"
+      ref={imgRef}
+      src={img}
+      onLoad={handleImageLoad}
       style={{
         position: 'fixed',
         width: '300px',
