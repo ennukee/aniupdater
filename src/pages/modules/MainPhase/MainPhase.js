@@ -64,7 +64,6 @@ const MainPhase = ({
 
   const { isShifting } = useKeyModifiers();
   const handleKeyPress = useCallback((e) => {
-    console.log(e.key, isShifting);
     if (e.key === 'CapsLock' && isShifting) {
       transitionMainState('a-or-m-phase');
     }

@@ -189,7 +189,6 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
         e.preventDefault();
         break;
       case 'Delete':
-        console.log(isShifting, isCtrling);
         if (isShifting) {
           affectCachedSearchResults({
             type: 'DELETE_QUERY',
@@ -225,7 +224,6 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
   }, [changeSearchPage, initiateSearch, isCtrling, isShifting, search, selectMediaIndex, token, type]);
 
   const updateWindowSize = () => {
-    console.log(window.innerWidth / window.innerHeight);
     if (window.innerWidth / window.innerHeight < 1.65) {
       setIsFlatView(true);
     } else {
