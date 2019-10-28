@@ -4,7 +4,7 @@ import {
   act,
 } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import Tip, { tips } from './Tip';
+import Tip from './Tip';
 
 describe('Tip.js tests', () => {
   it('shows the differing tip messages over time', () => {
