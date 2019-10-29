@@ -4,12 +4,30 @@ import ReactTooltip from 'react-tooltip';
 
 import './Avatar.css';
 
-const Avatar = ({ image }) => (
-  <>
-    <ReactTooltip />
-    <div id="profile-image" data-tip="Click here to logout" style={{ backgroundImage: `url(${image})` }} />
-  </>
-);
+const Avatar = ({ image }) => {
+  const handleClick = () => {
+    window.localStorage.removeItem('token');
+    window.location.reload();
+  };
+  const handleKeyClick = (e) => {
+    if (e.key === 'Enter') handleClick();
+  };
+  return image && (
+    <>
+      <ReactTooltip />
+      <div
+        id="profile-image"
+        onClick={handleClick}
+        onKeyDown={handleKeyClick}
+        tabIndex={0}
+        aria-label="Logout"
+        role="button"
+        data-tip="Click here to logout"
+        style={{ backgroundImage: `url(${image})` }}
+      />
+    </>
+  );
+};
 
 Avatar.propTypes = {
   image: PropTypes.string,
