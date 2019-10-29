@@ -6,6 +6,7 @@ import LoginPhase from './modules/LoginPhase/LoginPhase';
 import MainPhase from './modules/MainPhase/MainPhase';
 import Footer from './modules/Footer/Footer';
 import Alert from './modules/Alert/Alert';
+import Logo from './modules/Logo/Logo';
 import GlobalContext from './modules/util/GlobalContext';
 import useGlobalValues from './modules/util/useGlobalValues';
 
@@ -51,6 +52,9 @@ const Main = () => {
       </div>
       <GlobalContext.Provider value={providerValue}>
         <Alert />
+        <Logo
+          mainState={mainState}
+        />
         <LoginPhase
           loginState={loginState}
           width={width}
