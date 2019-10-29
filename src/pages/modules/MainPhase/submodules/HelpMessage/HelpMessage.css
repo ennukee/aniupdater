@@ -5,7 +5,7 @@
     justify-content: center;
     z-index: 10;
     position: fixed;
-    bottom: 50px;
+    bottom: 75px;
     color: #eee;
     text-shadow: -1px 0 #222, 1px 0 #222, 0 1px #222, 0 -1px #222;
 }

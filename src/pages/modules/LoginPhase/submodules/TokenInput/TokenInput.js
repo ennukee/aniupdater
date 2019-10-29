@@ -17,6 +17,7 @@ const TokenInput = ({ callback }) => {
   }), {});
 
   const tokenFailure = (e) => {
+    console.info(e);
     setAlertMessage('This token is either invalid or has expired. '
       + 'Please use the link below to get a new token and try again.');
     setAlertColor({ bg: '#eee', border: '#222' });
@@ -31,7 +32,10 @@ const TokenInput = ({ callback }) => {
 
     window.localStorage.setItem('token', tkn);
     // console.log(resp.data.Viewer);
-    callback(tkn, resp.data.Viewer.id, resp.data.Viewer.name);
+    callback(tkn,
+      resp.data.Viewer.id,
+      resp.data.Viewer.name,
+      resp.data.Viewer.avatar && resp.data.Viewer.avatar.medium);
   };
 
   const authorizeToken = (tkn) => {
