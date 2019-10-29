@@ -17,6 +17,7 @@ const TokenInput = ({ callback }) => {
   }), {});
 
   const tokenFailure = (e) => {
+    console.info(e);
     setAlertMessage('This token is either invalid or has expired. '
       + 'Please use the link below to get a new token and try again.');
     setAlertColor({ bg: '#eee', border: '#222' });
