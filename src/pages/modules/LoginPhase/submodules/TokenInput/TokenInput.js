@@ -32,7 +32,10 @@ const TokenInput = ({ callback }) => {
 
     window.localStorage.setItem('token', tkn);
     // console.log(resp.data.Viewer);
-    callback(tkn, resp.data.Viewer.id, resp.data.Viewer.name);
+    callback(tkn,
+      resp.data.Viewer.id,
+      resp.data.Viewer.name,
+      resp.data.Viewer.avatar && resp.data.Viewer.avatar.medium);
   };
 
   const authorizeToken = (tkn) => {

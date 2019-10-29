@@ -7,6 +7,7 @@ import MainPhase from './modules/MainPhase/MainPhase';
 import Footer from './modules/Footer/Footer';
 import Alert from './modules/Alert/Alert';
 import Logo from './modules/Logo/Logo';
+import Avatar from './modules/Avatar/Avatar';
 import GlobalContext from './modules/util/GlobalContext';
 import useGlobalValues from './modules/util/useGlobalValues';
 
