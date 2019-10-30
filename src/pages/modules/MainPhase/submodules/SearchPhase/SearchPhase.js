@@ -152,10 +152,31 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
           duration: 1500,
         },
       });
-      return;
+      return true;
+    }
+
+    // 2 requests per second rate limiting logic on searches
+    const lastSearchTime = localStorage.getItem('lastSearch') || 0;
+    const timeElapsed = (new Date()).getTime() - lastSearchTime;
+    if (timeElapsed < consts.LOCAL_RATE_LIMIT) {
+      setGlobalValues({
+        type: 'ALERT',
+        data: {
+          active: true,
+          content:
+            `Slow down! Please try again in ${((consts.LOCAL_RATE_LIMIT - timeElapsed) / 1000).toFixed(1)} second(s).`,
+          duration: 1000,
+          style: presets.white,
+        },
+        containerStyle: {
+          top: '150px',
+        },
+      });
+      return null;
     }
 
     console.error('Unable to find a cached query, sending new query out...');
+    localStorage.setItem('lastSearch', (new Date()).getTime());
     fetch(consts.ANILIST_BASE_URL, queryOptions)
       .then((resp) => resp.json())
       .then((resp) => {
@@ -164,6 +185,7 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
         });
       })
       .catch(handleBadRequest);
+    return true;
   }, [search, page, cachedSearchResults, handleBadRequest, setGlobalValues, searchResultParse, type]);
 
   const changeSearchPage = useCallback((direction, baseQueryCallback) => {
@@ -171,11 +193,13 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
 
     const query = baseQueryCallback(page + direction, search, type);
     const options = generateQueryJson(query, token);
-    initiateSearch(options, {
+    const result = initiateSearch(options, {
       page,
       direction,
     });
-    setPage(page + direction);
+    if (result) {
+      setPage(page + direction);
+    }
   }, [initiateSearch, page, search, searchPages, token, type]);
 
   const handleKeyPress = useCallback((e) => {

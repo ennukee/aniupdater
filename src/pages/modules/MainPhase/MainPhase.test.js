@@ -58,6 +58,7 @@ describe('MainPhase.js', () => {
       fireEvent.change(input, { target: { value: 'TEST' } });
     });
     fireEvent.keyDown(input, { key: 'Enter', code: 13 });
+    localStorage.removeItem('lastSearch'); // We have a rate limit of 2s per request -- avoid it in tests
 
     // Then we wait for data phase to be loaded and check localStorage
     await waitForElement(() => container.querySelector('#data-phase'));
