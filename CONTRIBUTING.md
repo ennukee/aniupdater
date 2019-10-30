@@ -8,6 +8,12 @@ However, there are certain guidelines that I ask contributors to adhere to.
 
 Most things, honestly. There's very little we're against including but note there are some preconditions for some of the stuff you may want to contribute
 
+### What not to do
+
+**Since I have not fully released the application, I am not currently accepting contributions yet**. Please wait until I have announced a public release of the application before opening any contributions, as I am often shifting my views and goals about the application during its initial development.
+
+Otherwise, try not to push any changes to your `package.json` / `yarn.lock` without asking or providing rationale prior. You are welcome to install packages for personal development experience, but do not commit them to the repo.
+
 ### Ground rules
 
  * If you plan to add a new feature, ensure that you have created (or that there exists already) a ticket that is marked as a feature request. That ticket should be read over and approved one of the maintainers before you consider implementing it. **It is not unreasonable for myself or a maintainer to turn down a PR if it's for a feature we haven't approved of yet.** 
