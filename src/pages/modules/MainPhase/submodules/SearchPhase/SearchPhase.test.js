@@ -113,6 +113,7 @@ describe('search phase tests', () => {
         fireEvent.change(input, { target: { value: 'TEST' } });
         fireEvent.keyDown(input, { key: 'Enter', code: 13 });
       });
+      localStorage.removeItem('lastSearch'); // We have a rate limit of 2s per request -- avoid it in tests
       await act(async () => {
         fireEvent.keyDown(input, { key: 'ArrowRight', code: 39 });
       });
@@ -207,6 +208,9 @@ describe('search phase tests', () => {
     });
 
     it('doesnt fetch unnecessarily for cached views', async () => {
+      // This also tests that our rate limiting does not apply to cached results (since we do not reset
+      // the rate limit localStorage on the last query)
+
       const { input } = setup();
       expect(fetch.mock.calls.length).toBe(0);
       await act(async () => {
@@ -216,15 +220,43 @@ describe('search phase tests', () => {
       await act(async () => {
         fireEvent.keyDown(input, { key: 'Enter', code: 13 });
       });
+      localStorage.removeItem('lastSearch'); // We have a rate limit of 2s per request -- avoid it in tests
       expect(fetch.mock.calls.length).toBe(1);
       await act(async () => {
         fireEvent.keyDown(input, { key: 'ArrowRight', code: 39 });
       });
+      // NOTE: We do not reset lastSearch here because it should not restrict requests to cached values.
       expect(fetch.mock.calls.length).toBe(2);
       await act(async () => {
         fireEvent.keyDown(input, { key: 'ArrowLeft', code: 37 });
       });
       expect(fetch.mock.calls.length).toBe(2);
+    });
+
+    it('stops requests if they are within the rate limit', async () => {
+      jest.useFakeTimers();
+
+      const { container, input } = setup();
+      expect(fetch.mock.calls.length).toBe(0);
+      await act(async () => {
+        fetch.mockResponse(JSON.stringify(SEARCH_PHASE_MOCK_RESPONSE));
+        fireEvent.change(input, { target: { value: 'TEST' } });
+      });
+      await act(async () => {
+        fireEvent.keyDown(input, { key: 'Enter', code: 13 });
+      });
+
+      // NOTE: We do not reset the rate limit here, as part of the test
+      expect(fetch.mock.calls.length).toBe(1);
+      await act(async () => {
+        fireEvent.keyDown(input, { key: 'ArrowRight', code: 39 });
+      });
+      expect(fetch.mock.calls.length).toBe(1);
+      const pageProgCircles = container.querySelectorAll('#page-prog-container .page-prog-circle');
+      expect(pageProgCircles[0]).toHaveClass('activePage');
+      expect(pageProgCircles[1]).not.toHaveClass('activePage');
+
+      act(() => jest.runAllTimers());
     });
   });
 });
