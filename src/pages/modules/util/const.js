@@ -1,3 +1,4 @@
+export const LOCAL_RATE_LIMIT = 2000; // 2 seconds;
 export const VERIFICATION_QUERY = `query {
   Viewer {
     id
