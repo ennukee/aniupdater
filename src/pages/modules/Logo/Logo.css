@@ -1,5 +1,6 @@
 #aniupdater-logo {
-    position: fixed;
-    background-color: #f99;
-    margin: 10px;
+	position: fixed;
+	background-color: #f99;
+	background-image: url('Logo.png');
+	margin: 10px;
 }
