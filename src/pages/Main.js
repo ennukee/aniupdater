@@ -49,27 +49,29 @@ const Main = () => {
           <source src="http://anilist.co/video/hero.webm" type="video/webm" />
         </video>
       </div>
-      <GlobalContext.Provider value={providerValue}>
-        <Alert />
-        <Logo
-          mainState={mainState}
-        />
-        <Avatar
-          image={userInfo.profileImage}
-        />
-        <LoginPhase
-          loginState={loginState}
-          width={width}
-          submitCallback={(tkn, uid, user, img) => enterMainPhase(tkn, uid, user, img)}
-        />
-        <MainPhase
-          token={token}
-          userId={userInfo.userId}
-          username={userInfo.username}
-          mainState={mainState}
-        />
-      </GlobalContext.Provider>
-      <Footer />
+      <React.StrictMode>
+        <GlobalContext.Provider value={providerValue}>
+          <Alert />
+          <Logo
+            mainState={mainState}
+          />
+          <Avatar
+            image={userInfo.profileImage}
+          />
+          <LoginPhase
+            loginState={loginState}
+            width={width}
+            submitCallback={(tkn, uid, user, img) => enterMainPhase(tkn, uid, user, img)}
+          />
+          <MainPhase
+            token={token}
+            // userId={userInfo.userId}
+            username={userInfo.username}
+            mainState={mainState}
+          />
+        </GlobalContext.Provider>
+        <Footer />
+      </React.StrictMode>
     </div>
   );
 };

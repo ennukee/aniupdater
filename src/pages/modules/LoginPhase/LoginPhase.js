@@ -7,7 +7,7 @@ import LoadingAnim from './submodules/LoadingAnim/LoadingAnim';
 
 
 const LoginPhase = ({
-  loginState, width, submitDisabled, submitCallback,
+  loginState, width, submitCallback,
 }) => {
   // all this to make the loading animation div thing work lol //
   const [preloadBuffer, setPreloadBuffer] = useState(false);
@@ -36,7 +36,6 @@ const LoginPhase = ({
       >
         <TokenInput
           callback={submitCallback}
-          disabled={submitDisabled}
         />
         <LoginButton
           content="No token? Click here to sign in."
@@ -52,7 +51,6 @@ const LoginPhase = ({
 LoginPhase.propTypes = {
   loginState: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
-  submitDisabled: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
 };
 

@@ -19,7 +19,7 @@ import fadePhases from '../util/fadePhases';
 // import generateQueryJson from '../util/generateQueryJson';
 
 const MainPhase = ({
-  token, mainState, userId, username,
+  token, mainState, username,
 }) => {
   const [substate, setSubstate] = useState('a-or-m-phase');
   const [prevSubstate, setPrevSubstate] = useState('');
@@ -139,8 +139,11 @@ const MainPhase = ({
 MainPhase.propTypes = {
   token: PropTypes.string.isRequired,
   mainState: PropTypes.string.isRequired,
-  userId: PropTypes.number.isRequired,
-  username: PropTypes.string.isRequired,
+  username: PropTypes.string,
+};
+
+MainPhase.defaultProps = {
+  username: '',
 };
 
 export default MainPhase;
