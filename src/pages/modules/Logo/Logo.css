@@ -2,5 +2,6 @@
 	position: fixed;
 	background-color: #f99;
 	background-image: url('Logo.png');
+	background-repeat: no-repeat;
 	margin: 10px;
 }
