@@ -12,7 +12,7 @@ const Avatar = ({ image }) => {
   const handleKeyClick = (e) => {
     if (e.key === 'Enter') handleClick();
   };
-  return image && (
+  return (
     <>
       <ReactTooltip />
       <div
@@ -23,7 +23,7 @@ const Avatar = ({ image }) => {
         aria-label="Logout"
         role="button"
         data-tip="Click here to logout"
-        style={{ backgroundImage: `url(${image})` }}
+        style={image ? { backgroundImage: `url(${image})` } : {}}
       />
     </>
   );
