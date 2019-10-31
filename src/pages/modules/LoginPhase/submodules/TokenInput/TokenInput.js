@@ -1,6 +1,9 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, {
+  useState, useEffect, useReducer, useCallback,
+} from 'react';
 import UseAnimations from 'react-useanimations';
 import { useSpring, animated } from 'react-spring';
+import { IoIosCheckmark } from 'react-icons/io';
 
 import './TokenInput.css';
 import PropTypes from 'prop-types';
@@ -10,7 +13,7 @@ import * as consts from '../../../util/const';
 
 const TokenInput = ({ callback }) => {
   const [inputVal, setInputVal] = useState('');
-  const [disabled, setDisabled] = useState(false);
+  const [processing, setProcessing] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [alertColor, setAlertColor] = useReducer((oldV, newV) => ({
     ...oldV, ...newV,
@@ -21,10 +24,10 @@ const TokenInput = ({ callback }) => {
     setAlertMessage('This token is either invalid or has expired. '
       + 'Please use the link below to get a new token and try again.');
     setAlertColor({ bg: '#eee', border: '#222' });
-    setDisabled(false);
+    setProcessing(false);
   };
 
-  const tokenSuccess = (resp, tkn) => {
+  const tokenSuccess = useCallback((resp, tkn) => {
     if (!resp || !resp.data || !resp.data.Viewer || !resp.data.Viewer.id || !resp.data.Viewer.name) {
       tokenFailure(resp);
       return;
@@ -36,16 +39,20 @@ const TokenInput = ({ callback }) => {
       resp.data.Viewer.id,
       resp.data.Viewer.name,
       resp.data.Viewer.avatar && resp.data.Viewer.avatar.medium);
-  };
+  }, [callback]);
 
-  const authorizeToken = (tkn) => {
-    setDisabled(true);
+  const authorizeToken = useCallback((tkn) => {
+    setProcessing(true);
     const options = generateQueryJson(consts.VERIFICATION_QUERY, tkn);
 
     fetch(consts.ANILIST_BASE_URL, options)
       .then((resp) => resp.json())
       .then((resp) => tokenSuccess(resp, tkn));
-  };
+  }, [tokenSuccess]);
+
+  const handleEnterKeyPress = useCallback((e) => {
+    if (e.key === 'Enter') authorizeToken(inputVal);
+  }, [authorizeToken, inputVal]);
 
   useEffect(() => {
     const preloadedToken = window.localStorage.getItem('token');
@@ -83,21 +90,27 @@ const TokenInput = ({ callback }) => {
           {alertMessage}
         </div>
       </animated.div>
-      <input
-        id="token-input"
-        aria-label="AniList access token input field"
-        type="text"
-        placeholder="AniList Token"
-        value={inputVal}
-        onChange={(e) => setInputVal(e.target.value)}
-      />
-      <input
-        id="token-submit"
-        type="button"
-        value="✓"
-        onClick={() => authorizeToken(inputVal)}
-        disabled={disabled}
-      />
+      <div id="token-input-row">
+        <input
+          id="token-input"
+          aria-label="AniList access token input field"
+          type="text"
+          placeholder="AniList Token"
+          value={inputVal}
+          onKeyDown={handleEnterKeyPress}
+          onChange={(e) => setInputVal(e.target.value)}
+        />
+        <div
+          id="token-submit"
+          className={processing ? 'disabled' : ''}
+          role="button"
+          tabIndex={0}
+          onKeyDown={handleEnterKeyPress}
+          onClick={() => authorizeToken(inputVal)}
+        >
+          <IoIosCheckmark size="3.5em" color={processing ? '666666' : 'c94c96'} />
+        </div>
+      </div>
     </div>
   );
 };
