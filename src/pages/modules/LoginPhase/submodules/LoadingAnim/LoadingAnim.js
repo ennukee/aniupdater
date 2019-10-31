@@ -35,6 +35,7 @@ const LoadingAnim = () => {
   return (
     <animated.img
       id="loading-anim-div"
+      alt="Loading animation image"
       ref={imgRef}
       src={img}
       onLoad={handleImageLoad}

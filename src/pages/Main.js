@@ -46,7 +46,7 @@ const Main = () => {
     <div id="app">
       <div id="bg-video-anim-container">
         <video id="bg-video-anim" autoPlay loop="loop" muted="muted">
-          <source src="http://anilist.co/video/hero.webm" type="video/webm" />
+          <source src="https://anilist.co/video/hero.webm" type="video/webm" />
         </video>
       </div>
       <React.StrictMode>
@@ -55,20 +55,28 @@ const Main = () => {
           <Logo
             mainState={mainState}
           />
-          <Avatar
-            image={userInfo.profileImage}
-          />
-          <LoginPhase
-            loginState={loginState}
-            width={width}
-            submitCallback={(tkn, uid, user, img) => enterMainPhase(tkn, uid, user, img)}
-          />
-          <MainPhase
-            token={token}
-            // userId={userInfo.userId}
-            username={userInfo.username}
-            mainState={mainState}
-          />
+          <nav>
+            <Avatar
+              image={userInfo.profileImage}
+            />
+          </nav>
+          <main>
+            <section>
+              <LoginPhase
+                loginState={loginState}
+                width={width}
+                submitCallback={(tkn, uid, user, img) => enterMainPhase(tkn, uid, user, img)}
+              />
+            </section>
+            <section>
+              <MainPhase
+                token={token}
+                // userId={userInfo.userId}
+                username={userInfo.username}
+                mainState={mainState}
+              />
+            </section>
+          </main>
         </GlobalContext.Provider>
         <Footer />
       </React.StrictMode>
