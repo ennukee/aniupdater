@@ -9,8 +9,21 @@
       name="description"
       content="Web site created using create-react-app"
     />
-    <link href="https://fonts.googleapis.com/css?family=Patua+One&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Khula:300,400&display=swap" rel="stylesheet">
+    <script>
+      // No render blocking web font loading
+      WebFontConfig = {
+         google: {
+           families: ['Patua One', 'Khula:300,400&display=swap']
+         }
+      };
+   
+      (function(d) {
+         var wf = d.createElement('script'), s = d.scripts[0];
+         wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js';
+         wf.async = true;
+         s.parentNode.insertBefore(wf, s);
+      })(document);
+   </script>
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
