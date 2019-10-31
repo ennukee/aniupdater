@@ -8,9 +8,18 @@ import 'jest-canvas-mock';
 import Avatar from './Avatar';
 
 describe('Avatar.js', () => {
-  it('should not load anything if no image is supplied', () => {
+  it('should load if no image provided', () => {
     const { container } = render(<Avatar image="" />);
-    expect(container.querySelector('#profile-image')).toBeNull();
+    expect(container.querySelector('#profile-image')).not.toBeNull();
+  });
+
+  // somehow getComputedStyle is not computing styles correctly (it doesn't detect any style in Avatar.css)
+  // but this should work if that issue was resolved
+  it.skip('should load default image when no image provided', () => {
+    const { container } = render(<Avatar />);
+    const div = container.querySelector('#profile-image');
+    expect(div).not.toBeNull();
+    expect(window.getComputedStyle(div).getPropertyValue('background-image')).toBe('url(./default.svg)');
   });
 
   it('loads the element if an image is provided', () => {
