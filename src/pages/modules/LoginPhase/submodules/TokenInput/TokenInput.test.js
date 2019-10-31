@@ -2,6 +2,7 @@ import React from 'react';
 import {
   render,
   fireEvent,
+  act,
 } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import 'jest-canvas-mock';
@@ -18,7 +19,7 @@ describe('TokenInput.js', () => {
   });
 
   afterEach(() => {
-    jest.runAllTimers();
+    jest.advanceTimersByTime(10000);
   });
 
   describe('preloading token in localStorage', () => {
@@ -37,10 +38,9 @@ describe('TokenInput.js', () => {
 
       // Now we resume the normal flow
       const callbackFn = jest.fn();
-      const { container } = render(
+      render(
         <TokenInput callback={callbackFn} />,
       );
-      fireEvent.click(container.querySelector('#token-submit'));
       setTimeout(() => expect(callbackFn).toHaveBeenCalledWith('WOW_A_TOKEN', 3, 'Nobo', 'apples'), 50);
     });
   });
