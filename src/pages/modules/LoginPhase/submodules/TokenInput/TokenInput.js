@@ -85,6 +85,7 @@ const TokenInput = ({ callback }) => {
       </animated.div>
       <input
         id="token-input"
+        aria-label="AniList access token input field"
         type="text"
         placeholder="AniList Token"
         value={inputVal}
