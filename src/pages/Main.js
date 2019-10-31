@@ -57,7 +57,7 @@ const Main = () => {
           />
           <nav>
             <Avatar
-              // image={userInfo.profileImage}
+              image={userInfo.profileImage}
             />
           </nav>
           <main>
