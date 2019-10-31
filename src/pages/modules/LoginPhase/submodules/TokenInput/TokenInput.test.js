@@ -58,6 +58,36 @@ describe('TokenInput.js', () => {
       expect(errorPopup).toBeDefined();
     });
 
+    it('can be accessed via Enter key on input field', () => {
+      fetch.mockResponseOnce(JSON.stringify({
+        data: { Viewer: { id: 5, name: 'Nobody' } },
+      }));
+      const callbackFn = jest.fn();
+      const { container } = render(
+        <TokenInput callback={callbackFn} />,
+      );
+      fireEvent.keyDown(container.querySelector('#token-input'), { key: 'Enter', code: 13 });
+      setTimeout(() => {
+        expect(callbackFn).toHaveBeenCalledWith('', 5, 'Nobody', undefined);
+        expect(window.localStorage.getItem('token')).toBe('');
+      }, 50);
+    });
+
+    it('can be accessed via Enter key on the submit button', () => {
+      fetch.mockResponseOnce(JSON.stringify({
+        data: { Viewer: { id: 5, name: 'Nobody' } },
+      }));
+      const callbackFn = jest.fn();
+      const { container } = render(
+        <TokenInput callback={callbackFn} />,
+      );
+      fireEvent.keyDown(container.querySelector('#token-submit'), { key: 'Enter', code: 13 });
+      setTimeout(() => {
+        expect(callbackFn).toHaveBeenCalledWith('', 5, 'Nobody', undefined);
+        expect(window.localStorage.getItem('token')).toBe('');
+      }, 50);
+    });
+
     it('runs the callback and saves token when token is valid', () => {
       fetch.mockResponseOnce(JSON.stringify({
         data: { Viewer: { id: 5, name: 'Nobody' } },
