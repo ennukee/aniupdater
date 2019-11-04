@@ -274,6 +274,7 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
         <input
           type="text"
           id="search-input"
+          aria-label="Media title search"
           placeholder="Title"
           value={search}
           onChange={(e) => setSearch(e.target.value)}

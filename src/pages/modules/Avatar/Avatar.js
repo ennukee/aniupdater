@@ -4,7 +4,7 @@ import ReactTooltip from 'react-tooltip';
 
 import './Avatar.css';
 
-const Avatar = ({ image }) => {
+const Avatar = ({ image = '' }) => {
   const handleClick = () => {
     window.localStorage.removeItem('token');
     window.location.reload();
@@ -31,10 +31,6 @@ const Avatar = ({ image }) => {
 
 Avatar.propTypes = {
   image: PropTypes.string,
-};
-
-Avatar.defaultProps = {
-  image: '',
 };
 
 export default Avatar;

@@ -17,7 +17,7 @@ import GlobalContext from '../../../util/GlobalContext';
 import { presets } from '../../../Alert/Alert';
 
 const DataForm = ({
-  title, image, color, type, token, mediaId, transitionCallback, presetProgress, presetScore,
+  title, image, color, type, token, mediaId, transitionCallback, presetProgress = undefined, presetScore = undefined,
 }) => {
   const [status, setStatus] = useState('CURRENT');
   const [progress, setProgress] = useState(presetProgress);
@@ -159,11 +159,6 @@ DataForm.propTypes = {
   transitionCallback: PropTypes.func.isRequired,
   presetProgress: PropTypes.number,
   presetScore: PropTypes.number,
-};
-
-DataForm.defaultProps = {
-  presetProgress: undefined,
-  presetScore: undefined,
 };
 
 export default DataForm;
