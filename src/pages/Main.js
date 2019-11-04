@@ -61,6 +61,14 @@ const Main = () => {
             />
           </nav>
           <main>
+            {/* Accessibility concern for screen readers -- ensure an H1 for initial reading */}
+            <h1 style={{
+              position: 'absolute',
+              top: '-500px',
+            }}
+            >
+              AniUpdater
+            </h1>
             <section>
               <LoginPhase
                 loginState={loginState}

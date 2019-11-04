@@ -102,6 +102,7 @@ const TokenInput = ({ callback }) => {
         />
         <div
           id="token-submit"
+          aria-label="Submit"
           className={processing ? 'disabled' : ''}
           role="button"
           tabIndex={0}
