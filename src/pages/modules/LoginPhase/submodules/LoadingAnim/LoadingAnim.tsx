@@ -6,10 +6,6 @@ import './LoadingAnim.css';
 import img from '../../../../../loading_verysmall.webp';
 import fullImg from '../../../../../loading_full.webp';
 
-interface imageRef {
-  src?: string,
-}
-
 const LoadingAnim = () => {
   const [loaderStatus, setLoaderStatus] = useState(0);
   const [imageLoaded, setImageLoaded] = useState(false);

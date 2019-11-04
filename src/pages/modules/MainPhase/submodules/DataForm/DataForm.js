@@ -1,7 +1,7 @@
 import React, {
   useState, useEffect, useCallback, useContext,
 } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import {
   MEDIA_STATUS_COLORS,
   MEDIA_TYPE_SINGLETON_TERM,
@@ -149,16 +149,16 @@ const DataForm = ({
   );
 };
 
-DataForm.propTypes = {
-  title: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  token: PropTypes.string.isRequired,
-  mediaId: PropTypes.number.isRequired,
-  transitionCallback: PropTypes.func.isRequired,
-  presetProgress: PropTypes.number,
-  presetScore: PropTypes.number,
-};
+// DataForm.propTypes = {
+//   title: PropTypes.string.isRequired,
+//   image: PropTypes.string.isRequired,
+//   color: PropTypes.string.isRequired,
+//   type: PropTypes.string.isRequired,
+//   token: PropTypes.string.isRequired,
+//   mediaId: PropTypes.number.isRequired,
+//   transitionCallback: PropTypes.func.isRequired,
+//   presetProgress: PropTypes.number,
+//   presetScore: PropTypes.number,
+// };
 
 export default DataForm;

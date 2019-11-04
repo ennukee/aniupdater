@@ -18,13 +18,38 @@ import useKeyModifiers from './util/useKeyModifiers';
 import fadePhases from '../util/fadePhases';
 // import generateQueryJson from '../util/generateQueryJson';
 
+interface MediaListEntry {
+  progress?: number;
+  score?: number;
+}
+
+interface CoverImage {
+  large?: string;
+  color?: string;
+}
+
+interface Title {
+  userPreferred?: string;
+}
+
+interface SelectedMedia {
+  id?: number;
+  title: Title;
+  coverImage: CoverImage;
+  mediaListEntry?: MediaListEntry | undefined;
+}
+
 const MainPhase = ({
   token, mainState, username = '',
 }) => {
   const [substate, setSubstate] = useState('a-or-m-phase');
   const [prevSubstate, setPrevSubstate] = useState('');
   const [type, setType] = useState('');
-  const [selectedMedia, setSelectedMedia] = useState({});
+  const [selectedMedia, setSelectedMedia] = useState<SelectedMedia>({
+    id: 0,
+    title: { userPreferred: '' },
+    coverImage: { large: '', color: '' }
+  });
 
   const { helpByPhase: helpMap } = useHelpMap();
 
