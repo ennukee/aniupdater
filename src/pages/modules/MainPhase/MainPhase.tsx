@@ -17,20 +17,7 @@ import useKeyModifiers from './util/useKeyModifiers';
 // import { ANILIST_BASE_URL, VIEWER_RELEVANT_MEDIA_QUERY_GEN } from '../util/const';
 import fadePhases from '../util/fadePhases';
 // import generateQueryJson from '../util/generateQueryJson';
-
-interface MediaListEntry {
-  progress?: number;
-  score?: number;
-}
-
-interface CoverImage {
-  large?: string;
-  color?: string;
-}
-
-interface Title {
-  userPreferred?: string;
-}
+import { Title, CoverImage, MediaListEntry } from 'interfaces/interfaces';
 
 interface SelectedMedia {
   id?: number;

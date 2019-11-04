@@ -14,7 +14,7 @@ interface GlobalValuesOptions {
 
 export interface GlobalContextOptions {
     globalValues?: GlobalValuesOptions;
-    setGlobalValues?: Function;
+    setGlobalValues: Function;
 }
 
 export default createContext({});

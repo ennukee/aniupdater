@@ -9,7 +9,10 @@
     "@testing-library/react-hooks": "^3.1.1",
     "@types/node": "^12.12.5",
     "d3-ease": "^1.0.5",
+    "eslint": "^6.6.0",
     "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-airbnb-typescript": "^6.0.0",
+    "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-react-hooks": "^2.0.1",
     "gh-pages": "^2.1.1",
     "jest-canvas-mock": "^2.1.2",
@@ -48,7 +51,11 @@
     ]
   },
   "devDependencies": {
-    "eslint-plugin-prettier": "^3.0.1",
+    "@typescript-eslint/eslint-plugin": "^2.6.1",
+    "@typescript-eslint/parser": "^2.6.1",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "prettier": "^1.18.2",
     "react-test-renderer": "^16.10.1"
   }
 }
