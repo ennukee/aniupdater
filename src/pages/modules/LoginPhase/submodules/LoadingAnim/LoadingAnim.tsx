@@ -6,10 +6,14 @@ import './LoadingAnim.css';
 import img from '../../../../../loading_verysmall.webp';
 import fullImg from '../../../../../loading_full.webp';
 
+interface imageRef {
+  src?: string,
+}
+
 const LoadingAnim = () => {
   const [loaderStatus, setLoaderStatus] = useState(0);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const imgRef = useRef();
+  const imgRef = useRef<HTMLImageElement>(null);
   const scalePerStatus = {
     0: 1,
     1: 1.75,
@@ -24,7 +28,13 @@ const LoadingAnim = () => {
   const handleImageLoad = () => {
     if (!imageLoaded) {
       setImageLoaded(true);
-      imgRef.current.src = fullImg;
+      if(imgRef.current) {
+        imgRef.current.src = fullImg;
+      } else {
+        setTimeout(() => {
+          handleImageLoad()
+        }, 100)
+      }
     }
   };
 
