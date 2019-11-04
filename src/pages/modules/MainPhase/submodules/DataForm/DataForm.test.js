@@ -8,7 +8,7 @@ import '@testing-library/jest-dom/extend-expect';
 import fetch from 'jest-fetch-mock';
 import DataForm from './DataForm';
 import { MEDIA_STATUS_COLORS, ANILIST_BASE_URL } from '../../../util/const';
-import GlobalContext from '../../../util/GlobalContext';
+import GlobalContext from '../../../util/GlobalContext.tsx';
 
 const setup = ({ presetProgress = 0, presetScore = 0 } = {}) => {
   const callbackFn = jest.fn();

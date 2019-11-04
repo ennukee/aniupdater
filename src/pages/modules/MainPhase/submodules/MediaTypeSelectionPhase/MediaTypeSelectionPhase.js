@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 
-import GlobalContext from '../../../util/GlobalContext';
+import GlobalContext from '../../../util/GlobalContext.tsx';
 
 const MediaTypeSelectionPhase = ({ transitionCallback, username }) => {
   const { setGlobalValues } = useContext(GlobalContext);

@@ -13,8 +13,8 @@ import {
 import generateQueryJson from '../../../util/generateQueryJson';
 
 import './DataForm.css';
-import GlobalContext from '../../../util/GlobalContext';
-import { presets } from '../../../Alert/Alert';
+import GlobalContext from '../../../util/GlobalContext.tsx';
+import presets from '../../../Alert/presets';
 
 const DataForm = ({
   title, image, color, type, token, mediaId, transitionCallback, presetProgress = undefined, presetScore = undefined,

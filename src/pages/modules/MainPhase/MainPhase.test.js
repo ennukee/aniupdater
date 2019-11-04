@@ -10,7 +10,7 @@ import '@testing-library/jest-dom/extend-expect';
 import fetch from 'jest-fetch-mock';
 import MainPhase from './MainPhase';
 import { SEARCH_PHASE_MOCK_RESPONSE, SEARCH_PHASE_MOCK_RESPONSE_PARTIAL } from '../util/const';
-import GlobalContext from '../util/GlobalContext';
+import GlobalContext from '../util/GlobalContext.tsx';
 
 describe('MainPhase.js', () => {
   const setup = () => {

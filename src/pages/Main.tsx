@@ -45,7 +45,7 @@ const Main = () => {
   return (
     <div id="app">
       <div id="bg-video-anim-container">
-        <video id="bg-video-anim" autoPlay loop="loop" muted="muted">
+        <video id="bg-video-anim" autoPlay loop={true} muted={true}>
           <source src="https://anilist.co/video/hero.webm" type="video/webm" />
         </video>
       </div>

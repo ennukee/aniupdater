@@ -2,21 +2,21 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useSpring, animated } from 'react-spring';
 
 import './Alert.css';
-import GlobalContext from '../util/GlobalContext';
+import GlobalContext, { GlobalContextOptions } from '../util/GlobalContext';
 
 const Alert = () => {
   const {
     globalValues: {
       alertData: {
-        active,
-        content,
-        containerStyle,
-        style,
+        active = false,
+        content = '',
+        containerStyle = {},
+        style = {},
         duration = 1250,
-      },
-    },
-    setGlobalValues,
-  } = useContext(GlobalContext);
+      } = {},
+    } = {},
+    setGlobalValues = (() => {}),
+  }: GlobalContextOptions = useContext(GlobalContext);
 
   const [cachedAlert, setCachedAlert] = useState(content);
   const alertProps = useSpring({
@@ -57,28 +57,5 @@ const Alert = () => {
       </div>
     </animated.div>
   );
-};
-
-export const presets = {
-  red: {
-    borderColor: '#f99',
-    backgroundColor: '#f996',
-  },
-  orange: {
-    borderColor: '#f96',
-    backgroundColor: '#f966',
-  },
-  green: {
-    borderColor: '#9f9',
-    backgroundColor: '#9b96',
-  },
-  white: {
-    borderColor: '#eee',
-    backgroundColor: '#eee6',
-  },
-  black: {
-    borderColor: '#242229',
-    backgroundColor: '#24222966',
-  },
 };
 export default Alert;

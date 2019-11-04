@@ -7,12 +7,12 @@ import { IoIosSearch } from 'react-icons/io';
 import SearchItem from './submodules/SearchItem/SearchItem';
 import PageProgression from './submodules/PageProgression/PageProgression';
 
-import GlobalContext from '../../../util/GlobalContext';
+import GlobalContext from '../../../util/GlobalContext.tsx';
 import searchQueryBase from './util/searchQueryBase';
 import generateQueryJson from '../../../util/generateQueryJson';
 import * as consts from '../../../util/const';
 import useKeyModifiers from '../../util/useKeyModifiers';
-import { presets } from '../../../Alert/Alert';
+import presets from '../../../Alert/presets';
 
 const SearchPhase = ({ transitionCallback, token, type }) => {
   const [search, setSearch] = useState('');
