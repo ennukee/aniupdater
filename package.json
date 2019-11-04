@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://www.aniupdater.com",
   "dependencies": {
-    "@testing-library/jest-dom": "^4.1.2",
+    "@testing-library/jest-dom": "^4.2.3",
     "@testing-library/react": "^9.3.2",
     "@testing-library/react-hooks": "^3.1.1",
     "d3-ease": "^1.0.5",
