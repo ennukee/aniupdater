@@ -1,5 +1,5 @@
 import generateQueryJson from '../generateQueryJson';
-import { VIEWER_RELEVANT_MEDIA_QUERY_GEN } from '../const';
+import { VIEWER_RELEVANT_MEDIA_QUERY_GEN } from 'Utils/const';
 
 // basically a snapshot test
 it('outputs the correct query JS object', () => {

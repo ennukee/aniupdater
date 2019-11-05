@@ -7,7 +7,7 @@ import {
   POST_MEDIA_CHANGE_QUERY_GEN,
   ANILIST_BASE_URL,
   MEDIA_STATUS_ALERT_MESSAGES,
-} from '../../../util/const';
+} from 'Utils/const';
 import generateQueryJson from '../../../util/generateQueryJson';
 
 import './DataForm.css';

@@ -1,4 +1,4 @@
-import * as c from '../const';
+import * as c from 'Utils/const';
 
 it('has all values used in production', () => {
   const VARS_USED = [

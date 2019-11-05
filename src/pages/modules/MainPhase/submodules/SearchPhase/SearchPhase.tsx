@@ -8,7 +8,7 @@ import PageProgression from './submodules/PageProgression/PageProgression';
 import GlobalContext, { GlobalContextOptions } from '../../../util/GlobalContext';
 import searchQueryBase from './util/searchQueryBase';
 import generateQueryJson from '../../../util/generateQueryJson';
-import * as consts from '../../../util/const';
+import * as consts from 'Utils/const';
 import useKeyModifiers from '../../util/useKeyModifiers';
 import presets from '../../../Alert/presets';
 

@@ -6,8 +6,7 @@ import './TokenInput.css';
 import PropTypes from 'prop-types';
 
 import generateQueryJson from '../../../util/generateQueryJson';
-import * as consts from '../../../util/const';
-
+import * as consts from 'Utils/const';
 import { KeyPress } from 'interfaces/interfaces';
 
 interface TIProps {
