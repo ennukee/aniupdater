@@ -25,9 +25,9 @@ interface MPProps {
   username?: string;
 }
 const MainPhase = ({ token, mainState, username = '' }: MPProps): React.ReactElement => {
-  const [substate, setSubstate] = useState<string>('a-or-m-phase');
-  const [prevSubstate, setPrevSubstate] = useState<string>('');
-  const [type, setType] = useState<string>('');
+  const [substate, setSubstate] = useState('a-or-m-phase');
+  const [prevSubstate, setPrevSubstate] = useState('');
+  const [type, setType] = useState('');
   const [selectedMedia, setSelectedMedia] = useState<SelectedMedia>({
     id: 0,
     title: { userPreferred: '' },

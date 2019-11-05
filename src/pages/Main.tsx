@@ -17,10 +17,10 @@ import './Main.css';
 const width = 500;
 
 const Main = (): React.ReactElement => {
-  const [token, setToken] = useState<string>('');
+  const [token, setToken] = useState('');
   const [userInfo, setUserInfo] = useReducer((_, newUserInfo) => newUserInfo, {});
-  const [loginState, setLoginState] = useState<string>('');
-  const [mainState, setMainState] = useState<string>('not-entered');
+  const [loginState, setLoginState] = useState('');
+  const [mainState, setMainState] = useState('not-entered');
 
   const { globalValues, setGlobalValues } = useGlobalValues();
   const providerValue = useMemo(() => ({ globalValues, setGlobalValues }), [globalValues, setGlobalValues]);

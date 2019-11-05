@@ -7,8 +7,8 @@ import img from '../../../../../loading_verysmall.webp';
 import fullImg from '../../../../../loading_full.webp';
 
 const LoadingAnim = (): React.ReactElement => {
-  const [loaderStatus, setLoaderStatus] = useState<number>(0);
-  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
+  const [loaderStatus, setLoaderStatus] = useState(0);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
   const scalePerStatus: Array<number> = [1, 1.75, 0];
   const loaderProps = useSpring({
