@@ -26,7 +26,7 @@ interface SelectedMedia {
   mediaListEntry?: MediaListEntry | undefined;
 }
 
-const MainPhase = ({ token, mainState, username = '' }) => {
+const MainPhase = ({ token, mainState, username = '' }): React.ReactElement => {
   const [substate, setSubstate] = useState('a-or-m-phase');
   const [prevSubstate, setPrevSubstate] = useState('');
   const [type, setType] = useState('');

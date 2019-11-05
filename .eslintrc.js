@@ -17,7 +17,6 @@ module.exports = {
     }
   },
   rules: {
-    "indent": ["error", 2],
     "linebreak-style": ["error", "windows"],
     "jsx-a11y/media-has-caption": "off",
     "max-len": ["error", { "code": 120 }],
