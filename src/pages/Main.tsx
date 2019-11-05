@@ -16,16 +16,16 @@ import './Main.css';
 
 const width = 500;
 
-const Main = () => {
-  const [token, setToken] = useState('');
+const Main = (): React.ReactElement => {
+  const [token, setToken] = useState<string>('');
   const [userInfo, setUserInfo] = useReducer((_, newUserInfo) => newUserInfo, {});
-  const [loginState, setLoginState] = useState('');
-  const [mainState, setMainState] = useState('not-entered');
+  const [loginState, setLoginState] = useState<string>('');
+  const [mainState, setMainState] = useState<string>('not-entered');
 
   const { globalValues, setGlobalValues } = useGlobalValues();
   const providerValue = useMemo(() => ({ globalValues, setGlobalValues }), [globalValues, setGlobalValues]);
 
-  const enterMainPhase = (tkn, userId, username, profileImage) => {
+  const enterMainPhase = (tkn: string, userId: number, username: string, profileImage: string): void => {
     setToken(tkn);
     setUserInfo({ username, userId, profileImage });
     setLoginState('leaving');
@@ -64,7 +64,9 @@ const Main = () => {
               <LoginPhase
                 loginState={loginState}
                 width={width}
-                submitCallback={(tkn, uid, user, img) => enterMainPhase(tkn, uid, user, img)}
+                submitCallback={(tkn: string, uid: number, user: string, img: string): void =>
+                  enterMainPhase(tkn, uid, user, img)
+                }
               />
             </section>
             <section>

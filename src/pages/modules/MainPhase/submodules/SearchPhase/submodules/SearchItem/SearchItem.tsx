@@ -2,10 +2,25 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSpring, animated } from 'react-spring';
 
+interface SIProps {
+  color?: string;
+  coverImage?: string;
+  title?: string;
+  index?: number;
+  isFlatView?: boolean;
+  progress?: number | null;
+  maxProgress?: number;
+}
 const SearchItem = ({
   // eslint-disable-next-line no-unused-vars
-  color, coverImage, title, index, isFlatView, progress, maxProgress,
-}) => {
+  color = '',
+  coverImage = '',
+  title = '',
+  index = 0,
+  isFlatView = false,
+  progress,
+  maxProgress = 0,
+}: SIProps): React.ReactElement => {
   const [loaded, setLoaded] = useState(false);
   const itemProps = useSpring({
     transform: `translateY(${loaded ? 0 : -20}px)`,
@@ -33,40 +48,18 @@ const SearchItem = ({
           // backgroundImage: `url('${coverImage}')`,
           border: '1px solid #222',
           height: '100%',
-          backgroundColor: `#${`${Math.floor(
-            Math.random() * 9,
-          )}`.repeat(6)}`,
+          backgroundColor: `#${`${Math.floor(Math.random() * 9)}`.repeat(6)}`,
         }}
       >
         {isFlatView ? (
-          <animated.div
-            id="result-item-title-flat-view"
-            className="result-item-title"
-          >
+          <animated.div id="result-item-title-flat-view" className="result-item-title">
             {title}
-            {progress
-              && (
-              <animated.div
-                id="result-item-media-progress"
-              >
-                {`${progress} / ${maxProgress}`}
-              </animated.div>
-              )}
+            {progress && <animated.div id="result-item-media-progress">{`${progress} / ${maxProgress}`}</animated.div>}
           </animated.div>
         ) : (
-          <animated.div
-            id="result-item-title-grid-view"
-            className="result-item-title"
-          >
+          <animated.div id="result-item-title-grid-view" className="result-item-title">
             {title}
-            {progress
-              && (
-              <animated.div
-                id="result-item-media-progress"
-              >
-                {`${progress} / ${maxProgress}`}
-              </animated.div>
-              )}
+            {progress && <animated.div id="result-item-media-progress">{`${progress} / ${maxProgress}`}</animated.div>}
           </animated.div>
         )}
       </animated.div>

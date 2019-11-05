@@ -28,12 +28,12 @@ interface DFProps {
 }
 
 const DataForm = ({
-  title,
-  image,
-  color,
-  type,
-  token,
-  mediaId,
+  title = '',
+  image = '',
+  color = '',
+  type = '',
+  token = '',
+  mediaId = 0,
   transitionCallback,
   presetProgress = undefined,
   presetScore = undefined,

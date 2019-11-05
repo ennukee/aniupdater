@@ -4,7 +4,11 @@ import PropTypes from 'prop-types';
 import GlobalContext, { GlobalContextOptions } from '../../../util/GlobalContext';
 import { KeyPress } from 'interfaces/interfaces';
 
-const MediaTypeSelectionPhase = ({ transitionCallback, username }) => {
+interface MTSPProps {
+  transitionCallback: Function;
+  username?: string;
+}
+const MediaTypeSelectionPhase = ({ transitionCallback, username }: MTSPProps): React.ReactElement => {
   const { setGlobalValues }: GlobalContextOptions = useContext(GlobalContext);
 
   const handleKeyPress = useCallback(

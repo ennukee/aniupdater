@@ -17,19 +17,17 @@ import useKeyModifiers from './util/useKeyModifiers';
 // import { ANILIST_BASE_URL, VIEWER_RELEVANT_MEDIA_QUERY_GEN } from '../util/const';
 import fadePhases from '../util/fadePhases';
 // import generateQueryJson from '../util/generateQueryJson';
-import { Title, CoverImage, MediaListEntry } from 'interfaces/interfaces';
+import { SelectedMedia } from 'interfaces/interfaces';
 
-interface SelectedMedia {
-  id?: number;
-  title: Title;
-  coverImage: CoverImage;
-  mediaListEntry?: MediaListEntry | undefined;
+interface MPProps {
+  token?: string;
+  mainState?: string;
+  username?: string;
 }
-
-const MainPhase = ({ token, mainState, username = '' }): React.ReactElement => {
-  const [substate, setSubstate] = useState('a-or-m-phase');
-  const [prevSubstate, setPrevSubstate] = useState('');
-  const [type, setType] = useState('');
+const MainPhase = ({ token, mainState, username = '' }: MPProps): React.ReactElement => {
+  const [substate, setSubstate] = useState<string>('a-or-m-phase');
+  const [prevSubstate, setPrevSubstate] = useState<string>('');
+  const [type, setType] = useState<string>('');
   const [selectedMedia, setSelectedMedia] = useState<SelectedMedia>({
     id: 0,
     title: { userPreferred: '' },
@@ -61,12 +59,12 @@ const MainPhase = ({ token, mainState, username = '' }): React.ReactElement => {
     [substate],
   );
 
-  const mediaTypeSelectionHandler = newType => {
+  const mediaTypeSelectionHandler = (newType: string): void => {
     setType(newType);
     transitionMainState('search-phase');
   };
 
-  const searchSelectionHandler = newSelectedMedia => {
+  const searchSelectionHandler = (newSelectedMedia: SelectedMedia): void => {
     setSelectedMedia(newSelectedMedia);
     transitionMainState('data-phase');
   };
@@ -83,7 +81,7 @@ const MainPhase = ({ token, mainState, username = '' }): React.ReactElement => {
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress);
-    return () => {
+    return (): void => {
       document.removeEventListener('keydown', handleKeyPress);
     };
   }, [handleKeyPress]);
@@ -125,7 +123,7 @@ const MainPhase = ({ token, mainState, username = '' }): React.ReactElement => {
               presetScore={selectedMedia.mediaListEntry ? selectedMedia.mediaListEntry.score : undefined}
               type={type}
               token={token}
-              transitionCallback={() => transitionMainState('search-phase')}
+              transitionCallback={(): Promise<void> => transitionMainState('search-phase')}
             />
           ) : (
             <div />

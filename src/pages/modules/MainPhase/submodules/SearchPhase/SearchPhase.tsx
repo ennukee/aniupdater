@@ -12,7 +12,14 @@ import * as consts from '../../../util/const';
 import useKeyModifiers from '../../util/useKeyModifiers';
 import presets from '../../../Alert/presets';
 
-const SearchPhase = ({ transitionCallback, token, type }): React.ReactElement => {
+import { SelectedMedia } from 'interfaces/interfaces';
+
+interface SPProps {
+  transitionCallback: Function;
+  token?: string;
+  type?: string;
+}
+const SearchPhase = ({ transitionCallback, token = '', type = '' }: SPProps): React.ReactElement => {
   const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState(consts.NO_RESULTS_FOUND_RESPONSE);
   const [page, setPage] = useState(1);
@@ -318,7 +325,7 @@ const SearchPhase = ({ transitionCallback, token, type }): React.ReactElement =>
         id="results-view"
         className={`${searchResults.length === 0 ? 'inactive' : 'active'}`}
       >
-        {searchResults.map((work, index) => (
+        {searchResults.map((work: SelectedMedia, index: number) => (
           <SearchItem
             key={`work${work.id}`}
             index={index}
