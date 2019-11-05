@@ -20,8 +20,6 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react",
-    // Fix before full release
-    "noImplicitAny": false
   },
   "include": [
     "src"

@@ -12,7 +12,7 @@ import * as consts from '../../../util/const';
 import useKeyModifiers from '../../util/useKeyModifiers';
 import presets from '../../../Alert/presets';
 
-const SearchPhase = ({ transitionCallback, token, type }) => {
+const SearchPhase = ({ transitionCallback, token, type }): React.ReactElement => {
   const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState(consts.NO_RESULTS_FOUND_RESPONSE);
   const [page, setPage] = useState(1);
