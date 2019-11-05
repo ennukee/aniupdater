@@ -1,17 +1,17 @@
 export interface KeyPress {
-    key: string;
+  key: string;
 }
 
 export interface MediaListEntry {
-    progress?: number;
-    score?: number;
+  progress?: number;
+  score?: number;
 }
 
 export interface CoverImage {
-    large?: string;
-    color?: string;
+  large?: string;
+  color?: string;
 }
 
 export interface Title {
-    userPreferred?: string;
+  userPreferred?: string;
 }

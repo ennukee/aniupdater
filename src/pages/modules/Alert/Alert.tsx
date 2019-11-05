@@ -7,15 +7,9 @@ import GlobalContext, { GlobalContextOptions } from '../util/GlobalContext';
 const Alert = () => {
   const {
     globalValues: {
-      alertData: {
-        active = false,
-        content = '',
-        containerStyle = {},
-        style = {},
-        duration = 1250,
-      } = {},
+      alertData: { active = false, content = '', containerStyle = {}, style = {}, duration = 1250 } = {},
     } = {},
-    setGlobalValues = (() => {}),
+    setGlobalValues,
   }: GlobalContextOptions = useContext(GlobalContext);
 
   const [cachedAlert, setCachedAlert] = useState(content);
@@ -27,9 +21,14 @@ const Alert = () => {
 
   useEffect(() => {
     if (active && content) {
-      const hide = setTimeout(() => setGlobalValues({
-        type: 'RESET_ALERT',
-      }), duration);
+      const hide = setTimeout(
+        () =>
+          setGlobalValues &&
+          setGlobalValues({
+            type: 'RESET_ALERT',
+          }),
+        duration,
+      );
       return () => clearTimeout(hide);
     }
     return () => {};

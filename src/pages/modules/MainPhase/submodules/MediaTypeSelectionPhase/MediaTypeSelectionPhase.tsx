@@ -28,6 +28,7 @@ const MediaTypeSelectionPhase = ({ transitionCallback, username }) => {
     if (username) {
       setTimeout(
         () =>
+          setGlobalValues &&
           setGlobalValues({
             type: 'ALERT',
             data: {
