@@ -9,9 +9,7 @@ interface LBProps {
 }
 const LoginButton = ({ style = {}, redirect, content }: LBProps): React.ReactElement => (
   <div id="login-button" className="text-border" style={style}>
-    <a href={redirect}>
-      {content}
-    </a>
+    <a href={redirect}>{content}</a>
   </div>
 );
 

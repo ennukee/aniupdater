@@ -28,7 +28,7 @@ const SearchItem = ({
   });
   useEffect(() => {
     const load = setTimeout(() => setLoaded(true), index * 25);
-    return () => clearTimeout(load);
+    return (): void => clearTimeout(load);
   }, [index]);
   return (
     <animated.div

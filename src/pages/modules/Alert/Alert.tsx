@@ -4,7 +4,7 @@ import { useSpring, animated } from 'react-spring';
 import './Alert.css';
 import GlobalContext, { GlobalContextOptions } from '../util/GlobalContext';
 
-const Alert = () => {
+const Alert = (): React.ReactElement => {
   const {
     globalValues: {
       alertData: { active = false, content = '', containerStyle = {}, style = {}, duration = 1250 } = {},
@@ -29,9 +29,9 @@ const Alert = () => {
           }),
         duration,
       );
-      return () => clearTimeout(hide);
+      return (): void => clearTimeout(hide);
     }
-    return () => {};
+    return (): void => {};
   }, [active, content, duration, setGlobalValues]);
 
   useEffect(() => {

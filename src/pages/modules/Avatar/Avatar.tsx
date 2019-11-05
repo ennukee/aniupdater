@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
-import { KeyPress } from 'interfaces/interfaces'
+import { KeyPress } from 'interfaces/interfaces';
 
 import './Avatar.css';
 

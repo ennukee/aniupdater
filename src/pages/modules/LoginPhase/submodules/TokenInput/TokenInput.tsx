@@ -116,7 +116,7 @@ const TokenInput = ({ callback }: TIProps): React.ReactElement => {
           placeholder="AniList Token"
           value={inputVal}
           onKeyDown={handleEnterKeyPress}
-          onChange={e => setInputVal(e.target.value)}
+          onChange={(e): void => setInputVal(e.target.value)}
         />
         <div
           id="token-submit"
@@ -125,7 +125,7 @@ const TokenInput = ({ callback }: TIProps): React.ReactElement => {
           role="button"
           tabIndex={0}
           onKeyDown={handleEnterKeyPress}
-          onClick={() => authorizeToken(inputVal)}
+          onClick={(): void => authorizeToken(inputVal)}
         >
           <IoIosCheckmark size="3.5em" color={processing ? '666666' : 'c94c96'} />
         </div>

@@ -3,7 +3,7 @@ import ReactTooltip from 'react-tooltip';
 import Tip from './submodules/Tip/Tip';
 import './Footer.css';
 
-const Footer = () => (
+const Footer = (): React.ReactElement => (
   <footer>
     <div id="footer-container">
       <ReactTooltip />

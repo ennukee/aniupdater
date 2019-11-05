@@ -14,7 +14,7 @@ const MediaTypeSelectionPhase = ({ transitionCallback, username }: MTSPProps): R
   const handleKeyPress = useCallback(
     (e: KeyPress) => {
       const keyPressed: string = e.key.toLowerCase();
-      const validMappings: any = { a: 'ANIME', m: 'MANGA' };
+      const validMappings: Record<string, string> = { a: 'ANIME', m: 'MANGA' };
       const { [keyPressed]: mediaType } = validMappings;
       if (mediaType) {
         transitionCallback(mediaType);
@@ -25,7 +25,7 @@ const MediaTypeSelectionPhase = ({ transitionCallback, username }: MTSPProps): R
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress);
-    return () => document.removeEventListener('keydown', handleKeyPress);
+    return (): void => document.removeEventListener('keydown', handleKeyPress);
   }, [handleKeyPress]);
 
   useEffect(() => {

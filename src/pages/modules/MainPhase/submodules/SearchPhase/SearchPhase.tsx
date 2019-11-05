@@ -276,7 +276,7 @@ const SearchPhase = ({ transitionCallback, token = '', type = '' }: SPProps): Re
     [changeSearchPage, initiateSearch, isCtrling, isShifting, search, selectMediaIndex, token, type],
   );
 
-  const updateWindowSize = () => {
+  const updateWindowSize = (): void => {
     if (window.innerWidth / window.innerHeight < 1.65) {
       setIsFlatView(true);
     } else {
@@ -286,12 +286,12 @@ const SearchPhase = ({ transitionCallback, token = '', type = '' }: SPProps): Re
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress);
-    return () => document.removeEventListener('keydown', handleKeyPress);
+    return (): void => document.removeEventListener('keydown', handleKeyPress);
   }, [handleKeyPress]);
 
   useEffect(() => {
     window.addEventListener('resize', updateWindowSize);
-    return () => window.removeEventListener('resize', updateWindowSize);
+    return (): void => window.removeEventListener('resize', updateWindowSize);
   }, []);
 
   return (
@@ -306,7 +306,7 @@ const SearchPhase = ({ transitionCallback, token = '', type = '' }: SPProps): Re
           aria-label="Media title search"
           placeholder="Title"
           value={search}
-          onChange={e => setSearch(e.target.value)}
+          onChange={(e): void => setSearch(e.target.value)}
         />
         <IoIosSearch
           size="2em"

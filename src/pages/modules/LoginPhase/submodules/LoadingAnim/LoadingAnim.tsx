@@ -6,7 +6,7 @@ import './LoadingAnim.css';
 import img from '../../../../../loading_verysmall.webp';
 import fullImg from '../../../../../loading_full.webp';
 
-const LoadingAnim = () => {
+const LoadingAnim = (): React.ReactElement => {
   const [loaderStatus, setLoaderStatus] = useState<number>(0);
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -17,7 +17,7 @@ const LoadingAnim = () => {
     },
   });
 
-  const handleImageLoad = () => {
+  const handleImageLoad = (): void => {
     if (!imageLoaded) {
       setImageLoaded(true);
       if (imgRef.current) {
