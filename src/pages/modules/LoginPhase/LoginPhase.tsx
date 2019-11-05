@@ -5,10 +5,7 @@ import TokenInput from './submodules/TokenInput/TokenInput';
 import LoginButton from './submodules/LoginButton/LoginButton';
 import LoadingAnim from './submodules/LoadingAnim/LoadingAnim';
 
-
-const LoginPhase = ({
-  loginState, width, submitCallback,
-}) => {
+const LoginPhase = ({ loginState, width, submitCallback }) => {
   // all this to make the loading animation div thing work lol //
   const [preloadBuffer, setPreloadBuffer] = useState(false);
   const loginPhaseDivProps = useSpring({
@@ -34,9 +31,7 @@ const LoginPhase = ({
           ...loginPhaseDivProps,
         }}
       >
-        <TokenInput
-          callback={submitCallback}
-        />
+        <TokenInput callback={submitCallback} />
         <LoginButton
           content="No token? Click here to sign in."
           redirect="https://anilist.co/api/v2/oauth/authorize?client_id=2599&response_type=token"

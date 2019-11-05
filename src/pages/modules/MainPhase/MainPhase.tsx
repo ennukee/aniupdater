@@ -17,57 +17,69 @@ import useKeyModifiers from './util/useKeyModifiers';
 // import { ANILIST_BASE_URL, VIEWER_RELEVANT_MEDIA_QUERY_GEN } from '../util/const';
 import fadePhases from '../util/fadePhases';
 // import generateQueryJson from '../util/generateQueryJson';
+import { Title, CoverImage, MediaListEntry } from 'interfaces/interfaces';
 
-const MainPhase = ({
-  token, mainState, username = '',
-}) => {
+interface SelectedMedia {
+  id?: number;
+  title: Title;
+  coverImage: CoverImage;
+  mediaListEntry?: MediaListEntry | undefined;
+}
+
+const MainPhase = ({ token, mainState, username = '' }): React.ReactElement => {
   const [substate, setSubstate] = useState('a-or-m-phase');
   const [prevSubstate, setPrevSubstate] = useState('');
   const [type, setType] = useState('');
-  const [selectedMedia, setSelectedMedia] = useState({});
+  const [selectedMedia, setSelectedMedia] = useState<SelectedMedia>({
+    id: 0,
+    title: { userPreferred: '' },
+    coverImage: { large: '', color: '' },
+  });
 
   const { helpByPhase: helpMap } = useHelpMap();
 
-  const transitionMainState = useCallback(async (nextState) => {
-    const oldPhaseElement = document.getElementById(substate);
-    const newPhaseElement = document.getElementById(nextState);
-    if (!oldPhaseElement || !newPhaseElement) {
-      // Something went wrong, but we don't want to explode so just halt
-      console.log(
-        'Unable to find one of the phase elements:',
-        oldPhaseElement,
-        newPhaseElement,
-      );
-      return;
-    }
+  const transitionMainState = useCallback(
+    async nextState => {
+      const oldPhaseElement = document.getElementById(substate);
+      const newPhaseElement = document.getElementById(nextState);
+      if (!oldPhaseElement || !newPhaseElement) {
+        // Something went wrong, but we don't want to explode so just halt
+        console.log('Unable to find one of the phase elements:', oldPhaseElement, newPhaseElement);
+        return;
+      }
 
-    // Don't let any keypresses affect us during our transition state
-    setPrevSubstate(substate);
-    setSubstate('TRANSITION');
+      // Don't let any keypresses affect us during our transition state
+      setPrevSubstate(substate);
+      setSubstate('TRANSITION');
 
-    // Transition states
-    await fadePhases(oldPhaseElement, newPhaseElement, 750);
+      // Transition states
+      await fadePhases(oldPhaseElement, newPhaseElement, 750);
 
-    // Lastly, return us to a proper state to receive key commands
-    setSubstate(nextState);
-  }, [substate]);
+      // Lastly, return us to a proper state to receive key commands
+      setSubstate(nextState);
+    },
+    [substate],
+  );
 
-  const mediaTypeSelectionHandler = (newType) => {
+  const mediaTypeSelectionHandler = newType => {
     setType(newType);
     transitionMainState('search-phase');
   };
 
-  const searchSelectionHandler = (newSelectedMedia) => {
+  const searchSelectionHandler = newSelectedMedia => {
     setSelectedMedia(newSelectedMedia);
     transitionMainState('data-phase');
   };
 
   const { isShifting } = useKeyModifiers();
-  const handleKeyPress = useCallback((e) => {
-    if (e.key === 'CapsLock' && isShifting) {
-      transitionMainState('a-or-m-phase');
-    }
-  }, [isShifting, transitionMainState]);
+  const handleKeyPress = useCallback(
+    e => {
+      if (e.key === 'CapsLock' && isShifting) {
+        transitionMainState('a-or-m-phase');
+      }
+    },
+    [isShifting, transitionMainState],
+  );
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress);
@@ -88,31 +100,17 @@ const MainPhase = ({
 
   return (
     <>
-      {mainState === 'entering' && (
-        <HelpMessage
-          substate={substate}
-          prevSubstate={prevSubstate}
-          helpMap={helpMap}
-        />
-      )}
+      {mainState === 'entering' && <HelpMessage substate={substate} prevSubstate={prevSubstate} helpMap={helpMap} />}
       <div id="main-phase" className={mainState}>
-
         <animated.div id="a-or-m-phase" style={AOMProps} className="main-phase-item active">
           {substate === 'a-or-m-phase' && (
-            <MediaTypeSelectionPhase
-              transitionCallback={mediaTypeSelectionHandler}
-              username={username}
-            />
+            <MediaTypeSelectionPhase transitionCallback={mediaTypeSelectionHandler} username={username} />
           )}
         </animated.div>
 
         <animated.div id="search-phase" style={SearchProps} className="main-phase-item inactive">
           {substate === 'search-phase' && (
-            <SearchPhase
-              token={token}
-              type={type}
-              transitionCallback={searchSelectionHandler}
-            />
+            <SearchPhase token={token} type={type} transitionCallback={searchSelectionHandler} />
           )}
         </animated.div>
 
@@ -129,7 +127,9 @@ const MainPhase = ({
               token={token}
               transitionCallback={() => transitionMainState('search-phase')}
             />
-          ) : <div />}
+          ) : (
+            <div />
+          )}
         </animated.div>
       </div>
     </>

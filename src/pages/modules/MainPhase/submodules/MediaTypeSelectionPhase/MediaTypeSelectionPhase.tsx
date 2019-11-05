@@ -1,21 +1,23 @@
-import React, {
-  useEffect, useCallback, useContext,
-} from 'react';
+import React, { useEffect, useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import GlobalContext from '../../../util/GlobalContext';
+import GlobalContext, { GlobalContextOptions } from '../../../util/GlobalContext';
+import { KeyPress } from 'interfaces/interfaces';
 
 const MediaTypeSelectionPhase = ({ transitionCallback, username }) => {
-  const { setGlobalValues } = useContext(GlobalContext);
+  const { setGlobalValues }: GlobalContextOptions = useContext(GlobalContext);
 
-  const handleKeyPress = useCallback((e) => {
-    const { [e.key.toLowerCase()]: mediaType } = {
-      a: 'ANIME', m: 'MANGA',
-    };
-    if (mediaType) {
-      transitionCallback(mediaType);
-    }
-  }, [transitionCallback]);
+  const handleKeyPress = useCallback(
+    (e: KeyPress) => {
+      const keyPressed: string = e.key.toLowerCase();
+      const validMappings: any = { a: 'ANIME', m: 'MANGA' };
+      const { [keyPressed]: mediaType } = validMappings;
+      if (mediaType) {
+        transitionCallback(mediaType);
+      }
+    },
+    [transitionCallback],
+  );
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress);
@@ -24,19 +26,24 @@ const MediaTypeSelectionPhase = ({ transitionCallback, username }) => {
 
   useEffect(() => {
     if (username) {
-      setTimeout(() => setGlobalValues({
-        type: 'ALERT',
-        data: {
-          active: true,
-          content: `Welcome ${username}`,
-          style: {
-            fontSize: '16px',
-            backgroundColor: '#2229',
-            border: '1px solid #eee',
-            color: '#eee',
-          },
-        },
-      }), 750);
+      setTimeout(
+        () =>
+          setGlobalValues &&
+          setGlobalValues({
+            type: 'ALERT',
+            data: {
+              active: true,
+              content: `Welcome ${username}`,
+              style: {
+                fontSize: '16px',
+                backgroundColor: '#2229',
+                border: '1px solid #eee',
+                color: '#eee',
+              },
+            },
+          }),
+        750,
+      );
     }
   }, [setGlobalValues, username]);
 
