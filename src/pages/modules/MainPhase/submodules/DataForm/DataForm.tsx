@@ -28,12 +28,12 @@ interface DFProps {
 }
 
 const DataForm = ({
-  title,
-  image,
-  color,
-  type,
-  token,
-  mediaId,
+  title = '',
+  image = '',
+  color = '',
+  type = '',
+  token = '',
+  mediaId = 0,
   transitionCallback,
   presetProgress = undefined,
   presetScore = undefined,
@@ -86,7 +86,7 @@ const DataForm = ({
   const handleKeyPress = useCallback(
     (e: KeyPress) => {
       const keyPressed: string = e.key;
-      const { [keyPressed.toLowerCase()]: newStatus }: any = {
+      const { [keyPressed.toLowerCase()]: newStatus }: Record<string, string> = {
         u: 'CURRENT',
         c: 'COMPLETED',
         d: 'DROPPED',
@@ -123,7 +123,7 @@ const DataForm = ({
     mediaCountElem && mediaCountElem.focus();
     document.addEventListener('keydown', handleKeyPress);
 
-    return () => document.removeEventListener('keydown', handleKeyPress);
+    return (): void => document.removeEventListener('keydown', handleKeyPress);
   }, [handleKeyPress]);
 
   /* Rendering */
@@ -159,7 +159,7 @@ const DataForm = ({
               id="data-form-media-count-value"
               type="number"
               value={progress}
-              onChange={e => setProgress(+e.target.value)}
+              onChange={(e): void => setProgress(+e.target.value)}
               placeholder={`${MEDIA_TYPE_SINGLETON_TERM[type]}s`}
               style={{
                 border: `1px solid ${currentMediaColor()}`,
@@ -171,7 +171,7 @@ const DataForm = ({
                 id="data-form-score-value"
                 type="number"
                 value={score}
-                onChange={e => setScore(+e.target.value)}
+                onChange={(e): void => setScore(+e.target.value)}
                 placeholder="Score"
                 style={{
                   border: `1px solid ${currentMediaColor()}`,

@@ -6,30 +6,26 @@ import './LoadingAnim.css';
 import img from '../../../../../loading_verysmall.webp';
 import fullImg from '../../../../../loading_full.webp';
 
-const LoadingAnim = () => {
+const LoadingAnim = (): React.ReactElement => {
   const [loaderStatus, setLoaderStatus] = useState(0);
   const [imageLoaded, setImageLoaded] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
-  const scalePerStatus = {
-    0: 1,
-    1: 1.75,
-    2: 0,
-  };
+  const scalePerStatus: Array<number> = [1, 1.75, 0];
   const loaderProps = useSpring({
     to: {
       transform: `scale(${scalePerStatus[loaderStatus]})`,
     },
   });
 
-  const handleImageLoad = () => {
+  const handleImageLoad = (): void => {
     if (!imageLoaded) {
       setImageLoaded(true);
-      if(imgRef.current) {
+      if (imgRef.current) {
         imgRef.current.src = fullImg;
       } else {
         setTimeout(() => {
-          handleImageLoad()
-        }, 100)
+          handleImageLoad();
+        }, 100);
       }
     }
   };

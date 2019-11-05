@@ -12,7 +12,14 @@ import * as consts from '../../../util/const';
 import useKeyModifiers from '../../util/useKeyModifiers';
 import presets from '../../../Alert/presets';
 
-const SearchPhase = ({ transitionCallback, token, type }) => {
+import { SelectedMedia } from 'interfaces/interfaces';
+
+interface SPProps {
+  transitionCallback: Function;
+  token?: string;
+  type?: string;
+}
+const SearchPhase = ({ transitionCallback, token = '', type = '' }: SPProps): React.ReactElement => {
   const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState(consts.NO_RESULTS_FOUND_RESPONSE);
   const [page, setPage] = useState(1);
@@ -269,7 +276,7 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
     [changeSearchPage, initiateSearch, isCtrling, isShifting, search, selectMediaIndex, token, type],
   );
 
-  const updateWindowSize = () => {
+  const updateWindowSize = (): void => {
     if (window.innerWidth / window.innerHeight < 1.65) {
       setIsFlatView(true);
     } else {
@@ -279,12 +286,12 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress);
-    return () => document.removeEventListener('keydown', handleKeyPress);
+    return (): void => document.removeEventListener('keydown', handleKeyPress);
   }, [handleKeyPress]);
 
   useEffect(() => {
     window.addEventListener('resize', updateWindowSize);
-    return () => window.removeEventListener('resize', updateWindowSize);
+    return (): void => window.removeEventListener('resize', updateWindowSize);
   }, []);
 
   return (
@@ -299,7 +306,7 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
           aria-label="Media title search"
           placeholder="Title"
           value={search}
-          onChange={e => setSearch(e.target.value)}
+          onChange={(e): void => setSearch(e.target.value)}
         />
         <IoIosSearch
           size="2em"
@@ -318,7 +325,7 @@ const SearchPhase = ({ transitionCallback, token, type }) => {
         id="results-view"
         className={`${searchResults.length === 0 ? 'inactive' : 'active'}`}
       >
-        {searchResults.map((work, index) => (
+        {searchResults.map((work: SelectedMedia, index: number) => (
           <SearchItem
             key={`work${work.id}`}
             index={index}

@@ -8,6 +8,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/react-hooks": "^3.1.1",
     "@types/node": "^12.12.5",
+    "@types/react-tooltip": "^3.9.3",
     "d3-ease": "^1.0.5",
     "eslint": "^6.6.0",
     "eslint-config-airbnb": "^18.0.1",

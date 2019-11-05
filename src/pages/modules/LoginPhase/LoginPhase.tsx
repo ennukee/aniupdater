@@ -5,7 +5,12 @@ import TokenInput from './submodules/TokenInput/TokenInput';
 import LoginButton from './submodules/LoginButton/LoginButton';
 import LoadingAnim from './submodules/LoadingAnim/LoadingAnim';
 
-const LoginPhase = ({ loginState, width, submitCallback }) => {
+interface LPProps {
+  loginState?: string;
+  width?: number;
+  submitCallback?: Function;
+}
+const LoginPhase = ({ loginState, width, submitCallback }: LPProps): React.ReactElement => {
   // all this to make the loading animation div thing work lol //
   const [preloadBuffer, setPreloadBuffer] = useState(false);
   const loginPhaseDivProps = useSpring({

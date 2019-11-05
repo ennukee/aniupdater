@@ -4,7 +4,10 @@ import { animated, useSpring } from 'react-spring';
 
 import './Logo.css';
 
-const Logo = ({ mainState }) => {
+interface LProps {
+  mainState?: string;
+}
+const Logo = ({ mainState }: LProps): React.ReactElement => {
   const logoProps = useSpring({
     width: `${mainState === 'entering' ? 150 : 360}px`,
     height: `${mainState === 'entering' ? 50 : 90}px`,

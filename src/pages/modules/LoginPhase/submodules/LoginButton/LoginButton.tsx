@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import './LoginButton.css';
 import PropTypes from 'prop-types';
 
-const LoginButton = ({ style = {}, redirect, content }) => (
+interface LBProps {
+  style?: CSSProperties;
+  redirect?: string;
+  content?: string;
+}
+const LoginButton = ({ style = {}, redirect, content }: LBProps): React.ReactElement => (
   <div id="login-button" className="text-border" style={style}>
-    <a href={redirect}>
-      {content}
-    </a>
+    <a href={redirect}>{content}</a>
   </div>
 );
 

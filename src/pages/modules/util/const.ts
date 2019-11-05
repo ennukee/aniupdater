@@ -1,3 +1,5 @@
+import { PMCQGqueryProp } from 'interfaces/interfaces';
+
 export const LOCAL_RATE_LIMIT = 2000; // 2 seconds;
 export const VERIFICATION_QUERY = `query {
   Viewer {
@@ -55,15 +57,19 @@ export const NO_RESULTS_FOUND_RESPONSE__NO_USE = [
 export const FOCUS_ELEMENT_BY_PHASE = {
   'search-phase': 'search-input',
 };
-export const POST_MEDIA_CHANGE_QUERY_GEN = (params) => `mutation {
-  SaveMediaListEntry(${Object.entries(params).filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`).join(', ')}) {
+
+export const POST_MEDIA_CHANGE_QUERY_GEN = (params: PMCQGqueryProp): string => `mutation {
+  SaveMediaListEntry(${Object.entries(params)
+    .filter(([, v]) => v)
+    .map(([k, v]) => `${k}: ${v}`)
+    .join(', ')}) {
     id
     status
     score
     progress
   }
 }`;
-export const VIEWER_RELEVANT_MEDIA_QUERY_GEN = (userId, type) => `query {
+export const VIEWER_RELEVANT_MEDIA_QUERY_GEN = (userId: number, type: string): string => `query {
   MediaListCollection(userId: ${userId}, type: ${type}) {
     lists {
       name
@@ -73,23 +79,24 @@ export const VIEWER_RELEVANT_MEDIA_QUERY_GEN = (userId, type) => `query {
     }
   }
 }`;
-export const MEDIA_STATUS_COLORS = {
+
+export const MEDIA_STATUS_COLORS: { [key: string]: string } = {
   CURRENT: '#6c6',
   COMPLETED: '#66c',
   DROPPED: '#c66',
   PAUSED: '#fb6',
 };
-export const MEDIA_STATUS_ALERT_MESSAGES = {
+export const MEDIA_STATUS_ALERT_MESSAGES: { [key: string]: string } = {
   CURRENT: 'Now updating existing...',
   COMPLETED: 'Now completing...',
   DROPPED: 'Now dropping...',
   PAUSED: 'Now pausing...',
 };
-export const MEDIA_TYPE_SINGLETON_TERM = {
+export const MEDIA_TYPE_SINGLETON_TERM: { [key: string]: string } = {
   ANIME: 'Episode',
   MANGA: 'Chapter',
 };
-export const SHOULD_SCORE_MEDIA_STATUS = {
+export const SHOULD_SCORE_MEDIA_STATUS: { [key: string]: boolean } = {
   COMPLETED: true,
   DROPPED: true,
   PAUSED: true,
@@ -107,7 +114,8 @@ export const SEARCH_PHASE_MOCK_RESPONSE = {
             userPreferred: 'AYAYA',
           },
           coverImage: {
-            large: '', color: '#111',
+            large: '',
+            color: '#111',
           },
           mediaListEntry: {
             progress: 1,
@@ -120,7 +128,8 @@ export const SEARCH_PHASE_MOCK_RESPONSE = {
             userPreferred: 'DansGame',
           },
           coverImage: {
-            large: '', color: '#222',
+            large: '',
+            color: '#222',
           },
           mediaListEntry: {
             progress: 2,
@@ -133,7 +142,8 @@ export const SEARCH_PHASE_MOCK_RESPONSE = {
             userPreferred: 'Kappa',
           },
           coverImage: {
-            large: '', color: '#333',
+            large: '',
+            color: '#333',
           },
           mediaListEntry: {
             progress: 3,
@@ -146,7 +156,8 @@ export const SEARCH_PHASE_MOCK_RESPONSE = {
             userPreferred: 'PogU',
           },
           coverImage: {
-            large: '', color: '#444',
+            large: '',
+            color: '#444',
           },
           mediaListEntry: {
             progress: 4,
@@ -170,7 +181,8 @@ export const SEARCH_PHASE_MOCK_RESPONSE_PARTIAL = {
             userPreferred: 'AYAYA',
           },
           coverImage: {
-            large: '', color: '#111',
+            large: '',
+            color: '#111',
           },
           mediaListEntry: {
             progress: 1,
