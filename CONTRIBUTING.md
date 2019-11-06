@@ -28,8 +28,10 @@ Please have an ESLint plugin installed for your editor of choice and use the `.e
 
 We are aiming to maintain a fairly consistent file structure in this repo. You'll probably catch on as you see it, but here's the formal documentation.
 
+ * All utility files used by more than one file will go in the src/Utils directory and imported via `import X from 'Utils/X'`
+ * Any TypeScript interface more than just a props interface should go in the `src/interface/interface.ts` file and be imported via `import { X } from 'interface/interface'`
  * Each module must have its own folder named exactly as the module JS file is. (e.g. MyModule/MyModule.js). Each module folder will contain the following:
-   * **`util/`** -- A folder that holds any utility files (**not** react components, standalone convenience functions abstracted out for easier testing or reuse. You can put custom hooks here.) -- **optional directory** (not all components have utils)
+   * **`util/`** -- A folder that holds any utility files that will be specifically used by only the react component in this direct directory -- if it will be used by any other component (including children), then put it in the src/Utils directory instead.
      * In this file, you will have any number of `.js` files and a `__tests__` folder that contains the test for all of the `.js` files.
    * **`submodules/`** -- A folder that holds all react components that are used exclusively within this module (if usable by many, bring to a higher level in file structure). Contains any number of module folders like being described here -- **optional directory** (lowest level components don't have subcomponents)
    * **`MyModule.js`** -- React component file, pretty self explanatory.
