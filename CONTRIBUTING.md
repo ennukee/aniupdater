@@ -34,6 +34,6 @@ We are aiming to maintain a fairly consistent file structure in this repo. You'l
    * **`util/`** -- A folder that holds any utility files that will be specifically used by only the react component in this direct directory -- if it will be used by any other component (including children), then put it in the src/Utils directory instead.
      * In this file, you will have any number of `.js` files and a `__tests__` folder that contains the test for all of the `.js` files.
    * **`submodules/`** -- A folder that holds all react components that are used exclusively within this module (if usable by many, bring to a higher level in file structure). Contains any number of module folders like being described here -- **optional directory** (lowest level components don't have subcomponents)
-   * **`MyModule.js`** -- React component file, pretty self explanatory.
-   * **`MyModule.test.js`** -- A Jest/RTL file that tests the react component. Note **this is a mandatory file**, all components must be fully tested.
+   * **`MyModule.ts`** -- React TypeScript component file, pretty self explanatory.
+   * **`MyModule.test.[js|ts]`** -- A Jest/RTL file that tests the react component. Note **this is a mandatory file**, all components must be fully tested. You are welcome to use either a vanilla JS or TypeScript test file here as long as the component is tested.
    * **`MyModule.css`** -- Any styling specific to this module must go here. You **should not import CSS files other than this one** in your respective component.
