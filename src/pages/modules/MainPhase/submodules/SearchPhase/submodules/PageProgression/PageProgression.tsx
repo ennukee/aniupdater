@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import './PageProgression.scss';
 
 const PageProgression = ({ maxPages = 0, page = 0 }): React.ReactElement =>
@@ -31,10 +30,5 @@ const PageProgression = ({ maxPages = 0, page = 0 }): React.ReactElement =>
       </div>
     </div>
   );
-
-PageProgression.propTypes = {
-  maxPages: PropTypes.number,
-  page: PropTypes.number,
-};
 
 export default PageProgression;

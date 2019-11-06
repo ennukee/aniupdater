@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useSpring, animated } from 'react-spring';
 import TokenInput from './submodules/TokenInput/TokenInput';
 import LoginButton from './submodules/LoginButton/LoginButton';
@@ -49,11 +48,6 @@ const LoginPhase = ({ loginState, width, submitCallback }: LPProps): React.React
       </animated.div>
     </>
   );
-};
-LoginPhase.propTypes = {
-  loginState: PropTypes.string.isRequired,
-  width: PropTypes.number.isRequired,
-  submitCallback: PropTypes.func.isRequired,
 };
 
 export default LoginPhase;

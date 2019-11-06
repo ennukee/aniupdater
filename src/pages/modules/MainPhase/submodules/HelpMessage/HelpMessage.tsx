@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useSpring, animated } from 'react-spring';
 import { IoIosInformationCircleOutline } from 'react-icons/io';
 
@@ -29,12 +28,6 @@ const HelpMessage = ({ substate = '', prevSubstate = '', helpMap }: HMProps): Re
   ) : (
     <></>
   );
-};
-
-HelpMessage.propTypes = {
-  substate: PropTypes.string.isRequired,
-  prevSubstate: PropTypes.string.isRequired,
-  helpMap: PropTypes.object.isRequired,
 };
 
 export default HelpMessage;
