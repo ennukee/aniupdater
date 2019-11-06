@@ -1,6 +1,5 @@
 /* Libraries */
 import React, { useState, useCallback, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useSpring, animated } from 'react-spring';
 
 /* Modules */
@@ -134,12 +133,6 @@ const MainPhase = ({ token, mainState, username = '' }: MPProps): React.ReactEle
       </div>
     </>
   );
-};
-
-MainPhase.propTypes = {
-  token: PropTypes.string.isRequired,
-  mainState: PropTypes.string.isRequired,
-  username: PropTypes.string,
 };
 
 export default MainPhase;

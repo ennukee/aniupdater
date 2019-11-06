@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useSpring, animated } from 'react-spring';
 
 import './SearchItem.scss';
@@ -70,13 +69,3 @@ const SearchItem = ({
 };
 
 export default SearchItem;
-
-SearchItem.propTypes = {
-  color: PropTypes.string.isRequired,
-  coverImage: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
-  isFlatView: PropTypes.bool.isRequired,
-  progress: PropTypes.number.isRequired,
-  maxProgress: PropTypes.number.isRequired,
-};

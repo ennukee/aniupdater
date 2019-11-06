@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { animated, useSpring } from 'react-spring';
 
 import './Logo.scss';
@@ -23,10 +22,6 @@ const Logo = ({ mainState }: LProps): React.ReactElement => {
       }}
     />
   );
-};
-
-Logo.propTypes = {
-  mainState: PropTypes.string.isRequired,
 };
 
 export default Logo;

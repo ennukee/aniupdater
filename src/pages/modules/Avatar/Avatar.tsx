@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
 
 import './Avatar.scss';
@@ -27,10 +26,6 @@ const Avatar = ({ image = '' }): React.ReactElement => {
       />
     </>
   );
-};
-
-Avatar.propTypes = {
-  image: PropTypes.string,
 };
 
 export default Avatar;

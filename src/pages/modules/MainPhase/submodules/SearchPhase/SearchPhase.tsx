@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, useReducer, useContext } from 'react';
-import PropTypes from 'prop-types';
 import { IoIosSearch } from 'react-icons/io';
 
 import SearchItem from './submodules/SearchItem/SearchItem';
@@ -347,12 +346,6 @@ const SearchPhase = ({ transitionCallback, token = '', type = '' }: SPProps): Re
       </div>
     </>
   );
-};
-
-SearchPhase.propTypes = {
-  transitionCallback: PropTypes.func.isRequired,
-  token: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
 };
 
 export default SearchPhase;
