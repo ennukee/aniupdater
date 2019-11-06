@@ -1,14 +1,10 @@
 import React from 'react';
-import {
-  render,
-  fireEvent,
-  act,
-} from '@testing-library/react';
+import { render, fireEvent, act } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import fetch from 'jest-fetch-mock';
-import SearchPhase from './SearchPhase';
-import { SEARCH_PHASE_MOCK_RESPONSE, SEARCH_PHASE_MOCK_RESPONSE_PARTIAL } from '../../../util/const';
-import GlobalContext from '../../../util/GlobalContext';
+import SearchPhase from './SearchPhase.tsx';
+import { SEARCH_PHASE_MOCK_RESPONSE, SEARCH_PHASE_MOCK_RESPONSE_PARTIAL } from 'Utils/const';
+import GlobalContext from 'Utils/GlobalContext.tsx';
 
 const setup = () => {
   const callbackFn = jest.fn();
@@ -20,16 +16,15 @@ const setup = () => {
         setGlobalValues: setGlobalCallbackFn,
       }}
     >
-      <SearchPhase
-        transitionCallback={callbackFn}
-        token="TOKEN"
-        type="ANIME"
-      />
+      <SearchPhase transitionCallback={callbackFn} token="TOKEN" type="ANIME" />
     </GlobalContext.Provider>,
   );
   const input = container.querySelector('input#search-input');
   return {
-    callbackFn, container, setGlobalCallbackFn, input,
+    callbackFn,
+    container,
+    setGlobalCallbackFn,
+    input,
   };
 };
 

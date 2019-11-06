@@ -1,16 +1,10 @@
 import React from 'react';
-import {
-  render,
-  fireEvent,
-  act,
-  waitForElement,
-  wait,
-} from '@testing-library/react';
+import { render, fireEvent, act, waitForElement, wait } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import fetch from 'jest-fetch-mock';
 import MainPhase from './MainPhase';
-import { SEARCH_PHASE_MOCK_RESPONSE, SEARCH_PHASE_MOCK_RESPONSE_PARTIAL } from '../util/const';
-import GlobalContext from '../util/GlobalContext';
+import { SEARCH_PHASE_MOCK_RESPONSE, SEARCH_PHASE_MOCK_RESPONSE_PARTIAL } from 'Utils/const';
+import GlobalContext from 'Utils/GlobalContext.tsx';
 
 describe('MainPhase.js', () => {
   const setup = () => {
@@ -22,12 +16,7 @@ describe('MainPhase.js', () => {
           setGlobalValues: setGlobalCallbackFn,
         }}
       >
-        <MainPhase
-          token="123123"
-          mainState="entering"
-          userId="123"
-          username="321"
-        />
+        <MainPhase token="123123" mainState="entering" userId="123" username="321" />
       </GlobalContext.Provider>,
     );
     return { container };
