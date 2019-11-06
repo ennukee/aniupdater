@@ -1,28 +1,27 @@
 #loading-anim-div {
-    /*background-image: url(../../../../loading_full.jpg);*/
-    background-position-x: 50%;
-    background-size: cover;
-    border: 2px solid #222 !important;
-    animation: shine 1s;
-    -webkit-animation: shine 1s;
-
+  /*background-image: url(../../../../loading_full.jpg);*/
+  background-position-x: 50%;
+  background-size: cover;
+  border: 2px solid #222 !important;
+  animation: shine 1s;
+  -webkit-animation: shine 1s;
 }
 
 @keyframes shine {
-    50% {
-        filter: hue-rotate(35deg) brightness(1.25);
-        -webkit-filter: hue-rotate(35deg) brightness(1.25);
-    }
-    60% {
-        filter: hue-rotate(35deg) brightness(1.55);
-        -webkit-filter: hue-rotate(35deg) brightness(1.55);
-}
-    90% {
-        filter: hue-rotate(25deg) brightness(1.15);
-        -webkit-filter: hue-rotate(25deg) brightness(1.15);
-}
-    100% {
-        filter: hue-rotate(0deg) brightness(1);
-        -webkit-filter: hue-rotate(0deg) brightness(1);
-}
+  50% {
+    filter: hue-rotate(35deg) brightness(1.25);
+    -webkit-filter: hue-rotate(35deg) brightness(1.25);
+  }
+  60% {
+    filter: hue-rotate(35deg) brightness(1.55);
+    -webkit-filter: hue-rotate(35deg) brightness(1.55);
+  }
+  90% {
+    filter: hue-rotate(25deg) brightness(1.15);
+    -webkit-filter: hue-rotate(25deg) brightness(1.15);
+  }
+  100% {
+    filter: hue-rotate(0deg) brightness(1);
+    -webkit-filter: hue-rotate(0deg) brightness(1);
+  }
 }

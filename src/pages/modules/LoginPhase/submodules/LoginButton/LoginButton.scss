@@ -1,16 +1,17 @@
 #login-button {
-    margin-top: 10px;
-    text-align: center;
-    /* font-weight: bold; */
-}
-#login-button a {
+  margin-top: 10px;
+  text-align: center;
+  /* font-weight: bold; */
+
+  a {
     color: #eee;
     font-size: 18px;
     transition: all 0.25s;
     text-decoration: none;
-}
 
-#login-button a:hover {
-    transition: all 0.25s;
-    cursor: pointer;
+    &:hover {
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+  }
 }

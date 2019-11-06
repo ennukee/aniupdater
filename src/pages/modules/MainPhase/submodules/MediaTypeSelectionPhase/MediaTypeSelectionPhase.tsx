@@ -1,7 +1,8 @@
 import React, { useEffect, useCallback, useContext } from 'react';
-import PropTypes from 'prop-types';
 
 import GlobalContext, { GlobalContextOptions } from 'Utils/GlobalContext';
+
+import './MediaTypeSelectionPhase.scss';
 
 interface MTSPProps {
   transitionCallback: Function;
@@ -52,35 +53,17 @@ const MediaTypeSelectionPhase = ({ transitionCallback, username }: MTSPProps): R
 
   return (
     <div>
-      {/* <Alert
-        active={alertActive}
-        content={`Welcome ${username}`}
-        containerStyle={{
-          top: '200px',
-        }}
-        style={{
-          fontSize: '16px',
-          backgroundColor: '#2229',
-          border: '1px solid #eee',
-          color: '#eee',
-        }}
-      /> */}
-      <span className="aom-a">
+      <span className="red">
         <span className="bold dark">A</span>
         nq
       </span>
       &nbsp;or&nbsp;
-      <span className="aom-m">
+      <span className="blue">
         <span className="bold dark">M</span>
         ar
       </span>
     </div>
   );
-};
-
-MediaTypeSelectionPhase.propTypes = {
-  transitionCallback: PropTypes.func.isRequired,
-  username: PropTypes.string.isRequired,
 };
 
 export default MediaTypeSelectionPhase;

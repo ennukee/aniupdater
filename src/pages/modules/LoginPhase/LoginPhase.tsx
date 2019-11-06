@@ -5,6 +5,8 @@ import TokenInput from './submodules/TokenInput/TokenInput';
 import LoginButton from './submodules/LoginButton/LoginButton';
 import LoadingAnim from './submodules/LoadingAnim/LoadingAnim';
 
+import './LoginPhase.scss';
+
 interface LPProps {
   loginState?: string;
   width?: number;

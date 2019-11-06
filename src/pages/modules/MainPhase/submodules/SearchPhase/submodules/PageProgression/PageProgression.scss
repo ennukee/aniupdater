@@ -1,48 +1,14 @@
 :root {
-    --main-circle-color: #bbe;
-    --past-circle-color: #cce;
-    --blank-color: #eee;
+  --main-circle-color: #bbe;
+  --past-circle-color: #cce;
+  --blank-color: #eee;
 }
 
 #page-prog-container {
-    height: 100%;
-    width: 100%;
-}
+  height: 100%;
+  width: 100%;
 
-#page-prog-container #circles {
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.page-prog-circle {
-    width: 25px;
-    height: 25px;
-    z-index: 10;
-    background-color: var(--blank-color);
-    transition: all 0.25s;
-
-    border-radius: 100%;
-    -webkit-border-radius: 100%;
-    -moz-border-radius: 100%;
-    -ms-border-radius: 100%;
-    -o-border-radius: 100%;
-}
-
-.page-prog-circle.activePage {
-    width: 40px;
-    height: 40px;
-    background-color: var(--main-circle-color);
-    transition: all 0.25s;
-    -webkit-transition: all 0.25s;
-    -moz-transition: all 0.25s;
-    -ms-transition: all 0.25s;
-    -o-transition: all 0.25s;
-}
-
-#line-container {
+  #line-container {
     display: flex;
     /* flex-direction: row; */
     justify-content: space-between;
@@ -53,27 +19,61 @@
     left: 0;
     top: 0;
     height: 100%;
-    
+
     z-index: 1;
-}
 
-#line-container #line {
-    height: 5px;
-    width: 100%;
-    background-color: var(--blank-color);
-    z-index: 1;
-}
+    #line {
+      height: 5px;
+      width: 100%;
+      background-color: var(--blank-color);
+      z-index: 1;
 
-.pastPage {
-    background-color: var(--past-circle-color);
-}
+      #line-fill {
+        height: 100%;
+        background-color: var(--past-circle-color);
+        transition: 0.25s;
+        -webkit-transition: 0.25s;
+        -moz-transition: 0.25s;
+        -ms-transition: 0.25s;
+        -o-transition: 0.25s;
+      }
+    }
+  }
 
-#line-container #line #line-fill {
+  #circles {
     height: 100%;
-    background-color: var(--past-circle-color);
-    transition: 0.25s;
-    -webkit-transition: 0.25s;
-    -moz-transition: 0.25s;
-    -ms-transition: 0.25s;
-    -o-transition: 0.25s;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .page-prog-circle {
+      width: 25px;
+      height: 25px;
+      z-index: 10;
+      background-color: var(--blank-color);
+      transition: all 0.25s;
+
+      border-radius: 100%;
+      -webkit-border-radius: 100%;
+      -moz-border-radius: 100%;
+      -ms-border-radius: 100%;
+      -o-border-radius: 100%;
+
+      &.activePage {
+        width: 40px;
+        height: 40px;
+        background-color: var(--main-circle-color);
+        transition: all 0.25s;
+        -webkit-transition: all 0.25s;
+        -moz-transition: all 0.25s;
+        -ms-transition: all 0.25s;
+        -o-transition: all 0.25s;
+      }
+
+      &.pastPage {
+        background-color: var(--past-circle-color);
+      }
+    }
+  }
 }

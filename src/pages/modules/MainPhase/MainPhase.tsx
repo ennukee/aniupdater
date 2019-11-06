@@ -19,6 +19,8 @@ import fadePhases from 'Utils/fadePhases';
 // import generateQueryJson from '../util/generateQueryJson';
 import { MediaEntry } from 'interfaces/interfaces';
 
+import './MainPhase.scss';
+
 interface MPProps {
   token?: string;
   mainState?: string;
