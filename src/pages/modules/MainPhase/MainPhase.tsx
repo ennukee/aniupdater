@@ -17,7 +17,7 @@ import useKeyModifiers from './util/useKeyModifiers';
 // import { ANILIST_BASE_URL, VIEWER_RELEVANT_MEDIA_QUERY_GEN } from '../util/const';
 import fadePhases from '../util/fadePhases';
 // import generateQueryJson from '../util/generateQueryJson';
-import { SelectedMedia } from 'interfaces/interfaces';
+import { MediaEntry } from 'interfaces/interfaces';
 
 interface MPProps {
   token?: string;
@@ -28,16 +28,17 @@ const MainPhase = ({ token, mainState, username = '' }: MPProps): React.ReactEle
   const [substate, setSubstate] = useState('a-or-m-phase');
   const [prevSubstate, setPrevSubstate] = useState('');
   const [type, setType] = useState('');
-  const [selectedMedia, setSelectedMedia] = useState<SelectedMedia>({
+  const [selectedMedia, setSelectedMedia] = useState<MediaEntry>({
     id: 0,
     title: { userPreferred: '' },
     coverImage: { large: '', color: '' },
+    mediaListEntry: null,
   });
 
   const { helpByPhase: helpMap } = useHelpMap();
 
   const transitionMainState = useCallback(
-    async nextState => {
+    async (nextState: string): Promise<void> => {
       const oldPhaseElement = document.getElementById(substate);
       const newPhaseElement = document.getElementById(nextState);
       if (!oldPhaseElement || !newPhaseElement) {
@@ -64,14 +65,14 @@ const MainPhase = ({ token, mainState, username = '' }: MPProps): React.ReactEle
     transitionMainState('search-phase');
   };
 
-  const searchSelectionHandler = (newSelectedMedia: SelectedMedia): void => {
+  const searchSelectionHandler = (newSelectedMedia: MediaEntry): void => {
     setSelectedMedia(newSelectedMedia);
     transitionMainState('data-phase');
   };
 
   const { isShifting } = useKeyModifiers();
   const handleKeyPress = useCallback(
-    e => {
+    (e: KeyboardEvent): void => {
       if (e.key === 'CapsLock' && isShifting) {
         transitionMainState('a-or-m-phase');
       }
@@ -117,8 +118,7 @@ const MainPhase = ({ token, mainState, username = '' }: MPProps): React.ReactEle
             <DataForm
               mediaId={selectedMedia.id}
               title={selectedMedia.title.userPreferred}
-              image={selectedMedia.coverImage.large}
-              color={selectedMedia.coverImage.color}
+              image={selectedMedia.coverImage ? selectedMedia.coverImage.large : null}
               presetProgress={selectedMedia.mediaListEntry ? selectedMedia.mediaListEntry.progress : undefined}
               presetScore={selectedMedia.mediaListEntry ? selectedMedia.mediaListEntry.score : undefined}
               type={type}

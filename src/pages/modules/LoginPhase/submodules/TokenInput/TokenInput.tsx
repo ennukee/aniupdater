@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 import generateQueryJson from '../../../util/generateQueryJson';
 import * as consts from 'Utils/const';
-import { KeyPress, InitialQuery } from 'interfaces/interfaces';
+import { InitialQuery } from 'interfaces/interfaces';
 
 interface TIProps {
   callback?: Function;
@@ -59,7 +59,7 @@ const TokenInput = ({ callback }: TIProps): React.ReactElement => {
   );
 
   const authorizeToken = useCallback(
-    (tkn: string) => {
+    (tkn: string): void => {
       setProcessing(true);
       const options = generateQueryJson(consts.VERIFICATION_QUERY, tkn);
 
@@ -71,7 +71,7 @@ const TokenInput = ({ callback }: TIProps): React.ReactElement => {
   );
 
   const handleEnterKeyPress = useCallback(
-    (e: KeyPress) => {
+    (e: React.KeyboardEvent<HTMLDivElement> | React.KeyboardEvent<HTMLInputElement>): void => {
       if (e.key === 'Enter') authorizeToken(inputVal);
     },
     [authorizeToken, inputVal],

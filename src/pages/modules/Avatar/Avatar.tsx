@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
-import { KeyPress } from 'interfaces/interfaces';
 
 import './Avatar.css';
 
@@ -10,7 +9,7 @@ const Avatar = ({ image = '' }): React.ReactElement => {
     window.localStorage.removeItem('token');
     window.location.reload();
   };
-  const handleKeyClick = (e: KeyPress): void => {
+  const handleKeyClick = (e: React.KeyboardEvent<HTMLDivElement>): void => {
     if (e.key === 'Enter') handleClick();
   };
   return (

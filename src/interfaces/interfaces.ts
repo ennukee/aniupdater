@@ -5,35 +5,10 @@ export interface KeyPress {
 
 /* const.js */
 export interface PMCQGqueryProp {
-  mediaId?: number | undefined;
-  status?: string | undefined;
-  score?: number | undefined;
-  progress?: number | undefined;
-}
-
-/* Below serve -some- file */
-
-interface MediaListEntry {
-  progress?: number;
-  score?: number;
-}
-
-interface CoverImage {
-  large?: string;
-  color?: string;
-}
-
-interface Title {
-  userPreferred?: string;
-}
-
-export interface SelectedMedia {
-  id?: number;
-  title: Title;
-  coverImage: CoverImage;
-  mediaListEntry?: MediaListEntry | undefined;
-  episodes?: number;
-  chapters?: number;
+  mediaId?: number | null;
+  status?: string | null;
+  score?: number | null;
+  progress?: number | null;
 }
 
 /* TokenInput.tsx */
@@ -55,7 +30,52 @@ export interface InitialQuery {
       };
     };
   };
-  errors?: Array<ResponseError>;
+  errors?: ResponseError[];
+}
+
+/* SearchPhase.tsx */
+export interface SearchResultParseExtra {
+  direction?: number;
+  page?: number;
+}
+
+interface CsrByMedia {
+  [key: string]: {
+    [key: string]: MediaEntry | number;
+  };
+}
+export interface CachedSearchResults {
+  ANIME?: CsrByMedia;
+  MANGA?: CsrByMedia;
+}
+
+export interface MediaEntry {
+  id: number;
+  episodes?: number;
+  chapters?: number;
+  title: {
+    userPreferred: string;
+  };
+  coverImage: {
+    large?: string;
+    color?: string | null;
+  } | null;
+  mediaListEntry: {
+    progress?: number | null;
+    score?: number | null;
+  } | null;
+}
+
+export interface SearchResult {
+  data?: {
+    Page?: {
+      pageInfo: {
+        total: number;
+      };
+      media: MediaEntry[];
+    };
+  };
+  errors?: ResponseError[];
 }
 
 /* LoadingAnim.tsx */
