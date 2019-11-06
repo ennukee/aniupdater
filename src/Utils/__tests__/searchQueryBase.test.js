@@ -1,4 +1,4 @@
-import searchQueryBase from '../searchQueryBase';
+import searchQueryBase from 'Utils/searchQueryBase';
 
 it('generates the correct search query', () => {
   const query = searchQueryBase(1, 'Kimi', 'ANIME');

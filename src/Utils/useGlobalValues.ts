@@ -1,10 +1,11 @@
 import { useReducer } from 'react';
+import { GlobalValuesUpdate, GlobalValueObject, GlobalValueContextObject } from 'interfaces/interfaces';
 
 // TODO
 // ! TEST THIS
 
-const useGlobalValues = () => {
-  const globalValueReducer = (state, action) => {
+const useGlobalValues = (): GlobalValueContextObject => {
+  const globalValueReducer = (state: GlobalValueObject, action: GlobalValuesUpdate): GlobalValueObject => {
     /*
       * action param potential forms
       {

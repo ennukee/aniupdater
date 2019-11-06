@@ -1,4 +1,4 @@
-import useHelpMap from '../useHelpMap';
+import useHelpMap from 'Utils/useHelpMap';
 
 // this is a test boi get outta here hooklint
 // eslint-disable-next-line react-hooks/rules-of-hooks

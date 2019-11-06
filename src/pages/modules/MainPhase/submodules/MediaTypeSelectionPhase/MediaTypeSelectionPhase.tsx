@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import GlobalContext, { GlobalContextOptions } from '../../../util/GlobalContext';
+import GlobalContext, { GlobalContextOptions } from 'Utils/GlobalContext';
 
 interface MTSPProps {
   transitionCallback: Function;

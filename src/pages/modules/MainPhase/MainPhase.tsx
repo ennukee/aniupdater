@@ -10,12 +10,12 @@ import DataForm from './submodules/DataForm/DataForm';
 import HelpMessage from './submodules/HelpMessage/HelpMessage';
 
 /* Custom Hooks */
-import useHelpMap from './util/useHelpMap';
-import useKeyModifiers from './util/useKeyModifiers';
+import useHelpMap from 'Utils/useHelpMap';
+import useKeyModifiers from 'Utils/useKeyModifiers';
 
 /* Utils */
 // import { ANILIST_BASE_URL, VIEWER_RELEVANT_MEDIA_QUERY_GEN } from '../util/const';
-import fadePhases from '../util/fadePhases';
+import fadePhases from 'Utils/fadePhases';
 // import generateQueryJson from '../util/generateQueryJson';
 import { MediaEntry } from 'interfaces/interfaces';
 

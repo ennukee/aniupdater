@@ -1,7 +1,7 @@
-import timeout from './timeout';
+import timeout from 'Utils/timeout';
 
 // Begin the manual transition animations (where's GSAP at tho)
-export default async (curPhaseElem, nextPhaseElem, duration) => {
+export default async (curPhaseElem: HTMLElement, nextPhaseElem: HTMLElement, duration: number): Promise<void> => {
   curPhaseElem.classList.replace('active', 'leaving');
   await timeout(duration - 10);
   curPhaseElem.classList.replace('leaving', 'inactive');

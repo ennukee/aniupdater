@@ -8,10 +8,10 @@ import {
   ANILIST_BASE_URL,
   MEDIA_STATUS_ALERT_MESSAGES,
 } from 'Utils/const';
-import generateQueryJson from '../../../util/generateQueryJson';
+import generateQueryJson from 'Utils/generateQueryJson';
 
 import './DataForm.css';
-import GlobalContext, { GlobalContextOptions } from '../../../util/GlobalContext';
+import GlobalContext, { GlobalContextOptions } from 'Utils/GlobalContext';
 import presets from '../../../Alert/presets';
 
 interface DFProps {

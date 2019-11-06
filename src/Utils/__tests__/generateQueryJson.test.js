@@ -1,4 +1,4 @@
-import generateQueryJson from '../generateQueryJson';
+import generateQueryJson from 'Utils/generateQueryJson';
 import { VIEWER_RELEVANT_MEDIA_QUERY_GEN } from 'Utils/const';
 
 // basically a snapshot test

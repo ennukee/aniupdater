@@ -1,3 +1,5 @@
+import { Dispatch } from 'react';
+
 /* GENERIC */
 export interface KeyPress {
   key: string;
@@ -76,6 +78,27 @@ export interface SearchResult {
     };
   };
   errors?: ResponseError[];
+}
+
+/* Utils/useGlobalValues.ts */
+interface AlertData {
+  active?: boolean;
+  content?: string;
+  style?: Record<string, string>;
+}
+
+export interface GlobalValuesUpdate {
+  type?: string;
+  data?: AlertData;
+}
+
+export interface GlobalValueObject {
+  alertData?: AlertData;
+}
+
+export interface GlobalValueContextObject {
+  globalValues: GlobalValueObject;
+  setGlobalValues: Dispatch<GlobalValuesUpdate>;
 }
 
 /* LoadingAnim.tsx */

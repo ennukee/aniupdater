@@ -5,11 +5,11 @@ import { IoIosSearch } from 'react-icons/io';
 import SearchItem from './submodules/SearchItem/SearchItem';
 import PageProgression from './submodules/PageProgression/PageProgression';
 
-import GlobalContext, { GlobalContextOptions } from '../../../util/GlobalContext';
-import searchQueryBase from './util/searchQueryBase';
-import generateQueryJson from '../../../util/generateQueryJson';
+import GlobalContext, { GlobalContextOptions } from 'Utils/GlobalContext';
+import searchQueryBase from 'Utils/searchQueryBase';
+import generateQueryJson from 'Utils/generateQueryJson';
 import * as consts from 'Utils/const';
-import useKeyModifiers from '../../util/useKeyModifiers';
+import useKeyModifiers from 'Utils/useKeyModifiers';
 import presets from '../../../Alert/presets';
 
 import { SearchResultParseExtra, MediaEntry, SearchResult } from 'interfaces/interfaces';

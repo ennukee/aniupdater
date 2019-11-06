@@ -1,4 +1,4 @@
-import fadePhases from '../fadePhases';
+import fadePhases from 'Utils/fadePhases';
 
 
 describe('fadePhases', () => {

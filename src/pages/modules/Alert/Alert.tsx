@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useSpring, animated } from 'react-spring';
 
 import './Alert.css';
-import GlobalContext, { GlobalContextOptions } from '../util/GlobalContext';
+import GlobalContext, { GlobalContextOptions } from 'Utils/GlobalContext';
 
 const Alert = (): React.ReactElement => {
   const {
