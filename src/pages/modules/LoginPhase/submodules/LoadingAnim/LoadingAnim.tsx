@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 // import ProgressiveImage from 'react-progressive-image';
 import { useSpring, animated } from 'react-spring';
-import './LoadingAnim.css';
+import './LoadingAnim.scss';
 
 import img from '../../../../../loading_verysmall.webp';
 import fullImg from '../../../../../loading_full.webp';

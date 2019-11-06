@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useSpring, animated } from 'react-spring';
 import { IoIosInformationCircleOutline } from 'react-icons/io';
 
-import './HelpMessage.css';
+import './HelpMessage.scss';
 
 interface HMProps {
   substate?: string;

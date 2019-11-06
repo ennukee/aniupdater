@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
 import Tip from './submodules/Tip/Tip';
-import './Footer.css';
+import './Footer.scss';
 
 const Footer = (): React.ReactElement => (
   <footer>

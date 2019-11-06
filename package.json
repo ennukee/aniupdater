@@ -18,6 +18,7 @@
     "gh-pages": "^2.1.1",
     "jest-canvas-mock": "^2.1.2",
     "jest-fetch-mock": "^2.1.2",
+    "node-sass": "^4.13.0",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",

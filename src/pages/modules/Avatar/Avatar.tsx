@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
 
-import './Avatar.css';
+import './Avatar.scss';
 
 const Avatar = ({ image = '' }): React.ReactElement => {
   const handleClick = (): void => {

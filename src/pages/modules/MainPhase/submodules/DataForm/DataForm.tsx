@@ -10,7 +10,7 @@ import {
 } from 'Utils/const';
 import generateQueryJson from 'Utils/generateQueryJson';
 
-import './DataForm.css';
+import './DataForm.scss';
 import GlobalContext, { GlobalContextOptions } from 'Utils/GlobalContext';
 import presets from '../../../Alert/presets';
 

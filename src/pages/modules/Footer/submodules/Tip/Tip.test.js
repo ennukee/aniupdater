@@ -4,7 +4,7 @@ import {
   act,
 } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import Tip from './Tip';
+import Tip from './Tip.tsx';
 
 describe('Tip.js tests', () => {
   it('shows the differing tip messages over time', () => {
@@ -13,7 +13,7 @@ describe('Tip.js tests', () => {
     const tip = container.querySelector('div');
 
     const oldTipContent = container.textContent;
-    act(() => jest.advanceTimersByTime(10100));
+    act(() => jest.advanceTimersByTime(12000));
     expect(tip.textContent).not.toBe(oldTipContent);
   });
 });
