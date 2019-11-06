@@ -7,6 +7,7 @@
     "@testing-library/jest-dom": "^4.2.3",
     "@testing-library/react": "^9.3.2",
     "@testing-library/react-hooks": "^3.1.1",
+    "@types/jest": "^24.0.22",
     "@types/node": "^12.12.5",
     "@types/react-tooltip": "^3.9.3",
     "d3-ease": "^1.0.5",
