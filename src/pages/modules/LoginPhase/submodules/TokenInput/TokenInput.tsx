@@ -2,12 +2,13 @@ import React, { useState, useEffect, useReducer, useCallback } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { IoIosCheckmark } from 'react-icons/io';
 
-import './TokenInput.css';
 import PropTypes from 'prop-types';
 
 import generateQueryJson from 'Utils/generateQueryJson';
 import * as consts from 'Utils/const';
 import { InitialQuery } from 'interfaces/interfaces';
+
+import './TokenInput.scss';
 
 interface TIProps {
   callback?: Function;

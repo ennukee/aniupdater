@@ -12,7 +12,7 @@ import GlobalContext from 'Utils/GlobalContext';
 import useGlobalValues from 'Utils/useGlobalValues';
 
 /* Styles */
-import './Main.css';
+import './Main.scss';
 
 const width = 500;
 

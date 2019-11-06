@@ -1,0 +1,17 @@
+#tip-container {
+    font-size: 14px;
+    text-align: right;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+
+    * {
+        display: flex;
+        align-items: center;
+        text-shadow: -1px 0 #222, 1px 0 #222, 0 1px #222, 0 -1px #222;
+    }
+
+    svg {
+        padding-right: 3px;
+    }
+}

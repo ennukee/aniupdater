@@ -1,6 +1,7 @@
 import React, { CSSProperties } from 'react';
-import './LoginButton.css';
 import PropTypes from 'prop-types';
+
+import './LoginButton.scss';
 
 interface LBProps {
   style?: CSSProperties;

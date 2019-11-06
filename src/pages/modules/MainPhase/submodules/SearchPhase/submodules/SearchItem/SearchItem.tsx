@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSpring, animated } from 'react-spring';
 
+import './SearchItem.scss';
+
 interface SIProps {
   color?: string | null;
   coverImage?: string | null;

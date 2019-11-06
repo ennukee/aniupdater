@@ -14,6 +14,8 @@ import presets from '../../../Alert/presets';
 
 import { SearchResultParseExtra, MediaEntry, SearchResult } from 'interfaces/interfaces';
 
+import './SearchPhase.scss';
+
 interface SPProps {
   transitionCallback: Function;
   token?: string;

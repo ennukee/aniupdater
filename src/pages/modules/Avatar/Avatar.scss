@@ -16,8 +16,8 @@
     -moz-border-radius: 1000px;
     -ms-border-radius: 1000px;
     -o-border-radius: 1000px;
-}
 
-#profile-image:hover {
-    cursor: pointer;
+    &:hover {
+        cursor: pointer;
+    }
 }

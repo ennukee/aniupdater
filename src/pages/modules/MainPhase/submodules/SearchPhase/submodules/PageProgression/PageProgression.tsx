@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './PageProgression.css';
+import './PageProgression.scss';
 
 const PageProgression = ({ maxPages = 0, page = 0 }): React.ReactElement =>
   maxPages <= 1 ? (

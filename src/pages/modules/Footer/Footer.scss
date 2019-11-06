@@ -1,0 +1,43 @@
+#footer-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 3em;
+  font-family: Khula;
+  font-weight: 200;
+  padding-left: 10px;
+
+  nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+      filter: brightness(75%) !important;
+      -webkit-filter: brightness(75%) !important;
+    }
+  }
+
+  .footer-logo {
+    width: 3em;
+    height: 3em;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.github {
+      filter: brightness(0%) invert(100%);
+      -webkit-filter: brightness(0%) invert(100%);
+      width: 2.25em;
+      height: 2.25em;
+      padding-right: 5px;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+#login-button {
+  margin-top: 10px;
+  text-align: center;
+  /* font-weight: bold; */
+
+  a {
+    color: #eee;
+    font-size: 18px;
+    transition: all 0.25s;
+    text-decoration: none;
+
+    &:hover {
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+  }
+}
