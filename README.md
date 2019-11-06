@@ -11,4 +11,22 @@ To be upfront, it's because I was taking *way* too long whenever I logged onto A
 
 ## Contribution Guidelines
 
-Please see CONTRIBUTING.md for information on dev environment setup and contributing to this open source project.
+Please see CONTRIBUTING.md for information on contributing to this open source project.
+
+## Development Setup
+
+This is a fairly simplistic (for both my sake and others') application structure, so it should be fairly easy to set up.
+
+### Fork & clone the repository
+
+Unless you're a maintainer, you will need to fork the repository with the **Fork** button in the top right of this page. This makes a copy of the repository under your name which you have push rights to. This is where you will do your development.
+
+Next, clone your forked repository onto your computer.
+
+### Install
+
+Run `npm install` or `yarn` -- both should work and automatically download every package and dependency you'll need to run this.
+
+### Make a branch and go
+
+Next you'll need to make a branch on your fork (never work right out of master!) and start development on an issue (bug or approved feature request) from [the Issues tab here](https://github.com/ennukee/aniupdater/issues)! Please try to leave a comment on the ticket that you'll be attempting to tackle it so that others don't waste their time. Nobody has a direct "right" over any ticket, including yourself, do not be surprised if someone takes over a ticket if it taking you longer than it should to solve it.
