@@ -14,6 +14,12 @@ Most things, honestly. There's very little we're against including but note ther
 
 Otherwise, try not to push any changes to your `package.json` / `yarn.lock` without asking or providing rationale prior. You are welcome to install packages for personal development experience, but do not commit them to the repo.
 
+### Issue "dibs"
+
+Please leave a comment on any ticket you may be trying to do. That said, you do not suddenly "own" any ticket you comment on -- any other contributor has every right to take over the ticket if they feel you are taking too long on the ticket.
+
+That said, don't be a jerk and steal tickets unless that person really is taking significantly too long -- they could be new and just trying to learn.
+
 ### Ground rules
 
  * If you plan to add a new feature, ensure that you have created (or that there exists already) a ticket that is marked as a feature request. That ticket should be read over and approved one of the maintainers before you consider implementing it. **It is not unreasonable for myself or a maintainer to turn down a PR if it's for a feature we haven't approved of yet.** 
