@@ -1,4 +1,4 @@
-export default (newPage, search, type) => `query {
+export default (newPage: number, search: string, type: string): string => `query {
     Page(page: ${newPage}, perPage: 4) {
       pageInfo {
         total

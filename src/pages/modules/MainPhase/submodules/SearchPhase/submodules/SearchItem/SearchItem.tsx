@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { useSpring, animated } from 'react-spring';
 
 interface SIProps {
-  color?: string;
-  coverImage?: string;
+  color?: string | null;
+  coverImage?: string | null;
   title?: string;
   index?: number;
   isFlatView?: boolean;

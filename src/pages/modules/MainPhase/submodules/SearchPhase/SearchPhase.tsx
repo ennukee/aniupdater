@@ -5,14 +5,14 @@ import { IoIosSearch } from 'react-icons/io';
 import SearchItem from './submodules/SearchItem/SearchItem';
 import PageProgression from './submodules/PageProgression/PageProgression';
 
-import GlobalContext, { GlobalContextOptions } from '../../../util/GlobalContext';
-import searchQueryBase from './util/searchQueryBase';
-import generateQueryJson from '../../../util/generateQueryJson';
-import * as consts from '../../../util/const';
-import useKeyModifiers from '../../util/useKeyModifiers';
+import GlobalContext, { GlobalContextOptions } from 'Utils/GlobalContext';
+import searchQueryBase from 'Utils/searchQueryBase';
+import generateQueryJson from 'Utils/generateQueryJson';
+import * as consts from 'Utils/const';
+import useKeyModifiers from 'Utils/useKeyModifiers';
 import presets from '../../../Alert/presets';
 
-import { SelectedMedia } from 'interfaces/interfaces';
+import { SearchResultParseExtra, MediaEntry, SearchResult } from 'interfaces/interfaces';
 
 interface SPProps {
   transitionCallback: Function;
@@ -21,7 +21,7 @@ interface SPProps {
 }
 const SearchPhase = ({ transitionCallback, token = '', type = '' }: SPProps): React.ReactElement => {
   const [search, setSearch] = useState('');
-  const [searchResults, setSearchResults] = useState(consts.NO_RESULTS_FOUND_RESPONSE);
+  const [searchResults, setSearchResults] = useState<MediaEntry[]>(consts.NO_RESULTS_FOUND_RESPONSE);
   const [page, setPage] = useState(1);
   const [searchPages, setSearchPages] = useState(0);
   const [isFlatView, setIsFlatView] = useState(() => window.innerWidth / window.innerHeight < 1.65);
@@ -92,7 +92,7 @@ const SearchPhase = ({ transitionCallback, token = '', type = '' }: SPProps): Re
     return newState;
   }, JSON.parse(localStorage.getItem('cachedResults') || '') || {});
 
-  const handleBadRequest = useCallback(() => {
+  const handleBadRequest = useCallback((): void => {
     setGlobalValues &&
       setGlobalValues({
         type: 'ALERT',
@@ -109,7 +109,7 @@ const SearchPhase = ({ transitionCallback, token = '', type = '' }: SPProps): Re
   }, [setGlobalValues]);
 
   const selectMediaIndex = useCallback(
-    index => {
+    (index: number): void => {
       if (!searchResults[index] || Object.keys(searchResults[index]).length === 0) {
         return; // Likely we tried to select something that isnt present on the last page of the search
       }
@@ -119,7 +119,12 @@ const SearchPhase = ({ transitionCallback, token = '', type = '' }: SPProps): Re
   );
 
   const searchResultParse = useCallback(
-    (resp, { direction = 0, page: pageParsed }) => {
+    (resp: SearchResult, { direction = 0, page: pageParsed = 0 }: SearchResultParseExtra): void => {
+      if (!resp.data || !resp.data.Page) {
+        // Something went horribly wrong in our query
+        console.error('Something went wrong in the query: ', resp.errors);
+        return handleBadRequest();
+      }
       if (resp.data.Page.media.length === 0) {
         // If no results, default to your "no results" set
         setSearchResults(consts.NO_RESULTS_FOUND_RESPONSE);
@@ -136,14 +141,15 @@ const SearchPhase = ({ transitionCallback, token = '', type = '' }: SPProps): Re
         setSearchPages(Math.min(10, Math.ceil(resp.data.Page.pageInfo.total / 4)));
       }
     },
-    [search, type],
+    [handleBadRequest, search, type],
   );
 
   const initiateSearch = useCallback(
-    (queryOptions, { pageOverride = 0, direction = 0 }) => {
+    (queryOptions: RequestInit, { pageOverride = 0, direction = 0 }): boolean | null => {
       console.info(
         `Currently checking local cache for query = '${search}' on page index ${(pageOverride || page) + direction}...`,
       );
+      // TODO: another candidate for optional chaining when supported
       if (
         cachedSearchResults[type] &&
         cachedSearchResults[type][search] &&
@@ -171,7 +177,7 @@ const SearchPhase = ({ transitionCallback, token = '', type = '' }: SPProps): Re
         return true;
       }
 
-      // 2 requests per second rate limiting logic on searches
+      // 1 request per 2 seconds rate limiting logic on searches
       const lastSearchTime = +(localStorage.getItem('lastSearch') || 0);
       const timeElapsed = new Date().getTime() - lastSearchTime;
       if (timeElapsed < consts.LOCAL_RATE_LIMIT) {
@@ -201,7 +207,6 @@ const SearchPhase = ({ transitionCallback, token = '', type = '' }: SPProps): Re
           searchResultParse(resp, {
             page: pageOverride || page,
             direction,
-            cachedSearchResults,
           });
         })
         .catch(handleBadRequest);
@@ -211,7 +216,7 @@ const SearchPhase = ({ transitionCallback, token = '', type = '' }: SPProps): Re
   );
 
   const changeSearchPage = useCallback(
-    (direction, baseQueryCallback) => {
+    (direction: number, baseQueryCallback: Function): void => {
       if (page + direction < 1 || page + direction > searchPages) return; // No page 0s or extra queries :)
 
       const query = baseQueryCallback(page + direction, search, type);
@@ -228,7 +233,7 @@ const SearchPhase = ({ transitionCallback, token = '', type = '' }: SPProps): Re
   );
 
   const handleKeyPress = useCallback(
-    e => {
+    (e: KeyboardEvent): void => {
       switch (e.key) {
         case 'F1':
         case 'F2':
@@ -325,12 +330,12 @@ const SearchPhase = ({ transitionCallback, token = '', type = '' }: SPProps): Re
         id="results-view"
         className={`${searchResults.length === 0 ? 'inactive' : 'active'}`}
       >
-        {searchResults.map((work: SelectedMedia, index: number) => (
+        {searchResults.map((work: MediaEntry, index: number) => (
           <SearchItem
             key={`work${work.id}`}
             index={index}
-            color={work.coverImage.color}
-            coverImage={work.coverImage.large}
+            color={work.coverImage ? work.coverImage.color : null}
+            coverImage={work.coverImage ? work.coverImage.large : null}
             title={work.title.userPreferred}
             isFlatView={isFlatView}
             progress={work.mediaListEntry ? work.mediaListEntry.progress : null}

@@ -7,24 +7,23 @@ import {
   POST_MEDIA_CHANGE_QUERY_GEN,
   ANILIST_BASE_URL,
   MEDIA_STATUS_ALERT_MESSAGES,
-} from '../../../util/const';
-import generateQueryJson from '../../../util/generateQueryJson';
+} from 'Utils/const';
+import generateQueryJson from 'Utils/generateQueryJson';
 
 import './DataForm.css';
-import GlobalContext, { GlobalContextOptions } from '../../../util/GlobalContext';
+import GlobalContext, { GlobalContextOptions } from 'Utils/GlobalContext';
 import presets from '../../../Alert/presets';
-import { KeyPress } from 'interfaces/interfaces';
 
 interface DFProps {
   title?: string;
-  image?: string;
-  color?: string;
+  image?: string | null;
+  color?: string | null;
   type?: string;
   token?: string;
   mediaId?: number;
   transitionCallback: Function;
-  presetProgress?: number;
-  presetScore?: number;
+  presetProgress?: number | null;
+  presetScore?: number | null;
 }
 
 const DataForm = ({
@@ -45,9 +44,12 @@ const DataForm = ({
   const { setGlobalValues }: GlobalContextOptions = useContext(GlobalContext);
 
   /* Get current media status color or default to black */
-  const currentMediaColor = useCallback((override = status) => MEDIA_STATUS_COLORS[override] || '#222', [status]);
+  const currentMediaColor = useCallback(
+    (override: string = status): string => MEDIA_STATUS_COLORS[override] || '#222',
+    [status],
+  );
 
-  const handleBadRequest = useCallback(() => {
+  const handleBadRequest = useCallback((): void => {
     setGlobalValues &&
       setGlobalValues({
         type: 'ALERT',
@@ -64,7 +66,7 @@ const DataForm = ({
   }, [setGlobalValues]);
 
   const switchMediaMode = useCallback(
-    newStatus => {
+    (newStatus: string) => {
       setStatus(newStatus);
       setGlobalValues &&
         setGlobalValues({
@@ -84,7 +86,7 @@ const DataForm = ({
 
   /* Key Press Event Handler */
   const handleKeyPress = useCallback(
-    (e: KeyPress) => {
+    (e: KeyboardEvent): void => {
       const keyPressed: string = e.key;
       const { [keyPressed.toLowerCase()]: newStatus }: Record<string, string> = {
         u: 'CURRENT',
@@ -158,7 +160,7 @@ const DataForm = ({
             <input
               id="data-form-media-count-value"
               type="number"
-              value={progress}
+              value={progress || ''}
               onChange={(e): void => setProgress(+e.target.value)}
               placeholder={`${MEDIA_TYPE_SINGLETON_TERM[type]}s`}
               style={{
@@ -170,7 +172,7 @@ const DataForm = ({
               <input
                 id="data-form-score-value"
                 type="number"
-                value={score}
+                value={score || ''}
                 onChange={(e): void => setScore(+e.target.value)}
                 placeholder="Score"
                 style={{

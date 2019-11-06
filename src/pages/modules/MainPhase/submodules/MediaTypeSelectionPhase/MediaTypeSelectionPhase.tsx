@@ -1,8 +1,7 @@
 import React, { useEffect, useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import GlobalContext, { GlobalContextOptions } from '../../../util/GlobalContext';
-import { KeyPress } from 'interfaces/interfaces';
+import GlobalContext, { GlobalContextOptions } from 'Utils/GlobalContext';
 
 interface MTSPProps {
   transitionCallback: Function;
@@ -12,7 +11,7 @@ const MediaTypeSelectionPhase = ({ transitionCallback, username }: MTSPProps): R
   const { setGlobalValues }: GlobalContextOptions = useContext(GlobalContext);
 
   const handleKeyPress = useCallback(
-    (e: KeyPress) => {
+    (e: KeyboardEvent): void => {
       const keyPressed: string = e.key.toLowerCase();
       const validMappings: Record<string, string> = { a: 'ANIME', m: 'MANGA' };
       const { [keyPressed]: mediaType } = validMappings;

@@ -3,8 +3,8 @@ import { render, fireEvent, act } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import fetch from 'jest-fetch-mock';
 import SearchPhase from './SearchPhase.tsx';
-import { SEARCH_PHASE_MOCK_RESPONSE, SEARCH_PHASE_MOCK_RESPONSE_PARTIAL } from '../../../util/const';
-import GlobalContext from '../../../util/GlobalContext.tsx';
+import { SEARCH_PHASE_MOCK_RESPONSE, SEARCH_PHASE_MOCK_RESPONSE_PARTIAL } from 'Utils/const';
+import GlobalContext from 'Utils/GlobalContext.tsx';
 
 const setup = () => {
   const callbackFn = jest.fn();

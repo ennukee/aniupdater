@@ -1,6 +1,7 @@
 import React from 'react';
 
-const useHelpMap = () => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const useHelpMap = (): Record<string, any> => {
   const helpByPhase = {
     'a-or-m-phase': (
       <span>
