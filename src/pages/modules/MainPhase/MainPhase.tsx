@@ -10,7 +10,6 @@ import HelpMessage from './submodules/HelpMessage/HelpMessage';
 
 /* Custom Hooks */
 import useHelpMap from 'Utils/useHelpMap';
-import useKeyModifiers from 'Utils/useKeyModifiers';
 
 /* Utils */
 // import { ANILIST_BASE_URL, VIEWER_RELEVANT_MEDIA_QUERY_GEN } from '../util/const';
@@ -71,14 +70,14 @@ const MainPhase = ({ token, mainState, username = '' }: MPProps): React.ReactEle
     transitionMainState('data-phase');
   };
 
-  const { isShifting } = useKeyModifiers();
   const handleKeyPress = useCallback(
     (e: KeyboardEvent): void => {
-      if (e.key === 'CapsLock' && isShifting) {
+      // console.log(e.key, isShifting)
+      if (e.key === 'Tab' && e.shiftKey) {
         transitionMainState('a-or-m-phase');
       }
     },
-    [isShifting, transitionMainState],
+    [transitionMainState],
   );
 
   useEffect(() => {

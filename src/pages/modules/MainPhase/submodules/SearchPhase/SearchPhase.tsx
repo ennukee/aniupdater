@@ -8,7 +8,6 @@ import GlobalContext, { GlobalContextOptions } from 'Utils/GlobalContext';
 import searchQueryBase from 'Utils/searchQueryBase';
 import generateQueryJson from 'Utils/generateQueryJson';
 import * as consts from 'Utils/const';
-import useKeyModifiers from 'Utils/useKeyModifiers';
 import presets from '../../../Alert/presets';
 
 import { SearchResultParseExtra, MediaEntry, SearchResult } from 'interfaces/interfaces';
@@ -27,8 +26,6 @@ const SearchPhase = ({ transitionCallback, token = '', type = '' }: SPProps): Re
   const [searchPages, setSearchPages] = useState(0);
   const [isFlatView, setIsFlatView] = useState(() => window.innerWidth / window.innerHeight < 1.65);
   const { setGlobalValues }: GlobalContextOptions = useContext(GlobalContext);
-
-  const { isCtrling, isShifting } = useKeyModifiers();
 
   const [cachedSearchResults, affectCachedSearchResults] = useReducer((state, action) => {
     // ? -> action = { type: 'WIPE_CACHE' }
@@ -245,14 +242,14 @@ const SearchPhase = ({ transitionCallback, token = '', type = '' }: SPProps): Re
           e.preventDefault();
           break;
         case 'Delete':
-          if (isShifting) {
+          if (e.shiftKey) {
             affectCachedSearchResults({
               type: 'DELETE_QUERY',
               mediaType: type,
               query: search,
             });
             e.preventDefault();
-          } else if (isCtrling) {
+          } else if (e.ctrlKey) {
             affectCachedSearchResults({
               type: 'WIPE_CACHE',
             });
@@ -279,7 +276,7 @@ const SearchPhase = ({ transitionCallback, token = '', type = '' }: SPProps): Re
           break;
       }
     },
-    [changeSearchPage, initiateSearch, isCtrling, isShifting, search, selectMediaIndex, token, type],
+    [changeSearchPage, initiateSearch, search, selectMediaIndex, token, type],
   );
 
   const updateWindowSize = (): void => {
