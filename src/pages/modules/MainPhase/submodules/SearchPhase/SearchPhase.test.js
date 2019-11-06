@@ -33,7 +33,7 @@ describe('search phase tests', () => {
     fetch.resetMocks();
     localStorage.clear();
   });
-  it.skip('updates the input field on typing', () => {
+  it('updates the input field on typing', () => {
     const { input } = setup();
     act(() => {
       fireEvent.change(input, { target: { value: 'TEST' } });
@@ -41,13 +41,13 @@ describe('search phase tests', () => {
     expect(input.value).toBe('TEST');
   });
 
-  it.skip('does not load page progression slider on initial render', () => {
+  it('does not load page progression slider on initial render', () => {
     const { container } = setup();
     expect(container.querySelector('#page-prog-container')).toBeNull();
   });
 
   describe('fetch mocking', () => {
-    it.skip('loads all page elements when good search sent', async () => {
+    it('loads all page elements when good search sent', async () => {
       const { container, input } = setup();
       await act(async () => {
         fetch.mockResponseOnce(JSON.stringify(SEARCH_PHASE_MOCK_RESPONSE));
@@ -61,7 +61,7 @@ describe('search phase tests', () => {
       expect(pageProgCircles[0]).toHaveClass('activePage');
     });
 
-    it.skip('refreshes on failed anilist response', async () => {
+    it('refreshes on failed anilist response', async () => {
       jest.useFakeTimers();
 
       const { callbackFn, input } = setup();
@@ -81,7 +81,7 @@ describe('search phase tests', () => {
       jest.runAllTimers();
     });
 
-    it.skip('refreshes on failed fetch', async () => {
+    it('refreshes on failed fetch', async () => {
       jest.useFakeTimers();
 
       const { callbackFn, input } = setup();
@@ -101,7 +101,7 @@ describe('search phase tests', () => {
       jest.runAllTimers();
     });
 
-    it.skip('shifts the page on arrow keypress', async () => {
+    it('shifts the page on arrow keypress', async () => {
       const { container, input } = setup();
       await act(async () => {
         fetch.mockResponse(JSON.stringify(SEARCH_PHASE_MOCK_RESPONSE));
@@ -117,7 +117,7 @@ describe('search phase tests', () => {
       expect(pageProgCircles[0]).toHaveClass('pastPage');
     });
 
-    it.skip('does not shift if at page 1', async () => {
+    it('does not shift if at page 1', async () => {
       const { container, input } = setup();
       await act(async () => {
         fetch.mockResponse(JSON.stringify(SEARCH_PHASE_MOCK_RESPONSE));
@@ -132,7 +132,7 @@ describe('search phase tests', () => {
       expect(pageProgCircles[1]).not.toHaveClass('activePage');
     });
 
-    it.skip('selects media 1 when F1 is pressed', async () => {
+    it('selects media 1 when F1 is pressed', async () => {
       const { callbackFn, input } = setup();
       await act(async () => {
         fetch.mockResponseOnce(JSON.stringify(SEARCH_PHASE_MOCK_RESPONSE));
@@ -146,7 +146,7 @@ describe('search phase tests', () => {
       expect(callbackFn).toHaveBeenCalledWith(expectedParam);
     });
 
-    it.skip('selects media 2 when F2 is pressed', async () => {
+    it('selects media 2 when F2 is pressed', async () => {
       const { callbackFn, input } = setup();
       await act(async () => {
         fetch.mockResponseOnce(JSON.stringify(SEARCH_PHASE_MOCK_RESPONSE));
@@ -160,7 +160,7 @@ describe('search phase tests', () => {
       expect(callbackFn).toHaveBeenCalledWith(expectedParam);
     });
 
-    it.skip('selects media 3 when F3 is pressed', async () => {
+    it('selects media 3 when F3 is pressed', async () => {
       const { callbackFn, input } = setup();
       await act(async () => {
         fetch.mockResponseOnce(JSON.stringify(SEARCH_PHASE_MOCK_RESPONSE));
@@ -174,7 +174,7 @@ describe('search phase tests', () => {
       expect(callbackFn).toHaveBeenCalledWith(expectedParam);
     });
 
-    it.skip('selects media 4 when F4 is pressed', async () => {
+    it('selects media 4 when F4 is pressed', async () => {
       const { callbackFn, input } = setup();
       await act(async () => {
         fetch.mockResponseOnce(JSON.stringify(SEARCH_PHASE_MOCK_RESPONSE));
@@ -188,7 +188,7 @@ describe('search phase tests', () => {
       expect(callbackFn).toHaveBeenCalledWith(expectedParam);
     });
 
-    it.skip('does nothing when selecting a media that is not present', async () => {
+    it('does nothing when selecting a media that is not present', async () => {
       const { callbackFn, input, container } = setup();
       await act(async () => {
         fetch.mockResponseOnce(JSON.stringify(SEARCH_PHASE_MOCK_RESPONSE_PARTIAL));
@@ -202,7 +202,7 @@ describe('search phase tests', () => {
       expect(callbackFn).not.toHaveBeenCalled();
     });
 
-    it.skip('doesnt fetch unnecessarily for cached views', async () => {
+    it('doesnt fetch unnecessarily for cached views', async () => {
       // This also tests that our rate limiting does not apply to cached results (since we do not reset
       // the rate limit localStorage on the last query)
 
@@ -228,7 +228,7 @@ describe('search phase tests', () => {
       expect(fetch.mock.calls.length).toBe(2);
     });
 
-    it.skip('stops requests if they are within the rate limit', async () => {
+    it('stops requests if they are within the rate limit', async () => {
       jest.useFakeTimers();
 
       const { container, input } = setup();
