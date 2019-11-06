@@ -11,4 +11,4 @@ To be upfront, it's because I was taking *way* too long whenever I logged onto A
 
 ## Contribution Guidelines
 
-Please see CONTRIBUTING.md for information on contributing to this open source project.
+Please see CONTRIBUTING.md for information on dev environment setup and contributing to this open source project.
