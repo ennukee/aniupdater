@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 import generateQueryJson from '../../../util/generateQueryJson';
 import * as consts from 'Utils/const';
-import { KeyPress } from 'interfaces/interfaces';
+import { KeyPress, InitialQuery } from 'interfaces/interfaces';
 
 interface TIProps {
   callback?: Function;
@@ -15,6 +15,7 @@ interface TIProps {
 const TokenInput = ({ callback }: TIProps): React.ReactElement => {
   const [inputVal, setInputVal] = useState('');
   const [processing, setProcessing] = useState(false);
+  // TODO: probably combine these two into one single reducer since they go hand-in-hand
   const [alertMessage, setAlertMessage] = useState('');
   const [alertColor, setAlertColor] = useReducer(
     (oldV, newV) => ({
@@ -24,7 +25,7 @@ const TokenInput = ({ callback }: TIProps): React.ReactElement => {
     {},
   );
 
-  const tokenFailure = (e: KeyPress): void => {
+  const tokenFailure = (e: InitialQuery): void => {
     console.info(e);
     setAlertMessage(
       'This token is either invalid or has expired. Please use the link below to get a new token and try again.',
@@ -34,7 +35,8 @@ const TokenInput = ({ callback }: TIProps): React.ReactElement => {
   };
 
   const tokenSuccess = useCallback(
-    (resp, tkn) => {
+    (resp: InitialQuery, tkn: string) => {
+      // TODO: pls refactor this to not be literal garbage when CRA is updated to work with TS3.7's optional chaining
       if (!resp || !resp.data || !resp.data.Viewer || !resp.data.Viewer.id || !resp.data.Viewer.name) {
         tokenFailure(resp);
         return;
@@ -57,7 +59,7 @@ const TokenInput = ({ callback }: TIProps): React.ReactElement => {
   );
 
   const authorizeToken = useCallback(
-    tkn => {
+    (tkn: string) => {
       setProcessing(true);
       const options = generateQueryJson(consts.VERIFICATION_QUERY, tkn);
 
@@ -69,7 +71,7 @@ const TokenInput = ({ callback }: TIProps): React.ReactElement => {
   );
 
   const handleEnterKeyPress = useCallback(
-    e => {
+    (e: KeyPress) => {
       if (e.key === 'Enter') authorizeToken(inputVal);
     },
     [authorizeToken, inputVal],
@@ -81,7 +83,6 @@ const TokenInput = ({ callback }: TIProps): React.ReactElement => {
       setInputVal(preloadedToken);
       authorizeToken(preloadedToken);
     }
-    // Intentionally disabled because I truly only wish for this to run a single time on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
