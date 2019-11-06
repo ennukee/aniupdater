@@ -3,8 +3,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSpring, animated } from 'react-spring';
 import './LoadingAnim.scss';
 
-import img from '../../../../../loading_verysmall.webp';
-import fullImg from '../../../../../loading_full.webp';
+import img from './loading_verysmall.webp';
+import fullImg from './loading_full.webp';
 
 const LoadingAnim = (): React.ReactElement => {
   const [loaderStatus, setLoaderStatus] = useState(0);
