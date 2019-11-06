@@ -30,7 +30,7 @@ describe('MainPhase.js', () => {
     await wait(() => expect(alertContainer).toHaveStyle('opacity: 1'));
   });
 
-  it.skip('differentiates search caching between different media types', async () => {
+  it('differentiates search caching between different media types', async () => {
     const { container } = setup();
 
     // Enter page and press A to select anime media

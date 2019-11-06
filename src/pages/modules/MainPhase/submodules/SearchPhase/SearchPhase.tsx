@@ -90,7 +90,7 @@ const SearchPhase = ({ transitionCallback, token = '', type = '' }: SPProps): Re
     // Store this in localStorage so we can use it at a future point
     localStorage.setItem('cachedResults', JSON.stringify(newState));
     return newState;
-  }, JSON.parse(localStorage.getItem('cachedResults') || '') || {});
+  }, JSON.parse(localStorage.getItem('cachedResults') || '{}') || {});
 
   const handleBadRequest = useCallback((): void => {
     setGlobalValues &&
