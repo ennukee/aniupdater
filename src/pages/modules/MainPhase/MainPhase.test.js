@@ -50,19 +50,16 @@ describe('MainPhase.js', () => {
     localStorage.removeItem('lastSearch'); // We have a rate limit of 2s per request -- avoid it in tests
 
     // Then we wait for data phase to be loaded and check localStorage
-    await waitForElement(() => container.querySelector('#data-phase'));
+    await waitForElement(() => container.querySelector('#results-item'));
     // console.log(JSON.parse(window.localStorage.getItem('cachedResults')));
     expect(JSON.parse(window.localStorage.getItem('cachedResults')).ANIME.TEST).toBeDefined();
     expect(fetch.mock.calls.length).toBe(1);
 
     // Return to media selection via Shift+CapsLock keybind
-    await act(async () => {
-      fireEvent.keyDown(container, { key: 'Shift', code: 16 });
-    });
-    fireEvent.keyDown(container, { key: 'CapsLock', code: 20 });
+    fireEvent.keyDown(container, { key: 'Tab', code: 20, shiftKey: true });
 
     // Then select manga media type this time
-    await waitForElement(() => document.querySelector('.aom-a'));
+    await waitForElement(() => document.querySelector('#a-or-m-phase div'));
     await act(async () => {
       fireEvent.keyDown(container, { key: 'm', code: 77 });
     });
@@ -80,7 +77,7 @@ describe('MainPhase.js', () => {
 
     // Then we check for the same query as before but in the manga cache
     await waitForElement(() => container.querySelector('#data-phase'));
-    // console.log(window.localStorage);
+    console.info(window.localStorage);
     expect(JSON.parse(window.localStorage.getItem('cachedResults')).MANGA.TEST).toBeDefined();
     expect(fetch.mock.calls.length).toBe(2);
   });

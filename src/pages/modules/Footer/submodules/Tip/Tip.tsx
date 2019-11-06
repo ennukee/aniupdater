@@ -10,7 +10,7 @@ const tips = [
   <div>
     <IoIosHappy size="1.75em" />
     Did you know you can do&nbsp;
-    <strong>Shift + CapsLock</strong>
+    <strong>Shift + Tab</strong>
     &nbsp;to return to the start?
   </div>,
   <div>
