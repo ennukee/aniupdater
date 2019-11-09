@@ -43,7 +43,6 @@ const SearchItem = ({
       <animated.div
         className="img"
         style={{
-          // TODO
           backgroundImage: `url('${coverImage}')`,
           border: '1px solid #222',
           height: '100%',
