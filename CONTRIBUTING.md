@@ -10,7 +10,7 @@ Most things, honestly. There's very little we're against including but note ther
 
 ### What not to do
 
-**Since I have not fully released the application, I am not currently accepting contributions yet**. Please wait until I have announced a public release of the application before opening any contributions, as I am often shifting my views and goals about the application during its initial development.
+**As of 11/8/2019, the application has received its first general public release. I am now accepting contributions**. Please do keep in mind that I am new to owning an open source project so there may be some weirdness as a maintainer :)
 
 Otherwise, try not to push any changes to your `package.json` / `yarn.lock` without asking or providing rationale prior. You are welcome to install packages for personal development experience, but do not commit them to the repo.
 
