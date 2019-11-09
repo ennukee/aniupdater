@@ -29,26 +29,12 @@ describe('search item DOM tests', () => {
       expect(container.querySelector('#result-item-media-progress')).toBeNull();
     });
   });
-  describe('flat view', () => {
-    it('has correct sizing styles on container', () => {
-      const { container } = render(<SearchItem color="#eee" title="AYAYA" index={2} coverImage="" isFlatView />);
-      expect(container.querySelector('#results-item')).toHaveStyle('top: 50%');
-      expect(container.querySelector('#results-item')).toHaveStyle('left: 0%');
-      expect(container.querySelector('#results-item')).toHaveStyle('width: 50%');
-      expect(container.querySelector('#results-item')).toHaveStyle('height: 50%');
-    });
-    it('has the right view div id', () => {
-      const { container } = render(<SearchItem color="#eee" title="AYAYA" index={2} coverImage="" isFlatView />);
-      expect(container.querySelector('#result-item-title-flat-view')).not.toBeNull();
-      expect(container.querySelector('#result-item-title-grid-view')).toBeNull();
-    });
-  });
   describe('grid view', () => {
     it('has correct sizing styles on container', () => {
       const { container } = render(
         <SearchItem color="#eee" title="AYAYA" index={2} coverImage="" isFlatView={false} />,
       );
-      expect(container.querySelector('#results-item')).toHaveStyle('top: 0%');
+      expect(container.querySelector('#results-item')).toHaveStyle('top: 0px');
       expect(container.querySelector('#results-item')).toHaveStyle('left: 50%');
       expect(container.querySelector('#results-item')).toHaveStyle('width: 25%');
       expect(container.querySelector('#results-item')).toHaveStyle('height: 100%');
