@@ -16,15 +16,17 @@ const HelpMessage = ({ substate = '', prevSubstate = '', helpMap }: HMProps): Re
   });
 
   return helpMap[substate] || helpMap[prevSubstate] ? (
-    <animated.div style={helpMessageProps} id="help-message" className={substate}>
-      <IoIosInformationCircleOutline
-        size="1.75em"
-        style={{
-          paddingRight: '3px',
-        }}
-      />
-      {helpMap[substate] || helpMap[prevSubstate]}
-    </animated.div>
+    <div id="help-message-container">
+      <animated.div style={helpMessageProps} id="help-message" className={substate}>
+        <IoIosInformationCircleOutline
+          size="1.75em"
+          style={{
+            paddingRight: '3px',
+          }}
+        />
+        {helpMap[substate] || helpMap[prevSubstate]}
+      </animated.div>
+    </div>
   ) : (
     <></>
   );

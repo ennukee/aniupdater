@@ -3,12 +3,27 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10;
-    width: 100%;
+    
+    padding: 10px 20px;
+    border-radius: 500px;
+    color: #eee;
     pointer-events: none;
+    
+    &.search-phase {
+        background-color: #222;
+        text-shadow: -1px 0 #222, 1px 0 #222, 0 1px #222, 0 -1px #222;
+    }
+}
+
+#help-message-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 10;
+
     position: fixed;
     left: 0;
     bottom: 75px;
-    color: #eee;
-    text-shadow: -1px 0 #222, 1px 0 #222, 0 1px #222, 0 -1px #222;
 }
