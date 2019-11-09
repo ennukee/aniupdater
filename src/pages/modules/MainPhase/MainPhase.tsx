@@ -31,7 +31,7 @@ const MainPhase = ({ token, mainState, username = '' }: MPProps): React.ReactEle
   const [selectedMedia, setSelectedMedia] = useState<MediaEntry>({
     id: 0,
     title: { userPreferred: '' },
-    coverImage: { large: '', color: '' },
+    coverImage: { extraLarge: '', color: '' },
     mediaListEntry: null,
   });
 
@@ -118,7 +118,7 @@ const MainPhase = ({ token, mainState, username = '' }: MPProps): React.ReactEle
             <DataForm
               mediaId={selectedMedia.id}
               title={selectedMedia.title.userPreferred}
-              image={selectedMedia.coverImage ? selectedMedia.coverImage.large : null}
+              image={selectedMedia.coverImage ? selectedMedia.coverImage.extraLarge : null}
               presetProgress={selectedMedia.mediaListEntry ? selectedMedia.mediaListEntry.progress : undefined}
               presetScore={selectedMedia.mediaListEntry ? selectedMedia.mediaListEntry.score : undefined}
               type={type}

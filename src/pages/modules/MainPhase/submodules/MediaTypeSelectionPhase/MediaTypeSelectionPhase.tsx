@@ -55,12 +55,12 @@ const MediaTypeSelectionPhase = ({ transitionCallback, username }: MTSPProps): R
     <div>
       <span className="red">
         <span className="bold dark">A</span>
-        nq
+        nime
       </span>
       &nbsp;or&nbsp;
       <span className="blue">
         <span className="bold dark">M</span>
-        ar
+        anga
       </span>
     </div>
   );

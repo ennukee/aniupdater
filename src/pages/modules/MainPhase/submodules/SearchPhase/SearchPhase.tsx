@@ -333,7 +333,7 @@ const SearchPhase = ({ transitionCallback, token = '', type = '' }: SPProps): Re
             key={`work${work.id}`}
             index={index}
             color={work.coverImage ? work.coverImage.color : null}
-            coverImage={work.coverImage ? work.coverImage.large : null}
+            coverImage={work.coverImage ? work.coverImage.extraLarge : null}
             title={work.title.userPreferred}
             isFlatView={isFlatView}
             progress={work.mediaListEntry ? work.mediaListEntry.progress : null}

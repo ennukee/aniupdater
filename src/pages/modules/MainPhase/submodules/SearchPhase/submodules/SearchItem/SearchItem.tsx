@@ -46,10 +46,10 @@ const SearchItem = ({
         className="img"
         style={{
           // TODO
-          // backgroundImage: `url('${coverImage}')`,
+          backgroundImage: `url('${coverImage}')`,
           border: '1px solid #222',
           height: '100%',
-          backgroundColor: `#${`${Math.floor(Math.random() * 9)}`.repeat(6)}`,
+          // backgroundColor: `#${`${Math.floor(Math.random() * 9)}`.repeat(6)}`,
         }}
       >
         {isFlatView ? (

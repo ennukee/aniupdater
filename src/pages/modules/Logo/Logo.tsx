@@ -2,6 +2,7 @@ import React from 'react';
 import { animated, useSpring } from 'react-spring';
 
 import './Logo.scss';
+import image from './logo.webp'
 
 interface LProps {
   mainState?: string;
@@ -9,7 +10,7 @@ interface LProps {
 const Logo = ({ mainState }: LProps): React.ReactElement => {
   const logoProps = useSpring({
     width: `${mainState === 'entering' ? 150 : 360}px`,
-    height: `${mainState === 'entering' ? 50 : 90}px`,
+    height: `${mainState === 'entering' ? 40 : 70}px`,
     left: `${mainState === 'entering' ? 0 : 50}%`,
     top: `${mainState === 'entering' ? 0 : 50}px`,
     transform: `translateX(-${mainState === 'entering' ? 0 : 50}%)`,
@@ -19,6 +20,7 @@ const Logo = ({ mainState }: LProps): React.ReactElement => {
       id="aniupdater-logo"
       style={{
         ...logoProps,
+        backgroundImage: `url(${image})`,
       }}
     />
   );
