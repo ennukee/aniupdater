@@ -9,7 +9,7 @@ To be upfront, it's because I was taking *way* too long whenever I logged onto A
 
 The website has been officially released to the public! Please keep in mind there are likely still lingering bugs that will appear as a result of wider use. Please report them via a github issue!
 
-http://www.aniupdater.com/
+https://www.aniupdater.com/
 
 ## Contribution Guidelines
 
