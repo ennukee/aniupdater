@@ -11,7 +11,7 @@ export default (newPage: number, search: string, type: string): string => `query
           userPreferred
         }
         coverImage {
-          large
+          extraLarge
           color
         }
         mediaListEntry {

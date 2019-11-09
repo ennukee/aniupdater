@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactTooltip from 'react-tooltip';
 
 import './Avatar.scss';
 
@@ -13,7 +12,6 @@ const Avatar = ({ image = '' }): React.ReactElement => {
   };
   return (
     <>
-      <ReactTooltip />
       <div
         id="profile-image"
         onClick={handleClick}

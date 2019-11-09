@@ -126,7 +126,7 @@ const TokenInput = ({ callback }: TIProps): React.ReactElement => {
           onKeyDown={handleEnterKeyPress}
           onClick={(): void => authorizeToken(inputVal)}
         >
-          <IoIosCheckmark size="3.5em" color={processing ? '666666' : 'c94c96'} />
+          <IoIosCheckmark size="3.5em" style={{fill: processing ? '#666666' : '#c94c96'}} />
         </div>
       </div>
     </div>

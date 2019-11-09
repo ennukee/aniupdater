@@ -15,7 +15,7 @@ it('generates the correct search query', () => {
           userPreferred
         }
         coverImage {
-          large
+          extraLarge
           color
         }
         mediaListEntry {

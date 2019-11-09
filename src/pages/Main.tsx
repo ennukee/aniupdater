@@ -1,5 +1,6 @@
 /* Libraries */
 import React, { useState, useMemo, useReducer } from 'react';
+import ReactTooltip from 'react-tooltip';
 
 /* Modules */
 import LoginPhase from './modules/LoginPhase/LoginPhase';
@@ -45,6 +46,7 @@ const Main = (): React.ReactElement => {
       </div>
       <React.StrictMode>
         <GlobalContext.Provider value={providerValue}>
+          <ReactTooltip />
           <Alert />
           <Logo mainState={mainState} />
           <nav>

@@ -95,6 +95,7 @@ const DataForm = ({
       };
       if (newStatus) {
         switchMediaMode(newStatus);
+        e.preventDefault();
       } else if (e.key === 'Enter') {
         const options = generateQueryJson(
           POST_MEDIA_CHANGE_QUERY_GEN({
@@ -134,9 +135,8 @@ const DataForm = ({
         <div
           id="data-form-image"
           style={{
-            // TODO
-            // backgroundImage: `url('${image}')`,
-            backgroundColor: `#${`${Math.floor(Math.random() * 9)}`.repeat(6)}`,
+            backgroundImage: `url('${image}')`,
+            // backgroundColor: `#${`${Math.floor(Math.random() * 9)}`.repeat(6)}`,
             border: `1px solid ${currentMediaColor()}`,
           }}
         />
@@ -150,7 +150,8 @@ const DataForm = ({
           <div id="data-form-fields">
             <input
               id="data-form-media-count-value"
-              type="number"
+              type="text"
+              pattern="[1-9]"
               value={progress || ''}
               onChange={(e): void => setProgress(+e.target.value)}
               placeholder={`${MEDIA_TYPE_SINGLETON_TERM[type]}s`}
@@ -162,7 +163,8 @@ const DataForm = ({
             {SHOULD_SCORE_MEDIA_STATUS[status] ? (
               <input
                 id="data-form-score-value"
-                type="number"
+                type="text"
+                pattern="[1-9]"
                 value={score || ''}
                 onChange={(e): void => setScore(+e.target.value)}
                 placeholder="Score"

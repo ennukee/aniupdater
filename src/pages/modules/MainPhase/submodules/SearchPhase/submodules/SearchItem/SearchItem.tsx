@@ -8,7 +8,6 @@ interface SIProps {
   coverImage?: string | null;
   title?: string;
   index?: number;
-  isFlatView?: boolean;
   progress?: number | null;
   maxProgress?: number;
 }
@@ -18,7 +17,6 @@ const SearchItem = ({
   coverImage = '',
   title = '',
   index = 0,
-  isFlatView = false,
   progress,
   maxProgress = 0,
 }: SIProps): React.ReactElement => {
@@ -36,33 +34,27 @@ const SearchItem = ({
       id="results-item"
       style={{
         ...itemProps,
-        top: `${!isFlatView ? 0 : Math.floor(index / 2) * 50}%`,
-        left: `${!isFlatView ? index * 25 : (index % 2) * 50}%`,
-        width: `${!isFlatView ? 25 : 50}%`,
-        height: `${!isFlatView ? 100 : 50}%`,
+        top: `0`,
+        left: `${index * 25}%`,
+        width: `25%`,
+        height: `100%`,
       }}
     >
       <animated.div
         className="img"
         style={{
-          // TODO
-          // backgroundImage: `url('${coverImage}')`,
+          backgroundImage: `url('${coverImage}')`,
           border: '1px solid #222',
           height: '100%',
-          backgroundColor: `#${`${Math.floor(Math.random() * 9)}`.repeat(6)}`,
+          // backgroundColor: `#${`${Math.floor(Math.random() * 9)}`.repeat(6)}`,
         }}
       >
-        {isFlatView ? (
-          <animated.div id="result-item-title-flat-view" className="result-item-title">
-            {title}
-            {progress && <animated.div id="result-item-media-progress">{`${progress} / ${maxProgress}`}</animated.div>}
-          </animated.div>
-        ) : (
-          <animated.div id="result-item-title-grid-view" className="result-item-title">
-            {title}
-            {progress && <animated.div id="result-item-media-progress">{`${progress} / ${maxProgress}`}</animated.div>}
-          </animated.div>
-        )}
+
+            <animated.div id="result-item-title-grid-view" className="result-item-title">
+              {title}
+              {progress && <animated.div id="result-item-media-progress">{`${progress} / ${maxProgress}`}</animated.div>}
+            </animated.div>
+
       </animated.div>
     </animated.div>
   );

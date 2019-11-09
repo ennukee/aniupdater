@@ -54,7 +54,7 @@ describe('data phase tests', () => {
   });
   it('autopopulates media count field', () => {
     const { container } = setup({ presetProgress: 12 });
-    expect(container.querySelector('#data-form-media-count-value')).toHaveValue(12);
+    expect(container.querySelector('#data-form-media-count-value')).toHaveValue('12');
   });
   it('changes to completed mode, calls global context and renders', () => {
     const { container, setGlobalCallbackFn } = setup({ presetScore: 5 });
@@ -75,7 +75,7 @@ describe('data phase tests', () => {
     });
     expect(imageDiv).toHaveStyle(`border: 1px solid ${MEDIA_STATUS_COLORS.COMPLETED}`);
     expect(scoreField).not.toBeNull();
-    expect(scoreField).toHaveValue(5);
+    expect(scoreField).toHaveValue('5');
   });
   it('changes to dropped mode and renders', () => {
     const { container } = setup();

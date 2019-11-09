@@ -59,7 +59,7 @@ export interface MediaEntry {
     userPreferred: string;
   };
   coverImage: {
-    large?: string;
+    extraLarge?: string;
     color?: string | null;
   } | null;
   mediaListEntry: {

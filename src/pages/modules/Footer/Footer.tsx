@@ -1,12 +1,10 @@
 import React from 'react';
-import ReactTooltip from 'react-tooltip';
 import Tip from './submodules/Tip/Tip';
 import './Footer.scss';
 
 const Footer = (): React.ReactElement => (
   <footer>
     <div id="footer-container">
-      <ReactTooltip />
       <nav aria-label="Social media links">
         <a className="footer-logo github" href="https://github.com/ennukee/aniupdater">
           <img
