@@ -1,6 +1,6 @@
 :root {
-  --main-circle-color: #bbe;
-  --past-circle-color: #cce;
+  --main-circle-color: #222;
+  --past-circle-color: #333;
   --blank-color: #eee;
 }
 
@@ -27,6 +27,7 @@
       width: 100%;
       background-color: var(--blank-color);
       z-index: 1;
+      border: 1px solid #222;
 
       #line-fill {
         height: 100%;
@@ -53,6 +54,8 @@
       z-index: 10;
       background-color: var(--blank-color);
       transition: all 0.25s;
+
+      border: 1px solid #222;
 
       border-radius: 100%;
       -webkit-border-radius: 100%;

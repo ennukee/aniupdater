@@ -24,7 +24,7 @@
     padding: 15px 20px 15px 50px;
     font-size: 18px;
     border-radius: 50px;
-    border: 2px solid #99e0;
+    border: 2px solid #999;
     transition: all 0.25s;
     z-index: 10;
 
@@ -34,7 +34,7 @@
     -o-border-radius: 50px;
 
     &:focus {
-      border: 2px solid #99e;
+      border: 2px solid #222;
       transition: all 0.25s;
       -webkit-transition: all 0.25s;
       -moz-transition: all 0.25s;

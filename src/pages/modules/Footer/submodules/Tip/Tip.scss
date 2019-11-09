@@ -1,8 +1,9 @@
 #tip-container {
     font-size: 14px;
     text-align: right;
-    position: fixed;
-    bottom: 10px;
+    position: absolute;
+    bottom: 50%;
+    transform: translateY(50%);
     right: 10px;
 
     * {
