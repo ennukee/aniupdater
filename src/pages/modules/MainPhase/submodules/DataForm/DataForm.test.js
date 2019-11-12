@@ -97,7 +97,7 @@ describe('data phase tests', () => {
   });
 
   it('posts data to anilist on Enter', async () => {
-    fetch.mockResponseOnce(JSON.stringify({ ok: true }));
+    fetch.mockResponseOnce(JSON.stringify({ data: { SaveMediaListEntry: { id: 1 } } }));
     const { container, callbackFn } = setup({ presetProgress: 12 });
     await act(async () => {
       fireEvent.keyDown(container, { key: 'Enter', code: 13 });

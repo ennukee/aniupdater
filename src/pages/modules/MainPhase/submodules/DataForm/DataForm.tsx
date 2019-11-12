@@ -49,7 +49,7 @@ const DataForm = ({
   );
 
   const handleBadRequest = useCallback((e): void => {
-    console.error(e)
+    // console.error(e)
     setGlobalValues &&
       setGlobalValues({
         type: 'ALERT',
@@ -61,7 +61,7 @@ const DataForm = ({
         },
       });
     setTimeout(() => {
-      // window.location.reload();
+      window.location.reload();
     }, 2000);
   }, [setGlobalValues]);
 
