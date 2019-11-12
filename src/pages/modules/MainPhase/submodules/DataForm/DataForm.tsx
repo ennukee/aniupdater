@@ -48,7 +48,8 @@ const DataForm = ({
     [status],
   );
 
-  const handleBadRequest = useCallback((): void => {
+  const handleBadRequest = useCallback((e): void => {
+    console.error(e)
     setGlobalValues &&
       setGlobalValues({
         type: 'ALERT',
@@ -60,7 +61,7 @@ const DataForm = ({
         },
       });
     setTimeout(() => {
-      window.location.reload();
+      // window.location.reload();
     }, 2000);
   }, [setGlobalValues]);
 
@@ -109,9 +110,9 @@ const DataForm = ({
         fetch(ANILIST_BASE_URL, options)
           .then(resp => resp.json())
           .then(resp =>
-            resp.ok
+            resp.data && resp.data.SaveMediaListEntry && resp.data.SaveMediaListEntry.id
               ? transitionCallback() // return to search phase
-              : handleBadRequest(),
+              : handleBadRequest(resp),
           )
           .catch(handleBadRequest);
       }
@@ -151,7 +152,7 @@ const DataForm = ({
             <input
               id="data-form-media-count-value"
               type="text"
-              pattern="[1-9]"
+              pattern="[1-9]+"
               value={progress || ''}
               onChange={(e): void => setProgress(+e.target.value)}
               placeholder={`${MEDIA_TYPE_SINGLETON_TERM[type]}s`}
